@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Drowable Sync - Quantum Brand System</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Inter Google Font -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-lowest": "#0a0e16",
+            "on-secondary-fixed": "#23005c",
+            "on-primary-fixed": "#07006c",
+            "on-surface": "#dfe2ee",
+            "tertiary-fixed": "#acedff",
+            "primary-fixed": "#e1e0ff",
+            "surface": "#0f131c",
+            "inverse-primary": "#494bd6",
+            "outline": "#908fa0",
+            "on-tertiary-fixed": "#001f26",
+            "surface-container-highest": "#31353e",
+            "secondary-fixed-dim": "#d0bcff",
+            "secondary-fixed": "#e9ddff",
+            "surface-variant": "#31353e",
+            "inverse-on-surface": "#2c3039",
+            "on-primary-container": "#0d0096",
+            "surface-container-high": "#262a33",
+            "primary": "#c0c1ff",
+            "surface-container-low": "#181c24",
+            "surface-dim": "#0f131c",
+            "outline-variant": "#464554",
+            "on-secondary-fixed-variant": "#5516be",
+            "primary-fixed-dim": "#c0c1ff",
+            "surface-container": "#1c2028",
+            "background": "#0f131c",
+            "surface-tint": "#c0c1ff",
+            "inverse-surface": "#dfe2ee",
+            "on-tertiary": "#003640",
+            "surface-bright": "#353942",
+            "error": "#ffb4ab",
+            "on-primary": "#1000a9",
+            "on-error": "#690005",
+            "tertiary-fixed-dim": "#4cd7f6",
+            "on-tertiary-fixed-variant": "#004e5c",
+            "tertiary-container": "#009eb9",
+            "error-container": "#93000a",
+            "on-secondary": "#3c0091",
+            "secondary-container": "#571bc1",
+            "on-surface-variant": "#c7c4d7",
+            "secondary": "#d0bcff",
+            "on-background": "#dfe2ee",
+            "tertiary": "#4cd7f6",
+            "primary-container": "#8083ff",
+            "on-error-container": "#ffdad6",
+            "on-tertiary-container": "#002f38",
+            "on-primary-fixed-variant": "#2f2ebe",
+            "on-secondary-container": "#c4abff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-md": "0.75rem",
+            "space-xl": "1.5rem",
+            "margin": "1rem",
+            "space-sm": "0.5rem",
+            "margin-compact": "0.5rem",
+            "gutter-dense": "0.5rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1rem",
+            "gutter": "0.75rem"
+          },
+          "fontFamily": {
+            "body-default": ["Inter"],
+            "label-default": ["Inter"],
+            "headline-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "display-lg-mobile": ["Inter"],
+            "display-lg": ["Inter"],
+            "body-dense": ["Inter"],
+            "label-mono": ["Inter"]
+          },
+          "fontSize": {
+            "body-default": ["0.875rem", { "lineHeight": "1.375rem", "letterSpacing": "-0.011em", "fontWeight": "400" }],
+            "label-default": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "headline-md": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "headline-sm": ["1rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "display-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "display-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.025em", "fontWeight": "600" }],
+            "body-dense": ["0.8125rem", { "lineHeight": "1.25rem", "letterSpacing": "-0.006em", "fontWeight": "400" }],
+            "label-mono": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.02em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-block;
+      user-select: none;
+    }
+    .material-symbols-outlined.fill {
+      font-variation-settings: 'FILL' 1;
+    }
+    /* Infinite dotted canvas grid */
+    .canvas-dot-grid {
+      background-size: 24px 24px;
+      background-image: radial-gradient(circle, #2B354C 1px, transparent 1px);
+    }
+    /* Glowing active bounding box */
+    .artboard-glow {
+      box-shadow: 0 0 0 1px #8083ff, 0 0 28px -4px rgba(128, 131, 255, 0.35);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #31353e;
+      border-radius: 2px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  </style>
+<style>@media (max-width: 700px) {
+ body { overflow: auto !important; height: auto !important; min-height: 100dvh; }
+ header { overflow-x: auto; gap: 20px; width: 100%; min-height: 44px; }
+ header > div { flex-shrink: 0; }
+ body > div.flex.flex-1 { flex-direction: column; overflow: visible; }
+ body > div.flex.flex-1 > main { order: 0; min-height: 520px; width: 100%; padding: 46px 0 24px; }
+ body > div.flex.flex-1 > aside { order: 1; width: 100%; min-height: 280px; border-right: 0; border-left: 0; border-top: 1px solid #464554; }
+ body > div.flex.flex-1 > main .w-\[460px\] { width: min(86vw,460px); height: min(86vw,460px); }
+ body > div.flex.flex-1 > main .absolute.top-12.-right-28 { right: 4px; top: 4px; transform: scale(.72); transform-origin: top right; }
+ body > div.flex.flex-1 > main .w-48.h-48 { width: 32vw; height: 32vw; max-width: 192px; max-height: 192px; }
+ }</style></head>
+<body class="bg-surface text-on-surface font-body-default h-screen w-screen overflow-hidden flex flex-col select-none antialiased">
+<!-- ================= TOP WORKBENCH HEADER TOOLBAR ================= -->
+<header class="h-11 bg-surface-container-low border-b border-outline-variant flex items-center justify-between px-space-md z-50 flex-shrink-0">
+<!-- Left Cluster: Navigation & Project Meta -->
+<div class="flex items-center space-x-space-sm min-w-[280px]">
+<button class="flex items-center justify-center p-1 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" title="Back to Projects">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<div class="flex items-center space-x-1.5 px-2 py-1 rounded hover:bg-surface-container-high transition-colors cursor-pointer group">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">Quantum Brand System</span>
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface transition-colors" data-icon="expand_more">expand_more</span>
+</div>
+<div class="flex items-center space-x-1 text-outline text-label-default font-label-default pl-1 border-l border-outline-variant/60">
+<span class="material-symbols-outlined text-tertiary-fixed-dim" data-icon="cloud_done">cloud_done</span>
+<span class="text-on-surface-variant font-label-mono text-label-mono">Saved</span>
+</div>
+</div>
+<!-- Center Cluster: Floating Centered Tool Icons Bar -->
+<div class="flex items-center bg-surface-container-lowest/80 backdrop-blur border border-outline-variant rounded-lg p-space-xs space-x-0.5">
+<!-- Tool: Select / Move (V) Active -->
+<button class="flex items-center justify-center w-7 h-7 rounded bg-surface-container-high text-primary border border-primary/40 transition-colors" title="Select / Move (V)">
+<span class="material-symbols-outlined" data-icon="near_me">near_me</span>
+</button>
+<!-- Tool: Vector Pen (P) -->
+<button class="flex items-center justify-center w-7 h-7 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" title="Vector Pen (P)">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<!-- Tool: Shapes (R/O) -->
+<button class="flex items-center justify-center w-7 h-7 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" title="Shapes (R / O)">
+<span class="material-symbols-outlined" data-icon="category">category</span>
+</button>
+<!-- Tool: Typography (T) -->
+<button class="flex items-center justify-center w-7 h-7 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" title="Typography (T)">
+<span class="material-symbols-outlined" data-icon="title">title</span>
+</button>
+<!-- Tool: Frame (F) -->
+<button class="flex items-center justify-center w-7 h-7 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" title="Frame (F)">
+<span class="material-symbols-outlined" data-icon="crop_free">crop_free</span>
+</button>
+<div class="w-px h-4 bg-outline-variant mx-1"></div>
+<!-- Tool: Hand / Pan (H) -->
+<button class="flex items-center justify-center w-7 h-7 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" title="Hand / Pan (H)">
+<span class="material-symbols-outlined" data-icon="pan_tool">pan_tool</span>
+</button>
+<!-- Tool: Comment (C) -->
+<button class="flex items-center justify-center w-7 h-7 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors relative" title="Comment (C)">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="absolute top-1 right-1 w-1.5 h-1.5 bg-tertiary rounded-full"></span>
+</button>
+</div>
+<!-- Right Cluster: Collaborative stack & Actions -->
+<div class="flex items-center space-x-space-md min-w-[340px] justify-end">
+<!-- Live Collaborators Avatar Halo Stack -->
+<div class="flex items-center -space-x-1.5 pr-2">
+<!-- Liam (You) -->
+<div class="relative group" title="Liam (You)">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container text-label-mono font-label-mono flex items-center justify-center font-bold ring-2 ring-surface-container-low cursor-pointer">
+            L
+          </div>
+<span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-primary ring-1 ring-surface-container-low"></span>
+</div>
+<!-- Sarah (Active Green Dot) -->
+<div class="relative group" title="Sarah - Active in Typography">
+<div class="w-6 h-6 rounded-full bg-emerald-700 text-white text-label-mono font-label-mono flex items-center justify-center font-bold ring-2 ring-surface-container-low cursor-pointer">
+            S
+          </div>
+<span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-400 ring-1 ring-surface-container-low animate-pulse"></span>
+</div>
+<!-- Alex (Active Purple Dot) -->
+<div class="relative group" title="Alex - Reviewing Glow Radius">
+<div class="w-6 h-6 rounded-full bg-purple-700 text-white text-label-mono font-label-mono flex items-center justify-center font-bold ring-2 ring-surface-container-low cursor-pointer">
+            A
+          </div>
+<span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-purple-400 ring-1 ring-surface-container-low"></span>
+</div>
+<!-- +2 Others badge -->
+<div class="w-6 h-6 rounded-full bg-surface-container-highest text-on-surface-variant text-label-mono font-label-mono flex items-center justify-center font-semibold ring-2 ring-surface-container-low cursor-pointer" title="Elena, David">
+          +2
+        </div>
+</div>
+<!-- Audio Huddle Active Pill -->
+<button class="flex items-center space-x-1 px-2 py-1 rounded-lg bg-surface-container-high border border-outline-variant text-tertiary font-label-mono text-label-mono hover:bg-surface-bright transition-colors" title="Active audio huddle">
+<span class="material-symbols-outlined text-[15px]" data-icon="headphones">headphones</span>
+<span class="font-medium">Huddle: 2</span>
+</button>
+<!-- Share & Permissions Button -->
+<button class="px-2.5 py-1 text-label-default font-label-default text-on-surface bg-surface-container-high border border-outline-variant hover:border-outline rounded-lg transition-colors flex items-center space-x-1">
+<span class="material-symbols-outlined text-[15px]" data-icon="share">share</span>
+<span>Share</span>
+</button>
+<!-- Export SVG/PNG Primary Action -->
+<button class="px-3 py-1 bg-primary text-on-primary-fixed font-label-default text-label-default font-semibold rounded-lg hover:bg-primary-fixed transition-colors flex items-center space-x-1 shadow-sm">
+<span class="material-symbols-outlined text-[15px]" data-icon="download">download</span>
+<span>Export</span>
+</button>
+<!-- Zoom Dropdown -->
+<div class="flex items-center text-label-mono font-label-mono text-on-surface-variant hover:text-on-surface cursor-pointer px-1 py-1 rounded hover:bg-surface-container-high">
+<span>100%</span>
+<span class="material-symbols-outlined text-[14px] ml-0.5" data-icon="arrow_drop_down">arrow_drop_down</span>
+</div>
+</div>
+</header>
+<!-- ================= MAIN WORKSPACE BODY ================= -->
+<div class="flex flex-1 overflow-hidden relative">
+<!-- ================= LEFT STUDIO PANEL (COLLAPSIBLE) ================= -->
+<aside class="w-60 bg-surface-container-low border-r border-outline-variant flex flex-col justify-between flex-shrink-0 z-30">
+<!-- Studio Header Tabs -->
+<div class="flex flex-col">
+<div class="flex border-b border-outline-variant px-space-xs pt-1">
+<button class="flex-1 py-1.5 text-center text-label-default font-label-default font-medium text-primary border-b-2 border-primary -mb-px">
+            Layers
+          </button>
+<button class="flex-1 py-1.5 text-center text-label-default font-label-default text-on-surface-variant hover:text-on-surface transition-colors">
+            Assets / Components
+          </button>
+<button class="flex-1 py-1.5 text-center text-label-default font-label-default text-on-surface-variant hover:text-on-surface transition-colors">
+            History
+          </button>
+</div>
+<!-- Filter / Quick Search Input -->
+<div class="p-space-sm border-b border-outline-variant/60 flex items-center">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-2 top-1.5 text-outline text-[14px]" data-icon="search">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded px-2.5 py-1 pl-7 text-label-default font-label-default text-on-surface placeholder:text-outline focus:outline-none focus:border-primary" placeholder="Filter layers..." type="text"/>
+</div>
+</div>
+<!-- Layer Tree Hierarchy -->
+<div class="p-space-xs space-y-0.5 overflow-y-auto max-h-[calc(100vh-14rem)] custom-scrollbar">
+<!-- Master Frame Row (Parent) -->
+<div class="flex items-center justify-between px-2 py-1.5 rounded hover:bg-surface-container-high group transition-colors cursor-pointer text-on-surface">
+<div class="flex items-center space-x-1.5">
+<span class="material-symbols-outlined text-outline text-[14px]" data-icon="expand_more">expand_more</span>
+<span class="material-symbols-outlined text-outline text-[16px]" data-icon="crop_free">crop_free</span>
+<span class="text-body-dense font-body-dense font-medium truncate max-w-[120px]">Master Iconmark</span>
+</div>
+<div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-outline hover:text-on-surface text-[14px]" data-icon="visibility">visibility</span>
+<span class="material-symbols-outlined text-outline hover:text-on-surface text-[14px]" data-icon="lock_open">lock_open</span>
+</div>
+</div>
+<!-- Active Child Selection: Vector Glyph -->
+<div class="flex items-center justify-between px-2 py-1.5 rounded-lg bg-surface-container-high border-l-2 border-primary group text-primary ml-3 cursor-pointer">
+<div class="flex items-center space-x-1.5">
+<span class="material-symbols-outlined text-primary text-[15px]" data-icon="polyline">polyline</span>
+<span class="text-body-dense font-body-dense font-medium truncate max-w-[110px]">Vector Glyph (Active)</span>
+</div>
+<div class="flex items-center space-x-1 text-primary">
+<span class="material-symbols-outlined text-[14px]" data-icon="visibility">visibility</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="lock_open">lock_open</span>
+</div>
+</div>
+<!-- Layer 3: Gradient Mask -->
+<div class="flex items-center justify-between px-2 py-1.5 rounded hover:bg-surface-container-high group transition-colors cursor-pointer text-on-surface-variant hover:text-on-surface ml-3">
+<div class="flex items-center space-x-1.5">
+<span class="material-symbols-outlined text-outline text-[15px]" data-icon="masks">masks</span>
+<span class="text-body-dense font-body-dense truncate max-w-[110px]">Gradient Mask</span>
+</div>
+<div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-outline hover:text-on-surface text-[14px]" data-icon="visibility">visibility</span>
+<span class="material-symbols-outlined text-outline hover:text-on-surface text-[14px]" data-icon="lock_open">lock_open</span>
+</div>
+</div>
+<!-- Layer 4: Typography / Wordmark -->
+<div class="flex items-center justify-between px-2 py-1.5 rounded hover:bg-surface-container-high group transition-colors cursor-pointer text-on-surface-variant hover:text-on-surface ml-3">
+<div class="flex items-center space-x-1.5">
+<span class="material-symbols-outlined text-outline text-[15px]" data-icon="text_fields">text_fields</span>
+<span class="text-body-dense font-body-dense truncate max-w-[110px]">Typography / Wordmark</span>
+</div>
+<div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-outline hover:text-on-surface text-[14px]" data-icon="visibility">visibility</span>
+<span class="material-symbols-outlined text-outline hover:text-on-surface text-[14px]" data-icon="lock_open">lock_open</span>
+</div>
+</div>
+<!-- Layer 5: Background Grid (Locked) -->
+<div class="flex items-center justify-between px-2 py-1.5 rounded hover:bg-surface-container-high group transition-colors cursor-pointer text-on-surface-variant/70 ml-3">
+<div class="flex items-center space-x-1.5">
+<span class="material-symbols-outlined text-outline text-[15px]" data-icon="grid_4x4">grid_4x4</span>
+<span class="text-body-dense font-body-dense truncate max-w-[110px]">Background Grid</span>
+</div>
+<div class="flex items-center space-x-1">
+<span class="material-symbols-outlined text-outline text-[14px]" data-icon="visibility">visibility</span>
+<span class="material-symbols-outlined text-outline text-[14px]" data-icon="lock">lock</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Studio Panel Footer Rail Actions -->
+<div class="p-space-sm border-t border-outline-variant bg-surface-container-lowest/50 space-y-1">
+<div class="flex items-center justify-between text-label-default font-label-default text-on-surface-variant px-1.5 py-1">
+<span class="flex items-center space-x-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="menu_book">menu_book</span>
+<span>Documentation</span>
+</span>
+<span class="material-symbols-outlined text-[14px] text-outline" data-icon="open_in_new">open_in_new</span>
+</div>
+<div class="flex items-center justify-between text-label-default font-label-default text-on-surface-variant px-1.5 py-1">
+<span class="flex items-center space-x-1">
+<span class="material-symbols-outlined text-[16px] text-emerald-400" data-icon="wifi_tethering">wifi_tethering</span>
+<span>Status: Connected</span>
+</span>
+<span class="font-label-mono text-label-mono text-outline">18ms</span>
+</div>
+</div>
+</aside>
+<!-- ================= CENTER INTERACTIVE CANVAS ================= -->
+<main class="flex-1 bg-surface-container-lowest relative overflow-hidden flex items-center justify-center canvas-dot-grid">
+<!-- Coordinate Origin Indicator (Top Left floating pill) -->
+<div class="absolute top-3 left-3 bg-surface-container-low/80 backdrop-blur border border-outline-variant rounded px-2 py-0.5 text-label-mono font-label-mono text-outline text-[10px] z-10">
+        X: 0.00 Y: 0.00 | Zoom 100%
+      </div>
+<!-- Interactive Canvas Viewport Center Stage -->
+<div class="relative flex flex-col items-center">
+<!-- Artboard Label & Dimension Pill -->
+<div class="absolute -top-7 left-0 flex items-center space-x-2">
+<span class="text-label-mono font-label-mono text-primary font-medium tracking-tight">Master Logo - 1000x1000</span>
+<span class="text-outline text-[11px] font-label-mono font-normal">#Artboard_01</span>
+</div>
+<!-- Master Artboard Container -->
+<div class="w-[460px] h-[460px] bg-[#0B0F17] rounded-xl relative border border-outline-variant artboard-glow flex flex-col items-center justify-center p-8 select-none">
+<!-- Outer Vector Selection Marquee Box -->
+<div class="absolute inset-8 border border-primary/90 pointer-events-none rounded-lg">
+<!-- Anchor Handles on corners & midpoints -->
+<div class="absolute -top-1.5 -left-1.5 w-3 h-3 bg-surface border border-primary rounded-sm shadow"></div>
+<div class="absolute -top-1.5 -right-1.5 w-3 h-3 bg-surface border border-primary rounded-sm shadow"></div>
+<div class="absolute -bottom-1.5 -left-1.5 w-3 h-3 bg-surface border border-primary rounded-sm shadow"></div>
+<div class="absolute -bottom-1.5 -right-1.5 w-3 h-3 bg-surface border border-primary rounded-sm shadow"></div>
+<div class="absolute top-1/2 -left-1.5 -translate-y-1/2 w-2.5 h-2.5 bg-surface border border-primary rounded-sm"></div>
+<div class="absolute top-1/2 -right-1.5 -translate-y-1/2 w-2.5 h-2.5 bg-surface border border-primary rounded-sm"></div>
+<div class="absolute -top-1.5 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-surface border border-primary rounded-sm"></div>
+<div class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-surface border border-primary rounded-sm"></div>
+<!-- Top Rotation Stalk Handle -->
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 flex flex-col items-center">
+<div class="w-3 h-3 bg-primary rounded-full shadow-lg ring-2 ring-surface"></div>
+<div class="w-px h-3 bg-primary"></div>
+</div>
+</div>
+<!-- RENDERED GEOMETRIC NEON 'Q' MONOGRAM -->
+<div class="relative flex flex-col items-center justify-center group cursor-grab">
+<!-- Ambient Glow Backdrop -->
+<div class="absolute w-52 h-52 bg-gradient-to-tr from-primary-container via-[#6366F1] to-tertiary-fixed-dim rounded-full blur-3xl opacity-35 animate-pulse"></div>
+<!-- SVG Geometric Monogram 'Q' Vector -->
+<svg class="w-48 h-48 relative z-10 drop-shadow-[0_0_24px_rgba(99,102,241,0.6)]" fill="none" viewbox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="qGradientCore" x1="20" x2="180" y1="20" y2="180">
+<stop offset="0%" stop-color="#C0C1FF"></stop>
+<stop offset="45%" stop-color="#8083FF"></stop>
+<stop offset="80%" stop-color="#4CD7F6"></stop>
+<stop offset="100%" stop-color="#009EB9"></stop>
+</lineargradient>
+<filter height="140%" id="vectorGlow" width="140%" x="-20%" y="-20%">
+<fegaussianblur result="blur" stddeviation="6"></fegaussianblur>
+<fecomposite in="SourceGraphic" in2="blur" operator="over"></fecomposite>
+</filter>
+</defs>
+<!-- Outer Hexagonal / Rounded Arc Ring -->
+<circle class="transition-all" cx="100" cy="94" r="66" stroke="url(#qGradientCore)" stroke-dasharray="320 40" stroke-linecap="round" stroke-width="15"></circle>
+<!-- Inner Concentric Precision Reticle -->
+<circle cx="100" cy="94" opacity="0.75" r="42" stroke="#464554" stroke-dasharray="4 6" stroke-width="2"></circle>
+<!-- Futuristic Core Cutout Nucleus -->
+<polygon fill="#181c24" points="100,56 130,94 100,132 70,94" stroke="url(#qGradientCore)" stroke-width="4"></polygon>
+<!-- Futuristic Tangent Stem of the 'Q' with high glow angle -->
+<path d="M124 118 L168 162" filter="url(#vectorGlow)" stroke="#4CD7F6" stroke-linecap="round" stroke-width="16"></path>
+<path d="M124 118 L168 162" stroke="#FFFFFF" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+<!-- Brand Wordmark Rendered Beneath Glyph -->
+<div class="mt-4 flex flex-col items-center z-10">
+<h1 class="font-headline-md text-headline-md tracking-[0.28em] font-bold text-on-surface uppercase">QUANTUM</h1>
+<span class="font-label-mono text-label-mono text-outline tracking-[0.4em] uppercase text-[10px]">Brand System // V2.4</span>
+</div>
+</div>
+<!-- ================= LIVE MULTIPLAYER PRESENCE LAYER ================= -->
+<!-- 1. Sarah's Multiplayer Cursor (Green) Hovering Near Wordmark -->
+<div class="absolute bottom-10 right-20 pointer-events-none z-30 flex flex-col items-start transition-all transform translate-x-2 translate-y-1">
+<svg class="w-4 h-4 text-emerald-400 drop-shadow" fill="currentColor" viewbox="0 0 24 24">
+<path d="M3.5 2.5L20.5 12L11.5 14L8 21.5L3.5 2.5Z"></path>
+</svg>
+<div class="mt-1 ml-3 px-2 py-0.5 rounded bg-emerald-500 text-surface-container-lowest font-label-mono text-label-mono font-bold whitespace-nowrap shadow-md">
+              Sarah (Editing typography)
+            </div>
+</div>
+<!-- 2. Alex's Multiplayer Cursor (Purple) with Open Comment Bubble -->
+<div class="absolute top-12 -right-28 pointer-events-auto z-40 flex flex-col items-start">
+<svg class="w-4 h-4 text-secondary-container drop-shadow" fill="currentColor" viewbox="0 0 24 24">
+<path d="M3.5 2.5L20.5 12L11.5 14L8 21.5L3.5 2.5Z"></path>
+</svg>
+<div class="ml-3 mt-1 px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-mono text-label-mono font-bold whitespace-nowrap shadow-md">
+              Alex (Reviewing glow radius)
+            </div>
+<!-- Floating Comment Bubble Card -->
+<div class="mt-2 ml-3 w-64 bg-surface-container border border-outline-variant/80 rounded-xl p-3 shadow-2xl backdrop-blur-md">
+<div class="flex items-center justify-between pb-1.5 mb-1.5 border-b border-outline-variant/50">
+<div class="flex items-center space-x-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span class="font-headline-sm text-[12px] font-semibold text-on-surface">Alex M.</span>
+</div>
+<span class="font-label-mono text-label-mono text-outline">Just now</span>
+</div>
+<p class="font-body-dense text-body-dense text-on-surface leading-snug">
+                Love this neon gradient contrast! Can we try 15% more glow?
+              </p>
+<div class="mt-2.5 flex items-center justify-between pt-1">
+<span class="font-label-mono text-[10px] text-tertiary-fixed-dim cursor-pointer hover:underline">Reply...</span>
+<button class="px-2 py-0.5 rounded bg-surface-container-highest text-label-mono text-[10px] text-on-surface hover:bg-surface-bright">Resolve</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Quick Viewport Control Pill (Bottom Center of Canvas) -->
+<div class="mt-4 bg-surface-container-low/90 backdrop-blur border border-outline-variant rounded-full px-3 py-1 flex items-center space-x-3 text-on-surface-variant shadow-lg">
+<button class="hover:text-on-surface text-label-mono text-label-mono font-medium">Fit Artboard (Shift+1)</button>
+<span class="w-px h-3 bg-outline-variant"></span>
+<button class="hover:text-on-surface text-label-mono text-label-mono font-medium">Snap: Smart Guides</button>
+<span class="w-px h-3 bg-outline-variant"></span>
+<span class="flex items-center space-x-1 text-label-mono text-label-mono text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-ping"></span>
+<span>60 FPS Sync</span>
+</span>
+</div>
+</div>
+</main>
+<!-- ================= RIGHT PROPERTIES INSPECTOR PANEL ================= -->
+<aside class="w-72 bg-surface-container-low border-l border-outline-variant flex flex-col justify-between flex-shrink-0 z-30 custom-scrollbar overflow-y-auto">
+<div class="divide-y divide-outline-variant/60">
+<!-- Header Inspector State -->
+<div class="px-space-md py-space-sm flex items-center justify-between">
+<div class="flex items-center space-x-1.5">
+<span class="material-symbols-outlined text-primary text-[16px]" data-icon="tune">tune</span>
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Properties</span>
+</div>
+<span class="font-label-mono text-label-mono px-1.5 py-0.5 rounded bg-surface-container-high text-primary border border-primary/30">Vector Path</span>
+</div>
+<!-- Section: Transform Coordinates -->
+<div class="p-space-md space-y-space-sm">
+<span class="font-label-default text-label-default font-semibold text-on-surface-variant uppercase tracking-wider block">Transform</span>
+<div class="grid grid-cols-2 gap-2">
+<!-- X Coordinate -->
+<div class="flex items-center bg-surface-container-lowest border border-outline-variant rounded px-2 py-1 focus-within:border-primary">
+<span class="font-label-mono text-label-mono text-outline w-4">X</span>
+<input class="w-full bg-transparent font-label-mono text-body-dense text-on-surface focus:outline-none text-right" type="text" value="420"/>
+</div>
+<!-- Y Coordinate -->
+<div class="flex items-center bg-surface-container-lowest border border-outline-variant rounded px-2 py-1 focus-within:border-primary">
+<span class="font-label-mono text-label-mono text-outline w-4">Y</span>
+<input class="w-full bg-transparent font-label-mono text-body-dense text-on-surface focus:outline-none text-right" type="text" value="360"/>
+</div>
+<!-- Width -->
+<div class="flex items-center bg-surface-container-lowest border border-outline-variant rounded px-2 py-1 focus-within:border-primary">
+<span class="font-label-mono text-label-mono text-outline w-4">W</span>
+<input class="w-full bg-transparent font-label-mono text-body-dense text-on-surface focus:outline-none text-right" type="text" value="480"/>
+</div>
+<!-- Height -->
+<div class="flex items-center bg-surface-container-lowest border border-outline-variant rounded px-2 py-1 focus-within:border-primary">
+<span class="font-label-mono text-label-mono text-outline w-4">H</span>
+<input class="w-full bg-transparent font-label-mono text-body-dense text-on-surface focus:outline-none text-right" type="text" value="480"/>
+</div>
+<!-- Rotation -->
+<div class="flex items-center bg-surface-container-lowest border border-outline-variant rounded px-2 py-1 focus-within:border-primary">
+<span class="material-symbols-outlined text-outline text-[13px] mr-1" data-icon="rotate_right">rotate_right</span>
+<input class="w-full bg-transparent font-label-mono text-body-dense text-on-surface focus:outline-none text-right" type="text" value="0°"/>
+</div>
+<!-- Corner Radius -->
+<div class="flex items-center bg-surface-container-lowest border border-outline-variant rounded px-2 py-1 focus-within:border-primary">
+<span class="material-symbols-outlined text-outline text-[13px] mr-1" data-icon="rounded_corner">rounded_corner</span>
+<input class="w-full bg-transparent font-label-mono text-body-dense text-on-surface focus:outline-none text-right" type="text" value="32px"/>
+</div>
+</div>
+</div>
+<!-- Section: Appearance -->
+<div class="p-space-md space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-default text-label-default font-semibold text-on-surface-variant uppercase tracking-wider">Appearance</span>
+<span class="material-symbols-outlined text-outline hover:text-on-surface cursor-pointer text-[16px]" data-icon="add">add</span>
+</div>
+<!-- Fill Property -->
+<div class="space-y-1">
+<div class="flex items-center justify-between text-body-dense font-body-dense text-on-surface">
+<span class="text-outline">Fill</span>
+<span class="font-label-mono text-label-mono text-primary">Radial Gradient</span>
+</div>
+<div class="flex items-center space-x-2 bg-surface-container-lowest border border-outline-variant rounded p-1.5">
+<div class="w-6 h-6 rounded bg-gradient-to-r from-[#6366F1] to-[#06B6D4] border border-outline-variant"></div>
+<div class="flex-1 font-label-mono text-label-mono text-on-surface truncate">#6366F1 → #06B6D4</div>
+<span class="font-label-mono text-label-mono text-outline">100%</span>
+<span class="material-symbols-outlined text-outline text-[14px]" data-icon="visibility">visibility</span>
+</div>
+</div>
+<!-- Stroke Property -->
+<div class="space-y-1 pt-1">
+<div class="flex items-center justify-between text-body-dense font-body-dense text-on-surface">
+<span class="text-outline">Stroke</span>
+<span class="font-label-mono text-label-mono text-outline">1.5px Solid Inside</span>
+</div>
+<div class="flex items-center space-x-2 bg-surface-container-lowest border border-outline-variant rounded p-1.5">
+<div class="w-6 h-6 rounded bg-[#818CF8] border border-outline-variant"></div>
+<div class="flex-1 font-label-mono text-label-mono text-on-surface truncate">#818CF8</div>
+<span class="font-label-mono text-label-mono text-outline">1.5px</span>
+<span class="material-symbols-outlined text-outline text-[14px]" data-icon="visibility">visibility</span>
+</div>
+</div>
+<!-- Effects Property (Neon Glow Drop Shadow) -->
+<div class="space-y-1 pt-1">
+<div class="flex items-center justify-between text-body-dense font-body-dense text-on-surface">
+<span class="text-outline">Effects</span>
+<span class="font-label-mono text-label-mono text-primary">Drop Shadow</span>
+</div>
+<div class="flex items-center space-x-2 bg-surface-container-lowest border border-outline-variant rounded p-1.5">
+<span class="material-symbols-outlined text-primary text-[16px]" data-icon="blur_on">blur_on</span>
+<div class="flex-1 font-label-mono text-[10px] text-on-surface truncate">0 10 30 rgba(99,102,241,0.4)</div>
+<span class="material-symbols-outlined text-outline text-[14px]" data-icon="tune">tune</span>
+<span class="material-symbols-outlined text-outline text-[14px]" data-icon="visibility">visibility</span>
+</div>
+</div>
+</div>
+<!-- Section: Export Presets -->
+<div class="p-space-md space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-default text-label-default font-semibold text-on-surface-variant uppercase tracking-wider">Export</span>
+<span class="material-symbols-outlined text-outline hover:text-on-surface cursor-pointer text-[16px]" data-icon="add">add</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-2.5 space-y-2">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-on-surface font-medium">Preset</span>
+<span class="font-label-mono text-label-mono text-primary bg-primary/10 px-1.5 py-0.5 rounded">2x PNG, SVG Vector</span>
+</div>
+<div class="text-outline text-[11px] font-body-dense">
+              Exports master mark with high-fidelity transparency alpha channel.
+            </div>
+<!-- Export Quantum Logo Action Button -->
+<button class="w-full mt-1 py-1.5 bg-surface-container-high hover:bg-surface-container-highest text-on-surface border border-outline-variant rounded-lg font-label-default text-label-default font-semibold transition-colors flex items-center justify-center space-x-1.5">
+<span class="material-symbols-outlined text-primary text-[15px]" data-icon="file_download">file_download</span>
+<span>Export Quantum Logo</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Inspector Bottom State Bar -->
+<div class="p-space-sm border-t border-outline-variant bg-surface-container-lowest/60 flex items-center justify-between text-label-mono text-label-mono text-outline">
+<span>Selection: Poly_294</span>
+<span class="flex items-center space-x-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+<span>Vector Validated</span>
+</span>
+</div>
+</aside>
+</div>
+<script src="/reference/interactions.js"></script></body></html>

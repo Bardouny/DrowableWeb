@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Drowable Sync - Create New Project</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-lowest": "#0a0e16",
+            "on-secondary-fixed": "#23005c",
+            "on-primary-fixed": "#07006c",
+            "on-surface": "#dfe2ee",
+            "tertiary-fixed": "#acedff",
+            "primary-fixed": "#e1e0ff",
+            "surface": "#0f131c",
+            "inverse-primary": "#494bd6",
+            "outline": "#908fa0",
+            "on-tertiary-fixed": "#001f26",
+            "surface-container-highest": "#31353e",
+            "secondary-fixed-dim": "#d0bcff",
+            "secondary-fixed": "#e9ddff",
+            "surface-variant": "#31353e",
+            "inverse-on-surface": "#2c3039",
+            "on-primary-container": "#0d0096",
+            "surface-container-high": "#262a33",
+            "primary": "#c0c1ff",
+            "surface-container-low": "#181c24",
+            "surface-dim": "#0f131c",
+            "outline-variant": "#464554",
+            "on-secondary-fixed-variant": "#5516be",
+            "primary-fixed-dim": "#c0c1ff",
+            "surface-container": "#1c2028",
+            "background": "#0f131c",
+            "surface-tint": "#c0c1ff",
+            "inverse-surface": "#dfe2ee",
+            "on-tertiary": "#003640",
+            "surface-bright": "#353942",
+            "error": "#ffb4ab",
+            "on-primary": "#1000a9",
+            "on-error": "#690005",
+            "tertiary-fixed-dim": "#4cd7f6",
+            "on-tertiary-fixed-variant": "#004e5c",
+            "tertiary-container": "#009eb9",
+            "error-container": "#93000a",
+            "on-secondary": "#3c0091",
+            "secondary-container": "#571bc1",
+            "on-surface-variant": "#c7c4d7",
+            "secondary": "#d0bcff",
+            "on-background": "#dfe2ee",
+            "tertiary": "#4cd7f6",
+            "primary-container": "#8083ff",
+            "on-error-container": "#ffdad6",
+            "on-tertiary-container": "#002f38",
+            "on-primary-fixed-variant": "#2f2ebe",
+            "on-secondary-container": "#c4abff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-md": "0.75rem",
+            "space-xl": "1.5rem",
+            "margin": "1rem",
+            "space-sm": "0.5rem",
+            "margin-compact": "0.5rem",
+            "gutter-dense": "0.5rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1rem",
+            "gutter": "0.75rem"
+          },
+          "fontFamily": {
+            "body-default": ["Inter"],
+            "label-default": ["Inter"],
+            "headline-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "display-lg-mobile": ["Inter"],
+            "display-lg": ["Inter"],
+            "body-dense": ["Inter"],
+            "label-mono": ["Inter"]
+          },
+          "fontSize": {
+            "body-default": ["0.875rem", { "lineHeight": "1.375rem", "letterSpacing": "-0.011em", "fontWeight": "400" }],
+            "label-default": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "headline-md": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "headline-sm": ["1rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "display-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "display-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.025em", "fontWeight": "600" }],
+            "body-dense": ["0.8125rem", { "lineHeight": "1.25rem", "letterSpacing": "-0.006em", "fontWeight": "400" }],
+            "label-mono": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.02em", "fontWeight": "500" }]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(24, 28, 36, 0.4);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #464554;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen overflow-hidden font-body-default select-none">
+<!-- ================= TOP APP BAR (from Shared Components JSON) ================= -->
+<header class="flex justify-between items-center w-full px-space-md h-11 fixed top-0 left-0 z-50 bg-surface-container-low dark:bg-surface-container-low border-b border-outline-variant dark:border-outline-variant transition-colors duration-150 ease-in-out">
+<!-- Left: Brand Logo & Workspace Search -->
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap-space-xs">
+<span class="w-5 h-5 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container font-headline-sm text-label-default font-bold shadow-[0_0_8px_rgba(99,102,241,0.5)]">D</span>
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-on-surface tracking-tight">Drowable Sync</span>
+</div>
+<!-- Quick Search Bar -->
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-2 text-outline" data-icon="search">search</span>
+<input class="h-7 w-64 bg-surface-container-lowest border border-outline-variant rounded-lg pl-7 pr-7 text-body-dense font-body-dense text-on-surface placeholder:text-outline focus:border-primary focus:outline-none transition-colors" placeholder="Search templates, projects..." type="text"/>
+<span class="absolute right-2 text-label-mono font-label-mono text-outline border border-outline-variant rounded px-1 text-[10px]">⌘K</span>
+</div>
+<!-- Primary Global Nav Links -->
+<nav class="hidden md:flex items-center gap-space-md ml-space-xs">
+<a class="text-primary dark:text-primary font-medium border-b-2 border-primary h-11 flex items-center px-space-xs text-label-default font-label-default" href="#">Projects</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface rounded-lg px-space-sm py-1 text-label-default font-label-default transition-colors" href="#">Canvas</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface rounded-lg px-space-sm py-1 text-label-default font-label-default transition-colors" href="#">Connections</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface rounded-lg px-space-sm py-1 text-label-default font-label-default transition-colors" href="#">Templates</a>
+</nav>
+</div>
+<!-- Right: Actions, Icons & Profile -->
+<div class="flex items-center gap-space-sm">
+<button class="h-7 px-space-sm flex items-center gap-1 rounded-lg border border-outline-variant bg-surface-container text-on-surface hover:bg-surface-container-high transition-all text-label-default font-label-default">
+<span class="material-symbols-outlined text-[16px]" data-icon="share">share</span>
+<span>Share</span>
+</button>
+<button class="h-7 px-space-md flex items-center gap-1.5 rounded-lg bg-primary text-on-primary font-label-default text-label-default font-medium hover:bg-primary-fixed-dim transition-all shadow-[0_0_12px_rgba(99,102,241,0.35)]">
+<span class="material-symbols-outlined text-[16px]" data-icon="add">add</span>
+<span>New Project</span>
+</button>
+<div class="h-4 w-[1px] bg-outline-variant mx-1"></div>
+<button class="w-7 h-7 flex items-center justify-center rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" title="Notifications">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-7 h-7 flex items-center justify-center rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" title="Help &amp; Docs">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="w-6 h-6 rounded-full overflow-hidden border border-outline-variant ml-1 cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="Close up photographic portrait of a creative design lead engineer smiling in a softly lit, modern obsidian tech studio setup with indigo and cyan monitors softly glowing behind him in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4t-G-hMMFZvNGYhpYOIB05a9mNWyO2Q_RcGbSf-_5WFnPn52FEI5NxEAgs-iGd8D9GN4_ioGfIRZADNbDPvWebKFBAl9EvMtGxJMekv-to0Ka1rUww5zlR92g3n2KNtqbkKTVe1-Z1znqGJnKPzmY0cu7WhtXPizHHCD35hEhDkGay3ZnOyA9uBpKUAqWNGKOHTWd6A5yHw6mG5edjs8E62sYlgUeBEviSm12v9eqcS5dc6TCC-s"/>
+</div>
+</div>
+</header>
+<!-- ================= SIDE NAV BAR (from Shared Components JSON) ================= -->
+<aside class="flex flex-col justify-between h-[calc(100vh-2.75rem)] w-60 fixed top-11 left-0 z-40 p-space-sm bg-surface-container-low dark:bg-surface-container-low border-r border-outline-variant dark:border-outline-variant transition-all duration-150 ease-in-out">
+<div class="flex flex-col gap-space-md">
+<!-- Workspace Brand Badge -->
+<div class="flex items-center justify-between p-space-xs rounded-lg bg-surface-container border border-outline-variant/60">
+<div class="flex items-center gap-space-xs">
+<div class="w-7 h-7 rounded-lg bg-surface-variant flex items-center justify-center text-primary font-bold text-headline-sm">
+<span class="material-symbols-outlined text-[18px]" data-icon="palette">palette</span>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-on-surface leading-tight text-xs">Drowable Studio</span>
+<span class="text-label-mono font-label-mono text-primary text-[10px]">Team Pro Plan</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[16px]" data-icon="unfold_more">unfold_more</span>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-1">
+<a class="bg-surface-container-high dark:bg-surface-container-high text-primary dark:text-primary font-medium rounded-lg px-space-sm py-1.5 border-l-2 border-primary flex items-center gap-2 text-label-default font-label-default" href="#">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="folder">folder</span>
+<span>All Projects</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface rounded-lg px-space-sm py-1.5 flex items-center gap-2 text-label-default font-label-default hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="group">group</span>
+<span>Connections</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface rounded-lg px-space-sm py-1.5 flex items-center gap-2 text-label-default font-label-default hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="share">share</span>
+<span>Shared Files</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface rounded-lg px-space-sm py-1.5 flex items-center gap-2 text-label-default font-label-default hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="palette">palette</span>
+<span>Assets</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface rounded-lg px-space-sm py-1.5 flex items-center gap-2 text-label-default font-label-default hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<!-- CTA Box -->
+<div class="p-space-sm rounded-lg bg-surface-container-lowest border border-outline-variant/80 flex flex-col gap-2 mt-2">
+<div class="flex items-center gap-2 text-primary font-label-default text-label-default">
+<span class="material-symbols-outlined text-primary text-[16px]" data-icon="group_add">group_add</span>
+<span>Collaborative Sync</span>
+</div>
+<p class="text-label-mono font-label-mono text-outline text-[11px] leading-tight">Co-edit vector artboards with ultra-low latency.</p>
+<button class="w-full py-1 text-center bg-surface-container text-on-surface hover:text-primary rounded-lg border border-outline-variant text-label-default font-label-default transition-all">
+          Invite Teammates
+        </button>
+</div>
+</div>
+<!-- Footer Links -->
+<div class="flex flex-col gap-1 pt-2 border-t border-outline-variant">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface rounded-lg px-space-sm py-1 flex items-center gap-2 text-label-default font-label-default transition-colors" href="#">
+<span class="material-symbols-outlined text-outline text-[16px]" data-icon="menu_book">menu_book</span>
+<span>Documentation</span>
+</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface rounded-lg px-space-sm py-1 flex items-center gap-2 text-label-default font-label-default transition-colors" href="#">
+<span class="material-symbols-outlined text-outline text-[16px]" data-icon="wifi_tethering">wifi_tethering</span>
+<div class="flex items-center justify-between w-full">
+<span>Status</span>
+<span class="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse"></span>
+</div>
+</a>
+</div>
+</aside>
+<!-- ================= CANVAS BACKGROUND WORKBENCH LAYER ================= -->
+<main class="ml-60 pt-11 min-h-screen bg-[#0B0F17] relative overflow-hidden flex flex-col p-space-lg">
+<!-- Subtle Coordinate Grid Background Simulation -->
+<div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(#2B354C 1px, transparent 1px); background-size: 24px 24px;"></div>
+<!-- Underneath Dashboard preview mockup (Blurred for modal focus) -->
+<div class="flex flex-col gap-space-lg opacity-40 blur-[2px] pointer-events-none select-none">
+<div class="flex justify-between items-center">
+<div>
+<h2 class="text-headline-md font-headline-md text-on-surface">Workspace Projects</h2>
+<p class="text-body-dense font-body-dense text-outline">Manage team repositories and synced infinite canvas boards</p>
+</div>
+<div class="flex gap-2">
+<div class="h-8 w-32 bg-surface-container rounded-lg border border-outline-variant"></div>
+<div class="h-8 w-24 bg-primary-container rounded-lg"></div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-md">
+<div class="h-40 rounded-lg bg-surface-container border border-outline-variant p-4"></div>
+<div class="h-40 rounded-lg bg-surface-container border border-outline-variant p-4"></div>
+<div class="h-40 rounded-lg bg-surface-container border border-outline-variant p-4"></div>
+</div>
+</div>
+<!-- ================= MODAL OVERLAY & POPUP CONTAINER ================= -->
+<div class="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-space-md animate-in fade-in duration-200">
+<!-- Focused Modal Card Container -->
+<div class="w-full max-w-[820px] max-h-[942px] flex flex-col bg-[#131823] border border-[#2B354C] rounded-xl shadow-[0_20px_50px_-10px_rgba(0,0,0,0.8),0_0_0_1px_rgba(99,102,241,0.2)] overflow-hidden">
+<!-- Modal Header -->
+<div class="px-space-lg py-space-md border-b border-outline-variant flex items-center justify-between bg-surface-container-low shrink-0">
+<div class="flex items-center gap-space-md">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant flex items-center justify-center text-primary shadow-[0_0_12px_rgba(99,102,241,0.25)]">
+<span class="material-symbols-outlined text-[20px]" data-icon="draw">draw</span>
+</div>
+<div>
+<div class="flex items-center gap-space-sm">
+<h1 class="text-headline-md font-headline-md text-on-surface tracking-tight">Create New Project</h1>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-mono bg-primary-container/20 text-primary border border-primary/30">STUDIO V2.4</span>
+</div>
+<!-- Step Indicator -->
+<div class="flex items-center gap-2 mt-0.5 text-label-default font-label-default text-outline">
+<span class="text-primary font-medium flex items-center gap-1">
+<span class="w-4 h-4 rounded-full bg-primary text-on-primary text-[10px] flex items-center justify-center font-bold">1</span>
+                  Choose Type &amp; Canvas
+                </span>
+<span class="material-symbols-outlined text-[12px]" data-icon="chevron_right">chevron_right</span>
+<span class="text-on-surface-variant flex items-center gap-1">
+<span class="w-4 h-4 rounded-full bg-surface-container-high text-outline text-[10px] flex items-center justify-center border border-outline-variant">2</span>
+                  Invite Friends &amp; Set Permissions
+                </span>
+</div>
+</div>
+</div>
+<!-- Close Action -->
+<button class="w-7 h-7 flex items-center justify-center rounded-lg text-outline hover:text-on-surface hover:bg-surface-container-high border border-transparent hover:border-outline-variant transition-colors" title="Close Modal">
+<span class="material-symbols-outlined text-[20px]" data-icon="close">close</span>
+</button>
+</div>
+<!-- Modal Body (Scrollable Bento Container) -->
+<div class="p-space-lg overflow-y-auto custom-scrollbar flex flex-col gap-space-xl">
+<!-- SECTION 1: Choose Project Type -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="text-label-mono font-label-mono text-primary uppercase text-[11px] tracking-wider">Step 01</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Choose Project Type &amp; Canvas Presets</h3>
+</div>
+<span class="text-label-default font-label-default text-outline">4 standard presets available</span>
+</div>
+<!-- Bento Card Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-sm">
+<!-- Card 1: Selected (Brand Logo) -->
+<div class="relative group p-space-sm rounded-lg bg-surface-container-high border-2 border-primary shadow-[0_0_0_1px_#6366F1,0_0_16px_-2px_rgba(99,102,241,0.4)] flex flex-col justify-between cursor-pointer transition-all">
+<div class="absolute top-2 right-2 flex items-center">
+<span class="w-4 h-4 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[13px] font-bold" data-icon="check">check</span>
+</span>
+</div>
+<div>
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary mb-space-sm border border-outline-variant">
+<span class="material-symbols-outlined text-[22px]" data-icon="token">token</span>
+</div>
+<h4 class="text-headline-sm font-headline-sm text-on-surface flex items-center gap-1.5">
+                    Brand Logo
+                  </h4>
+<p class="text-label-mono font-label-mono text-outline text-[11px] mt-0.5 leading-snug">
+                    Vector canvas, unlimited artboards, SVG/PDF engine.
+                  </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-outline-variant/60 flex items-center justify-between text-label-mono font-label-mono text-[10px]">
+<span class="text-primary font-medium">1000×1000</span>
+<span class="text-outline">1:1 Square</span>
+</div>
+</div>
+<!-- Card 2: YouTube Thumbnail -->
+<div class="relative group p-space-sm rounded-lg bg-surface-container border border-outline-variant hover:border-[#6366F1]/50 hover:bg-surface-container-high flex flex-col justify-between cursor-pointer transition-all">
+<div>
+<div class="w-9 h-9 rounded-lg bg-surface-container-low flex items-center justify-center text-outline group-hover:text-primary mb-space-sm border border-outline-variant">
+<span class="material-symbols-outlined text-[22px]" data-icon="smart_display">smart_display</span>
+</div>
+<h4 class="text-headline-sm font-headline-sm text-on-surface">YouTube Thumbnail</h4>
+<p class="text-label-mono font-label-mono text-outline text-[11px] mt-0.5 leading-snug">
+                    1280x720 HD, safe zones overlay, CTR preview tool.
+                  </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-outline-variant/60 flex items-center justify-between text-label-mono font-label-mono text-[10px]">
+<span class="text-on-surface-variant">1280×720</span>
+<span class="text-outline">16:9 HD</span>
+</div>
+</div>
+<!-- Card 3: Design Icon -->
+<div class="relative group p-space-sm rounded-lg bg-surface-container border border-outline-variant hover:border-[#6366F1]/50 hover:bg-surface-container-high flex flex-col justify-between cursor-pointer transition-all">
+<div>
+<div class="w-9 h-9 rounded-lg bg-surface-container-low flex items-center justify-center text-outline group-hover:text-primary mb-space-sm border border-outline-variant">
+<span class="material-symbols-outlined text-[22px]" data-icon="widgets">widgets</span>
+</div>
+<h4 class="text-headline-sm font-headline-sm text-on-surface">Design Icon</h4>
+<p class="text-label-mono font-label-mono text-outline text-[11px] mt-0.5 leading-snug">
+                    512x512 grid, iOS/Android corner smoothing, multi-res export.
+                  </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-outline-variant/60 flex items-center justify-between text-label-mono font-label-mono text-[10px]">
+<span class="text-on-surface-variant">512×512</span>
+<span class="text-outline">App Grid</span>
+</div>
+</div>
+<!-- Card 4: Omni Banner -->
+<div class="relative group p-space-sm rounded-lg bg-surface-container border border-outline-variant hover:border-[#6366F1]/50 hover:bg-surface-container-high flex flex-col justify-between cursor-pointer transition-all">
+<div>
+<div class="w-9 h-9 rounded-lg bg-surface-container-low flex items-center justify-center text-outline group-hover:text-primary mb-space-sm border border-outline-variant">
+<span class="material-symbols-outlined text-[22px]" data-icon="view_compact_alt">view_compact_alt</span>
+</div>
+<h4 class="text-headline-sm font-headline-sm text-on-surface">Omni Banner</h4>
+<p class="text-label-mono font-label-mono text-outline text-[11px] mt-0.5 leading-snug">
+                    1500x500 X/Twitter, LinkedIn &amp; YouTube header presets.
+                  </p>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-outline-variant/60 flex items-center justify-between text-label-mono font-label-mono text-[10px]">
+<span class="text-on-surface-variant">1500×500</span>
+<span class="text-outline">3:1 Wide</span>
+</div>
+</div>
+</div>
+<!-- Project Meta Configuration Details -->
+<div class="mt-space-xs p-space-md rounded-lg bg-surface-container-lowest border border-outline-variant/80 flex flex-col lg:flex-row gap-space-md items-start lg:items-center justify-between">
+<!-- Project Name Input -->
+<div class="flex-1 w-full lg:w-auto">
+<label class="block text-label-default font-label-default text-outline mb-1">Project Name</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-2 text-outline text-[16px]" data-icon="edit_note">edit_note</span>
+<input class="h-8 w-full bg-surface-container border border-outline-variant rounded-lg pl-7 pr-3 text-body-dense font-body-dense text-on-surface focus:border-primary focus:outline-none transition-colors" type="text" value="Quantum Brand System"/>
+</div>
+</div>
+<!-- Canvas Micro-Inspector Inputs -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full lg:w-auto shrink-0">
+<!-- Width -->
+<div>
+<label class="block text-label-mono font-label-mono text-outline text-[10px] mb-1">WIDTH (PX)</label>
+<div class="h-8 px-2 bg-surface-container border border-outline-variant rounded-lg flex items-center justify-between">
+<span class="text-label-mono font-label-mono text-outline">W</span>
+<input class="w-12 bg-transparent text-right text-label-mono font-label-mono text-on-surface focus:outline-none" type="text" value="1000"/>
+</div>
+</div>
+<!-- Height -->
+<div>
+<label class="block text-label-mono font-label-mono text-outline text-[10px] mb-1">HEIGHT (PX)</label>
+<div class="h-8 px-2 bg-surface-container border border-outline-variant rounded-lg flex items-center justify-between">
+<span class="text-label-mono font-label-mono text-outline">H</span>
+<input class="w-12 bg-transparent text-right text-label-mono font-label-mono text-on-surface focus:outline-none" type="text" value="1000"/>
+</div>
+</div>
+<!-- DPI Engine -->
+<div>
+<label class="block text-label-mono font-label-mono text-outline text-[10px] mb-1">DPI / ENGINE</label>
+<div class="h-8 px-2 bg-surface-container border border-outline-variant rounded-lg flex items-center justify-between">
+<span class="text-label-mono font-label-mono text-on-surface">300 DPI</span>
+<span class="material-symbols-outlined text-outline text-[14px]" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Background Color -->
+<div>
+<label class="block text-label-mono font-label-mono text-outline text-[10px] mb-1">CANVAS BASE</label>
+<div class="h-8 px-2 bg-surface-container border border-outline-variant rounded-lg flex items-center gap-1.5 cursor-pointer">
+<span class="w-3.5 h-3.5 rounded-full bg-[#0F131C] border border-outline-variant"></span>
+<span class="text-label-mono font-label-mono text-on-surface-variant text-[11px]">#0F131C</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 2: Invite Friends & Set Permissions -->
+<div class="flex flex-col gap-space-sm pt-space-xs border-t border-outline-variant/60">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="text-label-mono font-label-mono text-primary uppercase text-[11px] tracking-wider">Step 02</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Invite Friends &amp; Set Permissions</h3>
+</div>
+<span class="text-label-mono font-label-mono text-outline text-[11px] flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span> 3 active peers configured
+              </span>
+</div>
+<!-- Email Invitation Form Field -->
+<div class="flex items-center gap-2">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[18px]" data-icon="person_search">person_search</span>
+<input class="w-full h-9 bg-surface-container-lowest border border-outline-variant rounded-lg pl-9 pr-4 text-body-dense font-body-dense text-on-surface placeholder:text-outline focus:border-primary focus:outline-none transition-colors" placeholder="Enter colleague's email or username from Connections..." type="text"/>
+</div>
+<button class="h-9 px-space-md bg-surface-container-high border border-outline-variant hover:border-primary text-on-surface hover:text-primary rounded-lg text-label-default font-label-default flex items-center gap-1.5 transition-all">
+<span class="material-symbols-outlined text-[16px]" data-icon="add">add</span>
+<span>Invite</span>
+</button>
+</div>
+<!-- Member Permissions Matrix List -->
+<div class="flex flex-col gap-1.5 rounded-lg bg-surface-container-lowest border border-outline-variant/80 p-2">
+<!-- Member 1: Owner -->
+<div class="flex items-center justify-between p-space-xs rounded-lg hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-label-default">
+                    YU
+                  </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-body-dense font-body-dense font-medium text-on-surface">You</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-mono bg-primary/20 text-primary border border-primary/30">Owner</span>
+</div>
+<span class="text-label-mono font-label-mono text-outline text-[11px]">Full Control &amp; System Billing</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-label-mono font-label-mono text-outline text-xs">Primary Admin</span>
+<span class="material-symbols-outlined text-outline/50 text-[18px]" data-icon="lock">lock</span>
+</div>
+</div>
+<!-- Member 2: Sarah Jenkins -->
+<div class="flex items-center justify-between p-space-xs rounded-lg hover:bg-surface-container transition-colors border-t border-outline-variant/30">
+<div class="flex items-center gap-space-sm">
+<div class="relative w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Portrait photo of a young female UX engineer with dark framed glasses and auburn hair in a dark studio setting with gentle purple fill lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3n1PMsg7uvhFirZbqNEis07v8GZs2ovMzz5Xngr9RL7xsOAsrSEOTBXfIL75-MxDYMFTHwJMBfsMwxUzL_XYFpvHHmgWEObNgpImPhDvOXxkadqHcXcaX309l66l41aOm-Fdcks2gvXVhVAVC8KPmYUThqmAzTFsQ7mf2a1-DOjXmHU7ys_cCJazsVJ8F-4LLsiglBRRP8L0YGiZkt7jyF9TQutxQpUc5-3ueZGv6CkpACiePgA0"/>
+<span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-[#10b981] border border-surface"></span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-body-dense font-body-dense font-medium text-on-surface">Sarah Jenkins</span>
+<span class="w-1.5 h-1.5 rounded-full bg-cyan-400" title="Active in viewport"></span>
+</div>
+<span class="text-label-mono font-label-mono text-outline text-[11px]">sarah@studio.design</span>
+</div>
+</div>
+<!-- Custom Linear-style Role Select -->
+<div class="relative">
+<select class="appearance-none bg-surface-container border border-outline-variant rounded-lg h-7 pl-2.5 pr-7 text-label-default font-label-default text-on-surface focus:border-primary focus:outline-none cursor-pointer">
+<option selected="">Can Edit</option>
+<option>Admin</option>
+<option>Can Review/Comment</option>
+<option>View Only</option>
+</select>
+<span class="material-symbols-outlined absolute right-1.5 top-1.5 pointer-events-none text-outline text-[16px]" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Member 3: Alex Rivera -->
+<div class="flex items-center justify-between p-space-xs rounded-lg hover:bg-surface-container transition-colors border-t border-outline-variant/30">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-label-default border border-outline-variant">
+                    AR
+                  </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-body-dense font-body-dense font-medium text-on-surface">Alex Rivera</span>
+</div>
+<span class="text-label-mono font-label-mono text-outline text-[11px]">alex.r@create.io</span>
+</div>
+</div>
+<!-- Custom Linear-style Role Select -->
+<div class="relative">
+<select class="appearance-none bg-surface-container border border-outline-variant rounded-lg h-7 pl-2.5 pr-7 text-label-default font-label-default text-on-surface focus:border-primary focus:outline-none cursor-pointer">
+<option>Can Edit</option>
+<option>Admin</option>
+<option selected="">Can Review/Comment</option>
+<option>View Only</option>
+</select>
+<span class="material-symbols-outlined absolute right-1.5 top-1.5 pointer-events-none text-outline text-[16px]" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Workspace Collaboration Toggles -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm mt-1">
+<!-- Toggle 1 -->
+<label class="flex items-center gap-space-sm p-space-xs rounded-lg bg-surface-container border border-outline-variant/60 cursor-pointer hover:bg-surface-container-high transition-colors">
+<input checked="" class="w-3.5 h-3.5 rounded-[3px] border-outline-variant bg-[#131823] text-primary focus:ring-0 focus:ring-offset-0 cursor-pointer" type="checkbox"/>
+<div class="flex flex-col">
+<span class="text-label-default font-label-default text-on-surface leading-tight">Allow team members to invite other collaborators</span>
+<span class="text-label-mono font-label-mono text-outline text-[10px]">Non-admins can request access links</span>
+</div>
+</label>
+<!-- Toggle 2 -->
+<label class="flex items-center gap-space-sm p-space-xs rounded-lg bg-surface-container border border-outline-variant/60 cursor-pointer hover:bg-surface-container-high transition-colors">
+<input checked="" class="w-3.5 h-3.5 rounded-[3px] border-outline-variant bg-[#131823] text-primary focus:ring-0 focus:ring-offset-0 cursor-pointer" type="checkbox"/>
+<div class="flex flex-col">
+<span class="text-label-default font-label-default text-on-surface leading-tight">Enable Real-time Live Cursors and Audio Chat</span>
+<span class="text-label-mono font-label-mono text-outline text-[10px]">Show multi-peer hover paths and voice room</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Modal Footer Actions Bar -->
+<div class="px-space-lg py-space-sm border-t border-outline-variant flex items-center justify-between bg-surface-container-low shrink-0">
+<div class="flex items-center gap-2 text-label-mono font-label-mono text-outline text-[11px]">
+<span class="material-symbols-outlined text-[15px]" data-icon="info">info</span>
+<span>Project defaults can be adjusted later in Canvas Settings</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="h-8 px-space-md rounded-lg text-outline hover:text-on-surface hover:bg-surface-container-high text-label-default font-label-default transition-colors">
+              Cancel
+            </button>
+<!-- Glowing Indigo Primary Action Button -->
+<button class="h-8 px-space-lg rounded-lg bg-[#6366F1] hover:bg-[#5558E6] active:bg-[#4F46E5] text-white text-label-default font-label-default font-medium flex items-center gap-1.5 shadow-[0_0_16px_rgba(99,102,241,0.5)] hover:shadow-[0_0_24px_rgba(99,102,241,0.7)] transition-all">
+<span class="material-symbols-outlined text-[16px]" data-icon="auto_awesome">auto_awesome</span>
+<span>Create Project &amp; Launch Studio</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script src="/reference/interactions.js"></script></body></html>

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Drowable Sync - YouTube Thumbnail Editor Studio</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "error-container": "#93000a",
+            "background": "#0f131c",
+            "outline": "#908fa0",
+            "on-tertiary-fixed-variant": "#004e5c",
+            "surface-container-low": "#181c24",
+            "on-secondary-fixed": "#23005c",
+            "error": "#ffb4ab",
+            "surface": "#0f131c",
+            "on-secondary-container": "#c4abff",
+            "surface-container": "#1c2028",
+            "inverse-surface": "#dfe2ee",
+            "primary-fixed-dim": "#c0c1ff",
+            "secondary-container": "#571bc1",
+            "surface-dim": "#0f131c",
+            "surface-bright": "#353942",
+            "primary": "#c0c1ff",
+            "on-primary-fixed-variant": "#2f2ebe",
+            "on-tertiary-fixed": "#001f26",
+            "inverse-on-surface": "#2c3039",
+            "on-background": "#dfe2ee",
+            "on-secondary-fixed-variant": "#5516be",
+            "on-surface": "#dfe2ee",
+            "tertiary-fixed-dim": "#4cd7f6",
+            "on-secondary": "#3c0091",
+            "surface-container-high": "#262a33",
+            "primary-container": "#8083ff",
+            "surface-container-highest": "#31353e",
+            "tertiary-container": "#009eb9",
+            "surface-container-lowest": "#0a0e16",
+            "secondary": "#d0bcff",
+            "on-tertiary-container": "#002f38",
+            "tertiary": "#4cd7f6",
+            "inverse-primary": "#494bd6",
+            "primary-fixed": "#e1e0ff",
+            "on-tertiary": "#003640",
+            "on-primary-fixed": "#07006c",
+            "surface-tint": "#c0c1ff",
+            "on-primary-container": "#0d0096",
+            "outline-variant": "#464554",
+            "secondary-fixed-dim": "#d0bcff",
+            "on-error": "#690005",
+            "tertiary-fixed": "#acedff",
+            "on-primary": "#1000a9",
+            "on-surface-variant": "#c7c4d7",
+            "secondary-fixed": "#e9ddff",
+            "surface-variant": "#31353e",
+            "on-error-container": "#ffdad6"
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          spacing: {
+            "gutter": "0.75rem",
+            "space-lg": "1rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "margin-compact": "0.5rem",
+            "margin": "1rem",
+            "space-xl": "1.5rem",
+            "gutter-dense": "0.5rem",
+            "space-md": "0.75rem"
+          },
+          fontFamily: {
+            "display-lg": ["Inter", "sans-serif"],
+            "label-default": ["Inter", "sans-serif"],
+            "body-default": ["Inter", "sans-serif"],
+            "label-mono": ["Inter", "monospace"],
+            "body-dense": ["Inter", "sans-serif"],
+            "headline-sm": ["Inter", "sans-serif"],
+            "headline-md": ["Inter", "sans-serif"]
+          },
+          fontSize: {
+            "display-lg": ["2rem", { lineHeight: "2.5rem", letterSpacing: "-0.025em", fontWeight: "600" }],
+            "label-default": ["0.75rem", { lineHeight: "1rem", letterSpacing: "0.01em", fontWeight: "500" }],
+            "body-default": ["0.875rem", { lineHeight: "1.375rem", letterSpacing: "-0.011em", fontWeight: "400" }],
+            "label-mono": ["0.6875rem", { lineHeight: "0.875rem", letterSpacing: "0.02em", fontWeight: "500" }],
+            "body-dense": ["0.8125rem", { lineHeight: "1.25rem", letterSpacing: "-0.006em", fontWeight: "400" }],
+            "headline-sm": ["1rem", { lineHeight: "1.5rem", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "headline-md": ["1.25rem", { lineHeight: "1.75rem", letterSpacing: "-0.02em", fontWeight: "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 18px;
+    }
+    .material-symbols-outlined.fill-icon {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
+    .canvas-dots {
+      background-image: radial-gradient(rgba(144, 143, 160, 0.15) 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+    .neon-halo-effect {
+      filter: drop-shadow(0 0 14px rgba(0, 240, 255, 0.95)) drop-shadow(0 0 32px rgba(99, 102, 241, 0.8));
+    }
+    .text-stroke-black {
+      -webkit-text-stroke: 4px #000000;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #0f131c;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #31353e;
+      border-radius: 2px;
+    }
+  </style>
+<style>@media (max-width: 700px) {
+ body { overflow: auto !important; height: auto !important; min-height: 100dvh; }
+ header { position: relative !important; overflow-x: auto; gap: 20px; justify-content: flex-start !important; }
+ header > div { flex-shrink: 0; }
+ body > div.flex-1.flex { padding-top: 0 !important; flex-direction: column; overflow: visible; }
+ body > div.flex-1.flex > main { order: 0; min-height: 410px; width: 100%; flex: none; }
+ body > div.flex-1.flex > aside { order: 1; width: 100%; flex: none; border-right: 0; border-left: 0; border-top: 1px solid #464554; }
+ main > div.flex-1 { padding: 12px !important; min-height: 330px; overflow: hidden; }
+ main #artboard { zoom: .4; flex-shrink: 0; }
+ main > div:first-child { overflow-x: auto; white-space: nowrap; }
+ }
+ @media (min-width: 500px) and (max-width: 700px) { main #artboard { zoom: .55; } }</style></head>
+<body class="bg-background text-on-surface font-body-default antialiased overflow-hidden select-none h-screen flex flex-col">
+<!-- TOP GLOBAL HEADER (Shared Component: TopNavBar with YouTube Studio Context) -->
+<header class="bg-surface-container-low border-b border-outline-variant flex justify-between items-center w-full px-space-md h-11 fixed top-0 left-0 z-50 transition-colors duration-150 ease-in-out">
+<!-- Left: Brand Anchor & Document Title Status -->
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-2">
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface tracking-tight flex items-center gap-1.5">
+<span class="w-6 h-6 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center font-black text-xs tracking-normal">DS</span>
+<span>Drowable Sync</span>
+</span>
+<span class="text-outline text-xs">/</span>
+<span class="text-primary font-medium text-xs">YouTube Studio</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<!-- Document Metadata -->
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-1.5">
+          AI Tech Review Ep. 42 Thumbnail
+          <span class="text-label-mono font-label-mono px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant border border-outline-variant">1280x720 • 16:9</span>
+</span>
+<div class="flex items-center gap-1 text-label-mono font-label-mono text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+<span>Cloud Auto-Saved</span>
+</div>
+</div>
+</div>
+<!-- Center: Interactive Studio Workbench Tools -->
+<div class="flex items-center bg-surface-container rounded-lg p-0.5 border border-outline-variant shadow-inner">
+<button class="px-2 py-1 rounded bg-surface-container-high text-primary border-l-2 border-primary flex items-center gap-1 text-label-default font-label-default" title="Selection Arrow (V)">
+<span class="material-symbols-outlined fill-icon text-primary">arrow_selector_tool</span>
+</button>
+<button class="px-2 py-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors flex items-center gap-1 text-label-default font-label-default" title="Cutout / Pen tool (P)">
+<span class="material-symbols-outlined">gesture</span>
+</button>
+<button class="px-2 py-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors flex items-center gap-1 text-label-default font-label-default" title="CTR Bold Typography (T)">
+<span class="material-symbols-outlined">title</span>
+</button>
+<button class="px-2 py-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors flex items-center gap-1 text-label-default font-label-default" title="Viral Badges &amp; Stickers (S)">
+<span class="material-symbols-outlined">token</span>
+</button>
+<button class="px-2 py-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors flex items-center gap-1 text-label-default font-label-default" title="Expression Cutout Library (E)">
+<span class="material-symbols-outlined">face_retouching_natural</span>
+</button>
+<div class="h-3.5 w-px bg-outline-variant mx-1"></div>
+<!-- Safe Area Toggle -->
+<button class="px-2 py-1 rounded bg-surface-container-high text-tertiary flex items-center gap-1 text-label-default font-label-default transition-colors" id="toggleSafeAreaBtn">
+<span class="material-symbols-outlined">aspect_ratio</span>
+<span class="text-label-mono font-label-mono">Safe Area</span>
+</button>
+<div class="h-3.5 w-px bg-outline-variant mx-1"></div>
+<!-- Live Huddle Voice Room With Avatars -->
+<div class="flex items-center gap-1 px-1.5 py-0.5">
+<div class="flex -space-x-1.5 items-center">
+<div class="w-5 h-5 rounded-full bg-cyan-500 border border-surface text-[10px] font-bold text-black flex items-center justify-center" title="Sarah (Lead Designer) - Mic On">S</div>
+<div class="w-5 h-5 rounded-full bg-indigo-500 border border-surface text-[10px] font-bold text-white flex items-center justify-center" title="Marcus (Video Editor)">M</div>
+<div class="w-5 h-5 rounded-full bg-purple-500 border border-surface text-[10px] font-bold text-white flex items-center justify-center" title="Devon (Creator)">D</div>
+</div>
+<button class="px-1.5 py-0.5 rounded text-tertiary hover:bg-surface-container-high flex items-center gap-1 text-label-mono font-label-mono">
+<span class="material-symbols-outlined fill-icon text-sm text-tertiary">mic</span>
+<span>Huddle</span>
+</button>
+</div>
+</div>
+<!-- Right Actions: CTR Engine & Export -->
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 rounded-lg border border-outline-variant bg-surface-container text-on-surface text-label-default font-label-default hover:bg-surface-container-high hover:border-primary flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-tertiary">local_fire_department</span>
+<span>CTR Heatmap</span>
+</button>
+<button class="px-2.5 py-1 rounded-lg border border-outline-variant bg-surface-container text-on-surface text-label-default font-label-default hover:bg-surface-container-high flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined">smart_display</span>
+<span>YT Feed Preview</span>
+</button>
+<button class="px-2.5 py-1 rounded-lg border border-outline-variant bg-surface-container text-on-surface text-label-default font-label-default hover:bg-surface-container-high flex items-center gap-1">
+<span class="material-symbols-outlined">share</span>
+<span>Share</span>
+</button>
+<!-- Primary Action: HD Export -->
+<button class="px-3 py-1 rounded-lg bg-primary-container text-on-primary-container text-label-default font-label-default font-semibold hover:opacity-90 active:scale-[0.98] transition-all flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined">download</span>
+<span>Export HD (WebP)</span>
+</button>
+<!-- Profile image avatar -->
+<div class="w-6 h-6 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden ml-1">
+<img class="w-full h-full object-cover" data-alt="Close up photographic avatar of a creative digital designer in high-contrast moody violet studio lighting, wearing matte black headphones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2YCv0R1tcHdS_73n9PbKIvEAUQ1se25RM3m0w97Skw073WNtDj6vrJwGethZ8AeA4OVQDU2ChgGoHhv_TeBRX-Og57R5NwxhSox8g5KAmWczBRdjJ3Pwa6hh9FbHj9TF-lPJEMSBDBH7Ct6bW4mNiV330HbvKC1eqR6KkEGQJWyg1caHtqRTtuqcOhrC8OmyUy2NeiNOTNe6Lm0N-iPYv4hMIUszu73gR24zjs1OrhQ32NhF4fXo"/>
+</div>
+</div>
+</header>
+<!-- WORKBENCH BODY (3-Column Layout: Left Drawer, Central Canvas, Right Inspector) -->
+<div class="flex-1 flex pt-11 overflow-hidden">
+<!-- LEFT SIDEBAR / ASSET DRAWER (w-72) -->
+<aside class="w-72 bg-surface-container-low border-r border-outline-variant flex flex-col z-30 flex-shrink-0">
+<!-- Drawer Navigation Tabs -->
+<div class="grid grid-cols-4 border-b border-outline-variant p-1 bg-surface-container-lowest text-center">
+<button class="py-1.5 rounded-lg text-label-mono font-label-mono bg-surface-container-high text-primary font-semibold border-b-2 border-primary">Elements</button>
+<button class="py-1.5 rounded-lg text-label-mono font-label-mono text-on-surface-variant hover:text-on-surface">Cutouts</button>
+<button class="py-1.5 rounded-lg text-label-mono font-label-mono text-on-surface-variant hover:text-on-surface">CTR Tpls</button>
+<button class="py-1.5 rounded-lg text-label-mono font-label-mono text-on-surface-variant hover:text-on-surface">Layers (8)</button>
+</div>
+<!-- Scrollable Elements Library -->
+<div class="flex-1 overflow-y-auto custom-scroll p-3 space-y-4">
+<!-- Category: Viral Thumbnail Stickers -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-mono font-label-mono text-on-surface-variant uppercase tracking-wider">Viral Badges &amp; Stickers</span>
+<span class="text-label-mono font-label-mono text-primary cursor-pointer hover:underline">View All</span>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<div class="bg-surface-container border border-outline-variant rounded-lg p-2.5 flex items-center justify-center cursor-pointer hover:border-primary transition-all hover:scale-[1.02] group">
+<span class="bg-red-600 text-white font-black text-xs px-2 py-0.5 transform -rotate-3 rounded tracking-wider shadow group-hover:scale-105 transition-transform">SHOCKING</span>
+</div>
+<div class="bg-surface-container border border-outline-variant rounded-lg p-2.5 flex items-center justify-center cursor-pointer hover:border-primary transition-all hover:scale-[1.02] group">
+<span class="bg-amber-400 text-black font-black text-[10px] px-1.5 py-0.5 rounded tracking-tighter uppercase transform rotate-2 group-hover:scale-105 transition-transform">DON'T BUY THIS</span>
+</div>
+<div class="bg-surface-container border border-outline-variant rounded-lg p-2.5 flex items-center justify-center cursor-pointer hover:border-primary transition-all hover:scale-[1.02] group">
+<span class="bg-rose-950 border border-red-500 text-red-300 font-extrabold text-[11px] px-2 py-0.5 rounded">99% FAIL</span>
+</div>
+<div class="bg-surface-container border border-outline-variant rounded-lg p-2.5 flex items-center justify-center cursor-pointer hover:border-primary transition-all hover:scale-[1.02] group">
+<span class="bg-purple-900 border border-primary text-white font-black text-[10px] px-1.5 py-0.5 rounded">STOP CODING</span>
+</div>
+</div>
+<!-- Viral Shapes Strip -->
+<div class="grid grid-cols-4 gap-1.5 mt-2">
+<div class="h-10 rounded border border-outline-variant bg-surface-container-high flex items-center justify-center cursor-pointer hover:border-tertiary" title="Neon Curved Arrow">
+<span class="material-symbols-outlined text-tertiary">near_me</span>
+</div>
+<div class="h-10 rounded border border-outline-variant bg-surface-container-high flex items-center justify-center cursor-pointer hover:border-red-500" title="Clickbait Red Circle">
+<span class="material-symbols-outlined text-red-500">radio_button_unchecked</span>
+</div>
+<div class="h-10 rounded border border-outline-variant bg-surface-container-high flex items-center justify-center cursor-pointer hover:border-yellow-400" title="Electric Lightning">
+<span class="material-symbols-outlined text-yellow-400">bolt</span>
+</div>
+<div class="h-10 rounded border border-outline-variant bg-surface-container-high flex items-center justify-center cursor-pointer hover:border-secondary" title="Shock Halo">
+<span class="material-symbols-outlined text-secondary">blur_on</span>
+</div>
+</div>
+</div>
+<!-- Category: Face / Expression Cutouts (Auto Edge-Glow) -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-mono font-label-mono text-on-surface-variant uppercase tracking-wider">Face Reactions (AI Cutouts)</span>
+<span class="text-label-mono font-label-mono text-tertiary">Edge-Glow On</span>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<div class="relative rounded-lg overflow-hidden border border-tertiary/70 group cursor-pointer bg-surface-container aspect-square">
+<img class="w-full h-full object-cover" data-alt="Studio photographic portrait cutout of an astonished software developer looking directly into the camera with mouth open in shock, sharp rim lighting with neon cyan aura backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsBj_kuA9iX3w25FFbQBirS1p3MtADo0fQ2w_X2optIHCCBQp_O2NFAwIAMurbu_2ycH_O2FGtWHfN0uFP-IFhtUmfm4FlLTlbH3Eu2UToXTD0AKWU-wgki0FYqN1IRsOvuLQIg_Sds6DA0M7T8NSsjZCftksxIQVqtq24UipY1sgiqjuiX5_-DC6W_9Ud9R-eYE6TzHEX72JRH1GYRIn_R8Trvtc5puZfPZX3AdaMPXtLj0lNRUg"/>
+<div class="absolute bottom-0 inset-x-0 bg-surface-container-lowest/80 text-[9px] text-center text-tertiary py-0.5">Astonished</div>
+</div>
+<div class="relative rounded-lg overflow-hidden border border-outline-variant hover:border-yellow-400 group cursor-pointer bg-surface-container aspect-square">
+<img class="w-full h-full object-cover" data-alt="Portrait cutout of an excited technology reviewer pointing to the left side with dramatic hyper-focused facial expression against pitch obsidian background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDBOMdVKUPy83jXrcVtqiuECAnicRbfOYMi-hz3QemHE9HBdAONPHLahdpNYKjf-AfS9ILos0WR0gkrMclx756braTPF2y5pBtts-96BfUbxOJ5emuJbigawEPehQLTxearor3yONilNHWD6MH00yRJc3BI1GiDomPivIPQeRJavnvCCbzn82sF1X_1Qz2un8xjkqjWw-f9LEsx2SGeFXlhPDB7ABBNDZEKzeSJbJpv5PC5vrCgYc"/>
+<div class="absolute bottom-0 inset-x-0 bg-surface-container-lowest/80 text-[9px] text-center text-on-surface-variant py-0.5">Excited Point</div>
+</div>
+<div class="relative rounded-lg overflow-hidden border border-outline-variant hover:border-pink-500 group cursor-pointer bg-surface-container aspect-square">
+<img class="w-full h-full object-cover" data-alt="Portrait cutout of a skeptical coder raising one eyebrow with hands on head in disbelief, clean studio cutout with subtle hot pink edge illumination." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDB0SyS6eqIg7Wpbqo3VNzKB3nQnecX6guGe-W-tg3jmSCF5Ejw0oh3aEMg7WElhq7c4oFsi_aPk6YroFGoQJenSBxLk__XtYejv69P5A6Tb1FLqb5xcOCKyIigVIc2EyELHm5rRjyBKeeqMLUWR5rvGPmvt--CmShHTF9O-JHM0Ug4oEvvER3B78S3ouTeIX1M0BZ0Bbfrm2x3KwBBEEXo3UY-gnHwJoNcCFQWNIvtxPL2zSnJUPY"/>
+<div class="absolute bottom-0 inset-x-0 bg-surface-container-lowest/80 text-[9px] text-center text-on-surface-variant py-0.5">Disbelief</div>
+</div>
+</div>
+</div>
+<!-- Category: Background FX & Dynamic Textures -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-mono font-label-mono text-on-surface-variant uppercase tracking-wider">Backdrop FX Presets</span>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<div class="relative h-16 rounded border border-outline-variant overflow-hidden cursor-pointer group bg-gradient-to-tr from-purple-900 via-surface to-black p-1.5 flex flex-col justify-end">
+<div class="text-[10px] font-bold text-white">Cyberpunk Grid</div>
+<div class="text-[9px] text-outline">Linear Neon Lines</div>
+</div>
+<div class="relative h-16 rounded border border-outline-variant overflow-hidden cursor-pointer group bg-gradient-to-r from-red-950 via-surface-container-low to-amber-950 p-1.5 flex flex-col justify-end">
+<div class="text-[10px] font-bold text-white">Speed Radial FX</div>
+<div class="text-[9px] text-outline">High Action Burst</div>
+</div>
+</div>
+</div>
+<!-- Category: High-CTR Typography Presets -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-mono font-label-mono text-on-surface-variant uppercase tracking-wider">CTR Font Presets</span>
+</div>
+<div class="space-y-1.5">
+<div class="p-2 rounded border border-outline-variant bg-surface-container hover:border-primary cursor-pointer flex items-center justify-between">
+<span class="font-black text-sm tracking-tight text-white drop-shadow-[0_3px_0_rgba(0,0,0,1)] uppercase">Impact Heavy 3D</span>
+<span class="text-label-mono font-label-mono text-xs text-primary">+6.4% CTR</span>
+</div>
+<div class="p-2 rounded border border-outline-variant bg-surface-container hover:border-primary cursor-pointer flex items-center justify-between">
+<span class="font-extrabold text-sm tracking-tight text-yellow-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] uppercase">Sub-Stroke Yellow</span>
+<span class="text-label-mono font-label-mono text-xs text-tertiary">+8.1% CTR</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Left Rail Footer CTA (Shared Component requirement) -->
+<div class="p-3 border-t border-outline-variant bg-surface-container-low">
+<button class="w-full py-1.5 rounded-lg border border-outline-variant text-primary text-label-default font-label-default hover:bg-surface-container-high transition-all flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-sm">group_add</span>
+<span>Invite Teammates</span>
+</button>
+</div>
+</aside>
+<!-- CENTER CANVAS WORKSPACE -->
+<main class="flex-1 relative flex flex-col bg-surface-container-lowest overflow-hidden">
+<!-- Coordinate / Viewport Header Strip -->
+<div class="h-7 border-b border-outline-variant/60 bg-surface-container-lowest/80 px-4 flex items-center justify-between text-label-mono font-label-mono text-on-surface-variant text-[11px] z-20">
+<div class="flex items-center gap-3">
+<span>Viewport: 1280 x 720 px (16:9)</span>
+<span class="text-outline">|</span>
+<span class="text-tertiary">Preset: YouTube HD Standard</span>
+<span class="text-outline">|</span>
+<span>Zoom: 100%</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span>Color Space: sRGB Verified</span>
+</div>
+</div>
+<!-- Main Canvas Display Area -->
+<div class="flex-1 relative canvas-dots flex items-center justify-center p-8 overflow-auto">
+<!-- 16:9 ARTBOARD CONTAINER (1280x720 aspect-ratio container with max bounds) -->
+<div class="relative w-[880px] h-[495px] bg-[#080b12] rounded border-2 border-primary/40 shadow-2xl overflow-hidden select-none" id="artboard">
+<!-- ARTBOARD BACKGROUND: Futuristic GPU Microchip Architecture -->
+<div class="absolute inset-0">
+<img class="w-full h-full object-cover opacity-55" data-alt="High tech semiconductor GPU microchip illuminated with luminous glowing neon purple circuits, deep indigo conduits, and volumetric dark tech shadows in crisp cinematic rendering." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3XIwlMb0iOTD9UuSlFaem7s2Z-3k9gI4de_xhGKWt-Kqh2GHPKRDrPLHg8itC9ISkiFMT6BJ2Ua071Dwx5kNImWSyQ1RMi262HxP8XfsmAVmUcKk4KoCT884nz4Eu1mTJBa0RbrZdoFs8Ib9e0rvu1Nx3U0nTHpxH_vlqef2JveX2febZYE2KEaUxEHJu66CMaNkVXdkJqn6rQNLfKZA5tM78BOr6h4j-NLQXMLj0CE-aXhQVMWU"/>
+<!-- Vignette & Dark Contrast Mask -->
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/60"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/70"></div>
+</div>
+<!-- BACKGROUND DYNAMIC SPLIT ACCENTS -->
+<div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-indigo-950/70 to-transparent pointer-events-none"></div>
+<!-- THUMBNAIL GRAPHIC: Expressive Tech Creator Cutout with Neon Halo -->
+<div class="absolute bottom-0 right-6 w-[420px] h-[470px] z-10 pointer-events-none neon-halo-effect">
+<img class="w-full h-full object-contain object-bottom" data-alt="Charismatic tech creator with intense expression and wide eyes, wearing a black crewneck sweater, expertly composited against a dark tech background, with vibrant cyan and electric violet neon outline." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgdmLtvEeDwbZLl50uL3mNBDUPWcO6IzSP9M7ORecYxiwBehsIFh6cz7IYIWGjfhBp3tpWDhCxMSOFEbVGK4J69_GQOJ-5Sw9Vt0pbgyjTvWphHSlLl899ds6Ngolsz3WSP3KzUmj89F9IzJMgKtmjZ8z0F6MgIXCE8P-dL5nY94JLgOvnIOhefqVvvvHAMYJ0eDwWajylkeAatU2b3eN6XFlMx_p3x_weaxSAdnGHkoRkptVZPSQ"/>
+</div>
+<!-- THUMBNAIL CONTENT: Left Aligned High-Impact CTR Typography -->
+<div class="absolute top-10 left-10 z-20 max-w-[500px]">
+<!-- Category Mini Pill -->
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-red-600/90 text-white font-black text-xs tracking-wider uppercase shadow-lg mb-2 transform -rotate-1">
+<span class="material-symbols-outlined text-sm">warning</span>
+<span>SPECIAL INVESTIGATION</span>
+</div>
+<!-- Big Multi-Tone 3D Headline -->
+<h1 class="font-black text-5xl leading-[1.05] tracking-tight uppercase">
+<span class="block text-yellow-400 drop-shadow-[0_5px_0_#000] text-stroke-black">THE END OF</span>
+<span class="block text-white drop-shadow-[0_6px_0_#000] text-stroke-black">CODING?</span>
+</h1>
+<div class="mt-3 inline-block bg-primary-container px-3.5 py-1.5 rounded-lg border-2 border-white shadow-[0_4px_12px_rgba(0,0,0,0.8)] transform -rotate-2">
+<span class="font-black text-lg text-on-primary-container tracking-tighter uppercase">AI REVOLUTION TESTED</span>
+</div>
+<!-- Comparison Benchmark Graphic Overlay -->
+<div class="mt-8 flex items-center gap-3">
+<div class="bg-surface-container-lowest/90 border-2 border-emerald-500 px-3 py-2 rounded-lg backdrop-blur-md shadow-lg">
+<div class="text-[10px] font-bold text-outline">NEW MODEL</div>
+<div class="text-xl font-black text-emerald-400 leading-none">99.4%</div>
+<div class="text-[9px] font-extrabold text-emerald-300 uppercase">ACCURACY</div>
+</div>
+<div class="text-white font-black text-lg italic opacity-80">VS</div>
+<div class="bg-surface-container-lowest/90 border-2 border-red-500 px-3 py-2 rounded-lg backdrop-blur-md shadow-lg">
+<div class="text-[10px] font-bold text-outline">PREVIOUS</div>
+<div class="text-xl font-black text-red-500 leading-none">FAIL</div>
+<div class="text-[9px] font-extrabold text-red-400 uppercase">SYNTAX ERRORS</div>
+</div>
+</div>
+</div>
+<!-- YOUTUBE UI SAFE AREA OVERLAYS (Toggleable) -->
+<!-- YouTube Video Duration Timestamp Overlay (Bottom-Right) -->
+<div class="absolute bottom-3 right-3 z-30 bg-black/90 text-white font-bold text-xs px-2 py-0.5 rounded pointer-events-none tracking-wider border border-white/10 shadow-lg flex items-center gap-1">
+<span>14:28</span>
+</div>
+<!-- YouTube Safe Area Danger Boundary Box (Dotted Border overlay) -->
+<div class="absolute inset-0 border border-dashed border-red-500/40 pointer-events-none z-20 m-3 rounded flex flex-col justify-between">
+<div class="p-1 text-[9px] font-label-mono text-red-400 bg-black/60 self-start rounded">YouTube UI Safe Boundary (Margin: 12px)</div>
+<div class="self-end p-1 text-[9px] font-label-mono text-red-400 bg-black/60 rounded">Avoid text in corner (Timestamp Zone)</div>
+</div>
+<!-- LIVE COLLABORATIVE CURSORS -->
+<!-- Cursor 1: Sarah (Lead Designer) -->
+<div class="absolute top-44 right-36 z-40 pointer-events-none">
+<svg class="w-4 h-4 text-cyan-400 drop-shadow" fill="currentColor" viewbox="0 0 24 24">
+<path d="M3 3l7 18 3-7 7-3L3 3z"></path>
+</svg>
+<div class="ml-3 -mt-1 bg-cyan-500 text-black px-2 py-0.5 rounded text-[10px] font-bold shadow-md whitespace-nowrap">
+              Sarah: Tweak cutout halo spread to 18px
+            </div>
+</div>
+<!-- Cursor 2: Marcus (Video Editor) -->
+<div class="absolute top-28 left-64 z-40 pointer-events-none">
+<svg class="w-4 h-4 text-indigo-400 drop-shadow" fill="currentColor" viewbox="0 0 24 24">
+<path d="M3 3l7 18 3-7 7-3L3 3z"></path>
+</svg>
+<div class="ml-3 -mt-1 bg-indigo-600 text-white px-2 py-0.5 rounded text-[10px] font-semibold shadow-md whitespace-nowrap border border-indigo-400/40">
+              Marcus: Can we make "THE END" yellow for higher mobile contrast?
+            </div>
+</div>
+</div>
+</div>
+<!-- FLOATING CANVAS HUD & ISLAND CONTROLS (Bottom-Center) -->
+<div class="absolute bottom-4 inset-x-0 flex justify-center z-30 pointer-events-none">
+<div class="pointer-events-auto bg-surface-container/90 backdrop-blur-xl border border-outline-variant px-3 py-1.5 rounded-xl shadow-2xl flex items-center gap-4 text-label-default font-label-default">
+<!-- Zoom Actions -->
+<div class="flex items-center gap-1.5">
+<button class="w-6 h-6 rounded flex items-center justify-center hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<span class="text-label-mono font-label-mono text-xs w-12 text-center text-primary font-semibold">100%</span>
+<button class="w-6 h-6 rounded flex items-center justify-center hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<!-- YouTube Safe Zone Switch -->
+<div class="flex items-center gap-2">
+<span class="text-xs text-on-surface-variant">Safe Zone:</span>
+<div class="w-7 h-4 bg-primary-container rounded-full p-0.5 flex items-center justify-end cursor-pointer">
+<div class="w-3 h-3 bg-on-primary-container rounded-full shadow"></div>
+</div>
+<span class="text-xs font-bold text-primary">ON</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<!-- CTR Contrast Score Pill -->
+<div class="flex items-center gap-1.5 bg-surface-container-highest px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-emerald-400 text-sm">verified</span>
+<span class="text-xs text-on-surface">CTR Contrast:</span>
+<span class="text-label-mono font-label-mono text-xs font-bold text-emerald-400">94/100 (Optimal)</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<!-- A/B Variation Switcher -->
+<div class="flex items-center bg-surface-container-lowest p-0.5 rounded border border-outline-variant">
+<button class="px-2 py-0.5 rounded text-[11px] font-bold bg-primary text-on-primary">Var A</button>
+<button class="px-2 py-0.5 rounded text-[11px] font-medium text-on-surface-variant hover:text-on-surface">Var B</button>
+</div>
+</div>
+</div>
+</main>
+<!-- RIGHT INSPECTOR SIDEBAR (Thumbnail Specific Settings) (w-80) -->
+<aside class="w-80 bg-surface-container-low border-l border-outline-variant flex flex-col z-30 flex-shrink-0">
+<!-- Inspector Header Tabs -->
+<div class="h-10 border-b border-outline-variant px-3 flex items-center justify-between">
+<span class="text-headline-sm font-headline-sm text-sm text-on-surface flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-base">tune</span>
+          Thumbnail Inspector
+        </span>
+<span class="text-label-mono font-label-mono text-xs px-2 py-0.5 rounded bg-surface-container text-tertiary border border-outline-variant">CTR Engine v2.4</span>
+</div>
+<!-- Inspector Scroll Content -->
+<div class="flex-1 overflow-y-auto custom-scroll p-3 space-y-4">
+<!-- SECTION 1: YOUTUBE FEED SIMULATOR & CTR QUALITY SCORE -->
+<div class="bg-surface-container rounded-lg p-3 border border-outline-variant">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-mono font-label-mono text-on-surface-variant uppercase tracking-wider text-[11px]">YouTube Feed Live Simulator</span>
+<span class="text-label-mono font-label-mono text-[10px] text-primary">Mobile Dark Feed</span>
+</div>
+<!-- Mock Mobile YouTube Feed Card -->
+<div class="bg-surface-container-lowest rounded-lg p-2 border border-outline-variant/80">
+<!-- Scaled Thumbnail Replica -->
+<div class="relative w-full aspect-video rounded overflow-hidden bg-black mb-2 border border-outline-variant/40">
+<img class="w-full h-full object-cover" data-alt="Micro preview of modern tech YouTube thumbnail with bright yellow typography and cyber neon background inside mobile feed card." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBR1ksM_d6IxfBiAZxmiFz6KapAKC2zjolg0uzBI2ghCocYCriuFR6qHCKzXAejGe0DDMB0zKLfe15vFsxD2NZiaDphwvnjWxsktipCy3mkSBrUk1Qsh683vCdpByWTE-Z-JoFxkkLb_k6n-Iky7i2XF0MZnkAHVtPBhpXA9ebvE25O4lnBKuZ6365cV3MvKgsPL-EN3k_TNCMVWxdfqsq4L3nG03-LGp8-Cg3wgj_b42a6Yonvavs"/>
+<div class="absolute bottom-1 right-1 bg-black/90 text-white text-[9px] font-bold px-1 rounded">14:28</div>
+</div>
+<!-- Video Meta In Feed -->
+<div class="flex gap-2 items-start">
+<div class="w-7 h-7 rounded-full bg-indigo-600 flex-shrink-0 text-white text-[10px] font-black flex items-center justify-center">D</div>
+<div class="flex-1 min-w-0">
+<div class="text-[11px] font-bold text-on-surface line-clamp-2 leading-tight">AI Tech Review: The End of Coding? We Tested Every Autonomous Agent</div>
+<div class="text-[9px] text-outline mt-0.5 flex items-center gap-1">
+<span>Drowable Studio</span>
+<span>•</span>
+<span>142K views</span>
+<span>•</span>
+<span>3 hours ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- CTR Scorecard breakdown -->
+<div class="mt-3 grid grid-cols-3 gap-1.5 text-center">
+<div class="bg-surface-container-high p-1.5 rounded border border-outline-variant">
+<div class="text-[9px] text-outline">Readability</div>
+<div class="text-xs font-bold text-emerald-400">98% High</div>
+</div>
+<div class="bg-surface-container-high p-1.5 rounded border border-outline-variant">
+<div class="text-[9px] text-outline">Contrast</div>
+<div class="text-xs font-bold text-emerald-400">95% Top</div>
+</div>
+<div class="bg-surface-container-high p-1.5 rounded border border-outline-variant">
+<div class="text-[9px] text-outline">Emotion</div>
+<div class="text-xs font-bold text-primary">91% Strong</div>
+</div>
+</div>
+</div>
+<!-- SECTION 2: SUBJECT CUTOUT & GLOW SETTINGS -->
+<div class="bg-surface-container rounded-lg p-3 border border-outline-variant space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-label-mono font-label-mono text-on-surface-variant uppercase tracking-wider text-[11px]">Subject Stroke &amp; Halo Glow</span>
+<div class="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00F0FF]"></div>
+</div>
+<!-- Color & Width Row -->
+<div class="grid grid-cols-2 gap-2">
+<div>
+<label class="text-[10px] text-outline block mb-1">Glow Color</label>
+<div class="flex items-center gap-2 bg-surface-container-lowest p-1 rounded border border-outline-variant">
+<span class="w-4 h-4 rounded bg-[#00F0FF] border border-white/20"></span>
+<span class="text-label-mono font-label-mono text-xs text-on-surface">#00F0FF</span>
+</div>
+</div>
+<div>
+<label class="text-[10px] text-outline block mb-1">Stroke Width</label>
+<div class="flex items-center justify-between bg-surface-container-lowest p-1 rounded border border-outline-variant">
+<span class="text-label-mono font-label-mono text-xs text-on-surface px-1">14 px</span>
+<span class="text-[10px] text-outline">Outer</span>
+</div>
+</div>
+</div>
+<!-- Blur & Opacity Sliders -->
+<div>
+<div class="flex justify-between text-[11px] mb-1">
+<span class="text-on-surface-variant">Halo Blur Spread</span>
+<span class="text-label-mono font-label-mono text-tertiary">24 px</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-1.5 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full w-[65%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[11px] mb-1">
+<span class="text-on-surface-variant">Halo Opacity</span>
+<span class="text-label-mono font-label-mono text-on-surface">100%</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-full"></div>
+</div>
+</div>
+<!-- Background Dimming Slider -->
+<div>
+<div class="flex justify-between text-[11px] mb-1">
+<span class="text-on-surface-variant">Backdrop Dimming Boost</span>
+<span class="text-label-mono font-label-mono text-on-surface">-45%</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-1.5 rounded-full overflow-hidden">
+<div class="bg-amber-400 h-full w-[45%]"></div>
+</div>
+</div>
+</div>
+<!-- SECTION 3: TEXT & CTR TYPOGRAPHY STYLES -->
+<div class="bg-surface-container rounded-lg p-3 border border-outline-variant space-y-2.5">
+<div class="flex items-center justify-between">
+<span class="text-label-mono font-label-mono text-on-surface-variant uppercase tracking-wider text-[11px]">CTR Text Styling</span>
+<span class="text-[10px] text-primary">Active: 'THE END OF'</span>
+</div>
+<!-- Font Selector -->
+<div>
+<label class="text-[10px] text-outline block mb-1">Typeface</label>
+<div class="flex items-center justify-between bg-surface-container-lowest px-2 py-1 rounded border border-outline-variant text-xs">
+<span class="font-bold text-white">Ultra Impact Heavy (Sans)</span>
+<span class="material-symbols-outlined text-sm text-outline">unfold_more</span>
+</div>
+</div>
+<!-- Micro Property Matrix -->
+<div class="grid grid-cols-3 gap-1.5">
+<div class="bg-surface-container-lowest p-1 rounded border border-outline-variant text-center">
+<span class="text-[9px] text-outline block">Fill</span>
+<span class="text-label-mono font-label-mono text-[11px] text-yellow-400 font-bold">#FACC15</span>
+</div>
+<div class="bg-surface-container-lowest p-1 rounded border border-outline-variant text-center">
+<span class="text-[9px] text-outline block">3D Offset</span>
+<span class="text-label-mono font-label-mono text-[11px] text-on-surface font-bold">6 px</span>
+</div>
+<div class="bg-surface-container-lowest p-1 rounded border border-outline-variant text-center">
+<span class="text-[9px] text-outline block">Stroke</span>
+<span class="text-label-mono font-label-mono text-[11px] text-on-surface font-bold">8 px Black</span>
+</div>
+</div>
+<!-- Quick Text Transforms -->
+<div class="flex gap-1">
+<button class="flex-1 py-1 rounded bg-surface-container-high hover:bg-surface-container-highest text-[10px] font-bold uppercase text-on-surface">ALL CAPS</button>
+<button class="flex-1 py-1 rounded bg-surface-container-high hover:bg-surface-container-highest text-[10px] font-bold text-on-surface flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-xs">shadow</span>
+<span>Layered 3D</span>
+</button>
+<button class="flex-1 py-1 rounded bg-surface-container-high hover:bg-surface-container-highest text-[10px] font-bold text-tertiary">Tilt -3°</button>
+</div>
+</div>
+<!-- SECTION 4: EXPORT & YOUTUBE API DISPATCH -->
+<div class="bg-surface-container rounded-lg p-3 border border-outline-variant space-y-2.5">
+<div class="flex items-center justify-between">
+<span class="text-label-mono font-label-mono text-on-surface-variant uppercase tracking-wider text-[11px]">YouTube Compliance Check</span>
+<span class="flex items-center gap-1 text-[10px] text-emerald-400 font-bold">
+<span class="material-symbols-outlined text-xs">check_circle</span>
+              Passed
+            </span>
+</div>
+<div class="bg-surface-container-lowest p-2 rounded border border-outline-variant/60 text-xs space-y-1">
+<div class="flex justify-between text-outline text-[11px]">
+<span>Dimensions:</span>
+<span class="text-on-surface font-mono">1280 x 720 (16:9)</span>
+</div>
+<div class="flex justify-between text-outline text-[11px]">
+<span>Estimated Size:</span>
+<span class="text-emerald-400 font-mono">840 KB (Under 2MB Max)</span>
+</div>
+<div class="flex justify-between text-outline text-[11px]">
+<span>Color Profile:</span>
+<span class="text-on-surface font-mono">sRGB (Rec. 709)</span>
+</div>
+</div>
+<!-- YouTube Studio Direct Upload CTA -->
+<button class="w-full py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-base">cloud_upload</span>
+<span>Upload Directly to YouTube Studio</span>
+</button>
+</div>
+</div>
+<!-- Inspector Footer Help & Metadata -->
+<div class="p-2.5 border-t border-outline-variant bg-surface-container-lowest flex items-center justify-between text-label-mono font-label-mono text-[11px] text-outline">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">auto_awesome</span>
+          AI CTR Predictor active
+        </span>
+<button class="hover:text-primary">Shortcuts (⌘K)</button>
+</div>
+</aside>
+</div>
+<!-- Interactive script for toggles and micro-interactions -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggleBtn = document.getElementById('toggleSafeAreaBtn');
+      let safeAreaActive = true;
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+          safeAreaActive = !safeAreaActive;
+          toggleBtn.classList.toggle('text-tertiary', safeAreaActive);
+          toggleBtn.classList.toggle('text-outline', !safeAreaActive);
+        });
+      }
+    });
+  </script>
+<script src="/reference/interactions.js"></script></body></html>

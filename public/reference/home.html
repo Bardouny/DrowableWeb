@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Drowable Sync — Real-Time Collaborative Creative Suite</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Inter Google Font -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Verbatim Tailwind Config Injection -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-lowest": "#0a0e16",
+            "on-secondary-fixed": "#23005c",
+            "on-primary-fixed": "#07006c",
+            "on-surface": "#dfe2ee",
+            "tertiary-fixed": "#acedff",
+            "primary-fixed": "#e1e0ff",
+            "surface": "#0f131c",
+            "inverse-primary": "#494bd6",
+            "outline": "#908fa0",
+            "on-tertiary-fixed": "#001f26",
+            "surface-container-highest": "#31353e",
+            "secondary-fixed-dim": "#d0bcff",
+            "secondary-fixed": "#e9ddff",
+            "surface-variant": "#31353e",
+            "inverse-on-surface": "#2c3039",
+            "on-primary-container": "#0d0096",
+            "surface-container-high": "#262a33",
+            "primary": "#c0c1ff",
+            "surface-container-low": "#181c24",
+            "surface-dim": "#0f131c",
+            "outline-variant": "#464554",
+            "on-secondary-fixed-variant": "#5516be",
+            "primary-fixed-dim": "#c0c1ff",
+            "surface-container": "#1c2028",
+            "background": "#0f131c",
+            "surface-tint": "#c0c1ff",
+            "inverse-surface": "#dfe2ee",
+            "on-tertiary": "#003640",
+            "surface-bright": "#353942",
+            "error": "#ffb4ab",
+            "on-primary": "#1000a9",
+            "on-error": "#690005",
+            "tertiary-fixed-dim": "#4cd7f6",
+            "on-tertiary-fixed-variant": "#004e5c",
+            "tertiary-container": "#009eb9",
+            "error-container": "#93000a",
+            "on-secondary": "#3c0091",
+            "secondary-container": "#571bc1",
+            "on-surface-variant": "#c7c4d7",
+            "secondary": "#d0bcff",
+            "on-background": "#dfe2ee",
+            "tertiary": "#4cd7f6",
+            "primary-container": "#8083ff",
+            "on-error-container": "#ffdad6",
+            "on-tertiary-container": "#002f38",
+            "on-primary-fixed-variant": "#2f2ebe",
+            "on-secondary-container": "#c4abff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-md": "0.75rem",
+            "space-xl": "1.5rem",
+            "margin": "1rem",
+            "space-sm": "0.5rem",
+            "margin-compact": "0.5rem",
+            "gutter-dense": "0.5rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1rem",
+            "gutter": "0.75rem"
+          },
+          "fontFamily": {
+            "body-default": ["Inter"],
+            "label-default": ["Inter"],
+            "headline-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "display-lg-mobile": ["Inter"],
+            "display-lg": ["Inter"],
+            "body-dense": ["Inter"],
+            "label-mono": ["Inter"]
+          },
+          "fontSize": {
+            "body-default": ["0.875rem", { "lineHeight": "1.375rem", "letterSpacing": "-0.011em", "fontWeight": "400" }],
+            "label-default": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "headline-md": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "headline-sm": ["1rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "display-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "display-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.025em", "fontWeight": "600" }],
+            "body-dense": ["0.8125rem", { "lineHeight": "1.25rem", "letterSpacing": "-0.006em", "fontWeight": "400" }],
+            "label-mono": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.02em", "fontWeight": "500" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .material-symbols-outlined[data-weight="fill"] {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
+    /* Grid Canvas Pattern */
+    .bg-grid-pattern {
+      background-size: 24px 24px;
+      background-image: 
+        linear-gradient(to right, rgba(70, 69, 84, 0.12) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(70, 69, 84, 0.12) 1px, transparent 1px);
+    }
+    .glow-accent {
+      box-shadow: 0 0 24px -4px rgba(128, 131, 255, 0.35);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-default min-h-screen selection:bg-primary-container selection:text-on-primary-container antialiased relative overflow-x-hidden">
+<!-- ================= TOP NAV BAR (Shared Component Execution) ================= -->
+<header class="bg-surface-container-low dark:bg-surface-container-low border-b border-outline-variant dark:border-outline-variant flex justify-between items-center w-full px-space-md h-11 fixed top-0 left-0 z-50 transition-colors duration-150 ease-in-out">
+<!-- Brand Anchor & Search / Links -->
+<div class="flex items-center gap-space-lg">
+<a class="flex items-center gap-space-xs group" href="#">
+<div class="w-6 h-6 rounded-lg bg-gradient-to-tr from-inverse-primary to-primary-container flex items-center justify-center shadow-[0_0_12px_rgba(128,131,255,0.5)]">
+<span class="material-symbols-outlined text-surface-container-lowest text-[15px]" data-icon="polyline">polyline</span>
+</div>
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-on-surface tracking-tight">Drowable Sync</span>
+</a>
+<!-- Quick Canvas Indicator Pill -->
+<div class="hidden lg:flex items-center gap-space-xs px-2 py-0.5 rounded bg-surface-container-high border border-outline-variant/40">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="text-label-mono font-label-mono text-tertiary">SYNC V3.8 ACTIVE</span>
+</div>
+<!-- Nav Links -->
+<nav class="hidden md:flex items-center gap-space-md ml-space-sm">
+<a class="text-label-default font-label-default text-primary dark:text-primary font-medium border-b-2 border-primary py-2.5" href="#features">Features</a>
+<a class="text-label-default font-label-default text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface py-2.5 transition-colors" href="#canvas-teaser">Canvas</a>
+<a class="text-label-default font-label-default text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface py-2.5 transition-colors" href="#use-cases">Use Cases</a>
+<a class="text-label-default font-label-default text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface py-2.5 transition-colors" href="#templates">Templates</a>
+<a class="text-label-default font-label-default text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface py-2.5 transition-colors" href="#community">Community</a>
+<a class="text-label-default font-label-default text-on-surface-variant dark:text-on-surface-variant hover:text-on-surface py-2.5 transition-colors" href="#pricing">Pricing</a>
+</nav>
+</div>
+<!-- Actions & Profile -->
+<div class="flex items-center gap-space-sm">
+<button class="hidden sm:flex items-center gap-1 text-label-default font-label-default px- space-sm py-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="hidden xl:inline">Docs</span>
+</button>
+<button class="relative p-1 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" title="Notifications">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</button>
+<a class="text-label-default font-label-default text-on-surface-variant hover:text-on-surface px-space-sm py-1 transition-colors" href="#login">Log in</a>
+<!-- Glowing CTA -->
+<a class="flex items-center gap-1.5 bg-primary text-on-primary-fixed hover:bg-primary-container px-space-md py-1 rounded-lg text-label-default font-label-default font-semibold transition-all duration-150 active:scale-[0.98] glow-accent shadow-sm" href="#signup">
+<span>Start Creating Free</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</header>
+<!-- Global Subtle Background Glow Elements -->
+<div class="fixed top-11 left-1/2 -translate-x-1/2 w-[900px] h-[350px] bg-gradient-to-b from-primary-container/15 via-secondary-container/10 to-transparent blur-[120px] pointer-events-none -z-10"></div>
+<div class="fixed top-96 right-10 w-[420px] h-[420px] bg-tertiary-container/10 blur-[140px] pointer-events-none -z-10"></div>
+<!-- ================= HERO SECTION ================= -->
+<main class="pt-24 pb-20 px-space-md max-w-7xl mx-auto">
+<section class="text-center max-w-4xl mx-auto flex flex-col items-center">
+<!-- Linear-style Micro-Announce Badge -->
+<div class="inline-flex items-center gap-space-xs px-3 py-1 rounded-full bg-surface-container-low border border-outline-variant hover:border-primary/50 transition-colors mb-space-lg cursor-pointer">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-ping"></span>
+<span class="text-label-mono font-label-mono text-tertiary">NEW</span>
+<span class="text-outline-variant">|</span>
+<span class="text-label-default font-label-default text-on-surface-variant flex items-center gap-1">
+          Vector Engine 4.0 with Sub-pixel Mesh Gradients
+          <span class="material-symbols-outlined text-[13px]" data-icon="chevron_right">chevron_right</span>
+</span>
+</div>
+<!-- Punchy Headline -->
+<h1 class="text-display-lg-mobile md:text-display-lg font-display-lg text-on-surface tracking-tight max-w-3xl mb-space-md">
+        Sync your creativity at the <span class="bg-gradient-to-r from-primary via-tertiary to-secondary bg-clip-text text-transparent">speed of thought</span>
+</h1>
+<!-- High-Density Subheadline -->
+<p class="text-body-default font-body-default text-on-surface-variant max-w-2xl mb-space-xl">
+        Ultra-low latency multiplayer creative workbench. Co-edit vector <span class="text-on-surface font-medium">Logos</span>, export viral <span class="text-on-surface font-medium">YouTube Thumbnails</span>, snap precision <span class="text-on-surface font-medium">App Icons</span>, and deploy omnichannel <span class="text-on-surface font-medium">Social Banners</span> simultaneously without lockouts.
+      </p>
+<!-- Dual Call To Actions -->
+<div class="flex flex-wrap items-center justify-center gap-space-md mb-space-xl w-full sm:w-auto">
+<a class="w-full sm:w-auto flex items-center justify-center gap-space-sm bg-primary text-on-primary-fixed hover:bg-primary-container px-space-xl py-2.5 rounded-lg text-body-dense font-body-dense font-semibold transition-all duration-150 active:scale-[0.98] glow-accent shadow-lg" href="#signup">
+<span>Start Designing Free</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</a>
+<button class="w-full sm:w-auto flex items-center justify-center gap-space-sm bg-surface-container-high/80 hover:bg-surface-container-high border border-outline-variant text-on-surface px-space-lg py-2.5 rounded-lg text-body-dense font-body-dense transition-all duration-150 active:scale-[0.98]">
+<span class="material-symbols-outlined text-tertiary" data-icon="play_circle" data-weight="fill">play_circle</span>
+<span>Watch 2-Min Demo</span>
+<span class="text-label-mono font-label-mono text-outline ml-1">⌘K</span>
+</button>
+</div>
+<!-- Quick Platform Capability Chips -->
+<div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-label-default font-label-default text-outline mb-10">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-tertiary" data-icon="bolt">bolt</span>
+<span>&lt; 16ms Peer Sync</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-primary" data-icon="device_hub">device_hub</span>
+<span>Multi-Format Output</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-secondary" data-icon="lock_open">lock_open</span>
+<span>Zero File Locking</span>
+</div>
+</div>
+</section>
+<!-- ================= INTERACTIVE CANVAS TEASER / HERO PREVIEW ================= -->
+<section class="relative mt-2 rounded-xl border border-outline-variant bg-surface-container-lowest overflow-hidden shadow-2xl" id="canvas-teaser">
+<!-- Studio Mockup Window Header Bar -->
+<div class="h-9 bg-surface-container-low border-b border-outline-variant flex items-center justify-between px-space-md">
+<!-- Window Traffic Dots & Document Name -->
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-error/60 border border-error"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-outline-variant"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-outline-variant"></span>
+</div>
+<span class="text-outline text-body-dense">|</span>
+<div class="flex items-center gap-2">
+<span class="text-body-dense font-body-dense text-on-surface font-medium">drowable-core-v4.sync</span>
+<span class="text-label-mono font-label-mono text-outline bg-surface-container px-1.5 py-0.5 rounded">AUTO-SAVED</span>
+</div>
+</div>
+<!-- Collaborators Live Stack & Action -->
+<div class="flex items-center gap-space-md">
+<div class="flex items-center -space-x-2">
+<div class="w-6 h-6 rounded-full bg-cyan-600 border-2 border-surface-container-low flex items-center justify-center text-label-mono text-white text-[10px] font-bold" title="Sarah (Design Lead)">S</div>
+<div class="w-6 h-6 rounded-full bg-indigo-600 border-2 border-surface-container-low flex items-center justify-center text-label-mono text-white text-[10px] font-bold" title="Alex (Illustrator)">A</div>
+<div class="w-6 h-6 rounded-full bg-amber-600 border-2 border-surface-container-low flex items-center justify-center text-label-mono text-white text-[10px] font-bold" title="Jordan (Motion)">J</div>
+<div class="w-6 h-6 rounded-full bg-surface-container-high border-2 border-surface-container-low flex items-center justify-center text-label-mono text-outline text-[10px]">+4</div>
+</div>
+<button class="bg-primary-container text-on-primary-container px-2 py-1 rounded text-label-mono font-label-mono font-semibold hover:opacity-90 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]" data-icon="share">share</span>
+<span>Share</span>
+</button>
+</div>
+</div>
+<!-- Main Canvas Stage Area -->
+<div class="relative w-full h-[520px] md:h-[620px] bg-surface-container-lowest bg-grid-pattern overflow-hidden flex items-center justify-center select-none">
+<!-- Left Micro Inspector / Layer Tree Dock (Style Guidance Level 1) -->
+<div class="absolute left-3 top-3 w-56 bg-surface-container-low/90 backdrop-blur-md border border-outline-variant rounded-lg p-space-sm hidden md:flex flex-col gap-space-xs z-20">
+<div class="flex justify-between items-center pb-1 border-b border-outline-variant/40">
+<span class="text-label-mono font-label-mono text-outline">LAYERS</span>
+<span class="material-symbols-outlined text-outline cursor-pointer hover:text-on-surface" data-icon="tune">tune</span>
+</div>
+<div class="flex items-center justify-between px-2 py-1 rounded bg-surface-container-high text-primary border-l-2 border-primary text-body-dense font-body-dense">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="shapes">shapes</span>
+<span>Neo-Vector Logo</span>
+</div>
+<span class="material-symbols-outlined text-[13px] text-tertiary" data-icon="visibility">visibility</span>
+</div>
+<div class="flex items-center justify-between px-2 py-1 rounded hover:bg-surface-container text-on-surface-variant text-body-dense font-body-dense transition-colors">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="text_fields">text_fields</span>
+<span>Wordmark Title</span>
+</div>
+<span class="material-symbols-outlined text-[13px] text-outline" data-icon="lock">lock</span>
+</div>
+<div class="flex items-center justify-between px-2 py-1 rounded hover:bg-surface-container text-on-surface-variant text-body-dense font-body-dense transition-colors">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]" data-icon="palette">palette</span>
+<span>Glow Mesh (Cyan/Violet)</span>
+</div>
+<span class="material-symbols-outlined text-[13px] text-outline" data-icon="visibility">visibility</span>
+</div>
+<!-- Quick Properties Input Matrix -->
+<div class="pt-2 mt-1 border-t border-outline-variant/30 flex flex-col gap-1.5">
+<span class="text-label-mono font-label-mono text-outline">TRANSFORM</span>
+<div class="grid grid-cols-2 gap-1">
+<div class="h-6 bg-surface-container px-2 border border-outline-variant/50 rounded flex items-center justify-between text-label-mono">
+<span class="text-outline">W</span>
+<span class="text-on-surface">512 px</span>
+</div>
+<div class="h-6 bg-surface-container px-2 border border-outline-variant/50 rounded flex items-center justify-between text-label-mono">
+<span class="text-outline">H</span>
+<span class="text-on-surface">512 px</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Central Vector Editing Graphic (Live Node Representation) -->
+<div class="relative w-72 h-72 sm:w-96 sm:h-96 border border-primary/40 rounded-2xl flex items-center justify-center p-6 bg-surface-container-low/40 backdrop-blur-sm shadow-[0_0_50px_rgba(99,102,241,0.15)]">
+<!-- Bounding Box Transformation Handles -->
+<div class="absolute -top-1.5 -left-1.5 w-3 h-3 bg-surface-container-lowest border-2 border-primary rounded-sm cursor-nwse-resize"></div>
+<div class="absolute -top-1.5 -right-1.5 w-3 h-3 bg-surface-container-lowest border-2 border-primary rounded-sm cursor-nesw-resize"></div>
+<div class="absolute -bottom-1.5 -left-1.5 w-3 h-3 bg-surface-container-lowest border-2 border-primary rounded-sm cursor-nesw-resize"></div>
+<div class="absolute -bottom-1.5 -right-1.5 w-3 h-3 bg-surface-container-lowest border-2 border-primary rounded-sm cursor-nwse-resize"></div>
+<div class="absolute top-1/2 -left-1.5 -translate-y-1/2 w-2.5 h-2.5 bg-surface-container-lowest border-2 border-primary rounded-sm"></div>
+<div class="absolute top-1/2 -right-1.5 -translate-y-1/2 w-2.5 h-2.5 bg-surface-container-lowest border-2 border-primary rounded-sm"></div>
+<!-- Dynamic SVG Vector Shape Being Edited -->
+<svg class="w-full h-full filter drop-shadow-[0_0_20px_rgba(76,215,246,0.3)]" viewbox="0 0 200 200">
+<defs>
+<lineargradient id="vectorGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#4cd7f6"></stop>
+<stop offset="50%" stop-color="#8083ff"></stop>
+<stop offset="100%" stop-color="#c4abff"></stop>
+</lineargradient>
+</defs>
+<!-- Glowing Editable Bezier Path -->
+<path d="M 40 100 C 40 40, 100 40, 100 100 C 100 160, 160 160, 160 100 C 160 40, 100 40, 100 100" fill="none" stroke="url(#vectorGrad)" stroke-linecap="round" stroke-width="12"></path>
+<!-- Live Active Vector Anchor Points with Control Handles -->
+<line stroke="#4cd7f6" stroke-dasharray="3,3" stroke-width="1.5" x1="40" x2="40" y1="100" y2="40"></line>
+<circle cx="40" cy="40" fill="#0f131c" r="4" stroke="#4cd7f6" stroke-width="2"></circle>
+<circle cx="40" cy="100" fill="#4cd7f6" r="5"></circle>
+<line stroke="#8083ff" stroke-dasharray="3,3" stroke-width="1.5" x1="160" x2="160" y1="100" y2="160"></line>
+<circle cx="160" cy="160" fill="#0f131c" r="4" stroke="#8083ff" stroke-width="2"></circle>
+<circle cx="160" cy="100" fill="#8083ff" r="5"></circle>
+</svg>
+<!-- Real-Time Cursor 1: Sarah (Design Lead) -->
+<div class="absolute -top-6 left-16 z-30 pointer-events-none flex flex-col items-start transition-all duration-300">
+<svg class="w-4 h-4 fill-cyan-400 drop-shadow-md" viewbox="0 0 16 16">
+<polygon points="0,0 16,5 8,8 5,16"></polygon>
+</svg>
+<div class="mt-0.5 ml-3 px-2 py-0.5 rounded bg-cyan-500 text-surface-container-lowest text-label-mono font-label-mono font-bold tracking-wide shadow-md whitespace-nowrap">
+              Sarah (Design Lead)
+            </div>
+</div>
+<!-- Real-Time Cursor 2: Alex (Illustrator) -->
+<div class="absolute bottom-8 right-6 z-30 pointer-events-none flex flex-col items-start transition-all duration-300">
+<svg class="w-4 h-4 fill-indigo-400 drop-shadow-md" viewbox="0 0 16 16">
+<polygon points="0,0 16,5 8,8 5,16"></polygon>
+</svg>
+<div class="mt-0.5 ml-3 px-2 py-0.5 rounded bg-indigo-500 text-white text-label-mono font-label-mono font-bold tracking-wide shadow-md whitespace-nowrap">
+              Alex (Illustrator)
+            </div>
+</div>
+</div>
+<!-- Real-Time Cursor 3 & Collaborative Comment Flyout: Jordan (Motion) -->
+<div class="absolute bottom-28 left-1/4 z-30 flex flex-col items-start">
+<div class="flex items-center gap-1">
+<svg class="w-4 h-4 fill-amber-400 drop-shadow-md" viewbox="0 0 16 16">
+<polygon points="0,0 16,5 8,8 5,16"></polygon>
+</svg>
+<div class="px-2 py-0.5 rounded bg-amber-500 text-surface-container-lowest text-label-mono font-label-mono font-bold shadow-md">
+              Jordan (Motion)
+            </div>
+</div>
+<!-- Live Interactive Comment Card -->
+<div class="mt-2 ml-4 w-64 bg-surface-container-high/95 backdrop-blur-md border border-outline-variant p-space-sm rounded-lg shadow-2xl">
+<div class="flex items-center justify-between mb-1">
+<span class="text-label-mono font-label-mono text-tertiary">#vector-motion-pass</span>
+<span class="text-label-mono font-label-mono text-outline">Just now</span>
+</div>
+<p class="text-body-dense font-body-dense text-on-surface">Can we soften the curvature on node 4 for the 60fps Lottie spin?</p>
+<div class="mt-2 pt-2 border-t border-outline-variant/40 flex items-center justify-between text-label-mono">
+<span class="text-primary cursor-pointer hover:underline">Reply (r)...</span>
+<div class="flex items-center gap-1 text-outline">
+<span class="material-symbols-outlined text-[14px]" data-icon="thumb_up">thumb_up</span>
+<span>2</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Micro-Toolbar (Style Guidance Level 2) -->
+<div class="absolute bottom-5 left-1/2 -translate-x-1/2 bg-surface-container-low/90 backdrop-blur-md border border-outline-variant rounded-full px-space-sm py-1.5 flex items-center gap-1 shadow-[0_8px_24px_rgba(0,0,0,0.5)] z-20">
+<button class="p-1.5 rounded-full bg-surface-container-high text-primary border border-primary/30" title="Select (V)">
+<span class="material-symbols-outlined text-[17px]" data-icon="near_me">near_me</span>
+</button>
+<button class="p-1.5 rounded-full hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" title="Pen Tool (P)">
+<span class="material-symbols-outlined text-[17px]" data-icon="edit">edit</span>
+</button>
+<button class="p-1.5 rounded-full hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" title="Frame Tool (F)">
+<span class="material-symbols-outlined text-[17px]" data-icon="crop_square">crop_square</span>
+</button>
+<div class="w-px h-4 bg-outline-variant mx-1"></div>
+<button class="p-1.5 rounded-full hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" title="Boolean Operations">
+<span class="material-symbols-outlined text-[17px]" data-icon="join_inner">join_inner</span>
+</button>
+<button class="p-1.5 rounded-full hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" title="Multiplayer Comments (C)">
+<span class="material-symbols-outlined text-[17px]" data-icon="chat_bubble">chat_bubble</span>
+</button>
+<div class="w-px h-4 bg-outline-variant mx-1"></div>
+<!-- Viewport Zoom Indicator -->
+<div class="flex items-center gap-1 px-2 py-0.5 rounded text-label-mono font-label-mono text-on-surface-variant bg-surface-container">
+<span>100%</span>
+<span class="material-symbols-outlined text-[12px]" data-icon="unfold_more">unfold_more</span>
+</div>
+</div>
+<!-- Coordinates Status HUD (Bottom Right) -->
+<div class="absolute bottom-4 right-4 hidden sm:flex items-center gap-space-sm bg-surface-container-low/80 backdrop-blur-sm border border-outline-variant/60 rounded px-2.5 py-1 text-label-mono font-label-mono text-outline">
+<span>X: 1240.50</span>
+<span>Y: -890.20</span>
+<span class="text-tertiary">3 PEERS LIVE</span>
+</div>
+</div>
+</section>
+<!-- ================= FEATURE GRID / SUPPORTED DESIGN TYPES ================= -->
+<section class="mt-28" id="features">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-space-xl">
+<div>
+<div class="text-label-mono font-label-mono text-primary uppercase tracking-wider mb-2">Omnichannel Workspaces</div>
+<h2 class="text-headline-md font-headline-md text-on-surface text-2xl md:text-3xl">Architected for Every Digital Canvas</h2>
+</div>
+<p class="text-body-default font-body-default text-on-surface-variant max-w-md mt-2 md:mt-0">
+          Streamlined presets engineered for instant handoff, sub-pixel raster rendering, and zero-degradation vector scaling.
+        </p>
+</div>
+<!-- 4 Bento Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<!-- CARD 1: Dynamic Brand Logos -->
+<div class="bg-surface-container-low border border-outline-variant hover:border-primary/60 rounded-xl p-space-lg transition-all duration-200 group flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<span class="text-label-mono font-label-mono px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/30">SVG &amp; VECTOR MASTER</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="pentagon">pentagon</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface mb-space-xs text-lg">Dynamic Brand Logos</h3>
+<p class="text-body-dense font-body-dense text-on-surface-variant mb-space-md">
+              Infinite precision vector paths with real-time multi-stop gradient mesh rendering. Export clean production-ready SVGs, EPS, and React JSX icon components in one click.
+            </p>
+</div>
+<!-- Visual Preview Box -->
+<div class="h-44 rounded-lg bg-surface-container-lowest border border-outline-variant/60 flex items-center justify-center p-space-md relative overflow-hidden">
+<div class="absolute inset-0 bg-grid-pattern opacity-40"></div>
+<!-- Simulated Logo Symbol -->
+<div class="relative z-10 flex items-center gap-3">
+<div class="w-16 h-16 rounded-xl bg-gradient-to-br from-primary via-secondary to-tertiary p-0.5 shadow-xl">
+<div class="w-full h-full bg-surface-container-lowest rounded-[10px] flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="polyline">polyline</span>
+</div>
+</div>
+<div>
+<div class="h-3 w-24 bg-surface-container-highest rounded mb-1.5"></div>
+<div class="h-2 w-16 bg-surface-container-high rounded"></div>
+</div>
+</div>
+<div class="absolute bottom-2 right-2 text-label-mono font-label-mono text-outline bg-surface-container-high px-1.5 py-0.5 rounded text-[10px]">
+              PATH TANGENT: ACTIVE
+            </div>
+</div>
+</div>
+<!-- CARD 2: High-CTR YouTube Thumbnails -->
+<div class="bg-surface-container-low border border-outline-variant hover:border-tertiary/60 rounded-xl p-space-lg transition-all duration-200 group flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<span class="text-label-mono font-label-mono px-2 py-0.5 rounded bg-tertiary/10 text-tertiary border border-tertiary/30">1280x720 PRESETS</span>
+<span class="material-symbols-outlined text-outline group-hover:text-tertiary transition-colors" data-icon="play_box">cloud_download</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface mb-space-xs text-lg">High-CTR YouTube Thumbnails</h3>
+<p class="text-body-dense font-body-dense text-on-surface-variant mb-space-md">
+              One-click AI cutout edge feathering, intense neon halo backdrops, dynamic bold typography contours, and simultaneous side-by-side A/B test thumbnail comparisons.
+            </p>
+</div>
+<!-- Visual Preview Box -->
+<div class="h-44 rounded-lg bg-surface-container-lowest border border-outline-variant/60 flex items-center justify-center relative overflow-hidden p-space-md">
+<div class="w-full max-w-xs h-32 rounded bg-surface-container border border-outline-variant relative flex items-center justify-between px-4 overflow-hidden">
+<div class="z-10">
+<span class="bg-error text-surface-container-lowest text-label-mono font-bold px-1.5 py-0.5 rounded">VIRAL GLOW</span>
+<div class="text-headline-sm font-black text-on-surface mt-1 leading-tight tracking-tighter">STOP CODING<br/><span class="text-tertiary">LIKE THIS</span></div>
+</div>
+<div class="w-20 h-20 rounded-full bg-gradient-to-tr from-tertiary/30 to-primary/40 border border-tertiary/50 flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-tertiary text-4xl" data-icon="sentiment_very_satisfied">sentiment_very_satisfied</span>
+</div>
+<div class="absolute bottom-1 right-2 text-label-mono font-label-mono text-outline text-[10px]">A/B METRIC: +24.8% CTR</div>
+</div>
+</div>
+</div>
+<!-- CARD 3: Precision App & UI Icons -->
+<div class="bg-surface-container-low border border-outline-variant hover:border-secondary/60 rounded-xl p-space-lg transition-all duration-200 group flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<span class="text-label-mono font-label-mono px-2 py-0.5 rounded bg-secondary/10 text-secondary border border-secondary/30">IOS &amp; ANDROID SPEC PACKS</span>
+<span class="material-symbols-outlined text-outline group-hover:text-secondary transition-colors" data-icon="grid_goldenratio">grid_goldenratio</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface mb-space-xs text-lg">Precision App &amp; UI Icons</h3>
+<p class="text-body-dense font-body-dense text-on-surface-variant mb-space-md">
+              Hard pixel-grid snapping engine for 16px to 1024px assets. Automatically generate Apple squircle masks, asset catalogs, adaptive icon sets, and Xcode JSON definitions.
+            </p>
+</div>
+<!-- Visual Preview Box -->
+<div class="h-44 rounded-lg bg-surface-container-lowest border border-outline-variant/60 flex items-center justify-center p-space-md relative overflow-hidden gap-3">
+<!-- 1024 Icon Grid Preview -->
+<div class="w-20 h-20 rounded-2xl bg-surface-container-high border border-outline-variant flex items-center justify-center relative shadow-md">
+<div class="absolute inset-1 border border-dashed border-outline-variant/40 rounded-xl"></div>
+<span class="material-symbols-outlined text-secondary text-2xl" data-icon="terminal">terminal</span>
+</div>
+<!-- Small 512 Icon -->
+<div class="w-14 h-14 rounded-xl bg-surface-container-high border border-outline-variant flex items-center justify-center relative shadow-md">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="terminal">terminal</span>
+</div>
+<!-- Micro 64 Icon -->
+<div class="w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-tertiary text-sm" data-icon="terminal">terminal</span>
+</div>
+<div class="absolute bottom-2 right-2 text-label-mono font-label-mono text-outline bg-surface-container-high px-1.5 py-0.5 rounded text-[10px]">
+              SQUIRCLE MASK 22%
+            </div>
+</div>
+</div>
+<!-- CARD 4: Omnichannel Banners & Covers -->
+<div class="bg-surface-container-low border border-outline-variant hover:border-primary/60 rounded-xl p-space-lg transition-all duration-200 group flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<span class="text-label-mono font-label-mono px-2 py-0.5 rounded bg-primary-container/20 text-primary border border-primary/40">MULTI-ASPECT SYNC</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="aspect_ratio">aspect_ratio</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface mb-space-xs text-lg">Omnichannel Banners &amp; Covers</h3>
+<p class="text-body-dense font-body-dense text-on-surface-variant mb-space-md">
+              Intelligent adaptive layout engine for X/Twitter headers (1500x500), LinkedIn company covers, Discord banners, and Twitch offline screens that re-center key anchors automatically.
+            </p>
+</div>
+<!-- Visual Preview Box -->
+<div class="h-44 rounded-lg bg-surface-container-lowest border border-outline-variant/60 flex flex-col items-center justify-center p-space-md relative overflow-hidden gap-2">
+<!-- Simulated Aspect Bars -->
+<div class="w-5/6 h-9 rounded bg-surface-container-high border border-outline-variant flex items-center justify-between px-3 text-label-mono text-outline">
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span>X / Twitter Header</span>
+<span class="text-[10px]">1500x500</span>
+</div>
+<div class="w-4/6 h-8 rounded bg-surface-container border border-outline-variant flex items-center justify-between px-3 text-label-mono text-outline">
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>LinkedIn Banner</span>
+<span class="text-[10px]">1584x396</span>
+</div>
+<div class="absolute bottom-2 right-2 text-label-mono font-label-mono text-outline bg-surface-container-high px-1.5 py-0.5 rounded text-[10px]">
+              SAFE ZONES: LOCKED
+            </div>
+</div>
+</div>
+</div>
+</section>
+<!-- ================= SOCIAL PROOF & COLLABORATION METRICS ================= -->
+<section class="mt-28 border border-outline-variant rounded-2xl bg-surface-container-low p-space-xl relative overflow-hidden">
+<!-- Glow Gradient accent in background -->
+<div class="absolute -right-20 -bottom-20 w-80 h-80 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-xl items-center">
+<!-- Live Presence Metric Counter -->
+<div class="lg:col-span-1 border-b lg:border-b-0 lg:border-r border-outline-variant pb-8 lg:pb-0 lg:pr-8">
+<div class="flex items-center gap-2 mb-2">
+<span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
+<span class="text-label-mono font-label-mono text-tertiary">REAL-TIME GLOBAL TELEMETRY</span>
+</div>
+<div class="text-4xl font-extrabold text-on-surface tracking-tight mb-2">
+            124,892
+          </div>
+<p class="text-body-dense font-body-dense text-on-surface-variant mb-6">
+            Designers, illustrators, and content engineers syncing active project frames this very second.
+          </p>
+<!-- Peer Avatars Row -->
+<div class="flex items-center gap-3">
+<div class="flex -space-x-3 overflow-hidden">
+<img class="inline-block h-9 w-9 rounded-full ring-2 ring-surface-container-low object-cover" data-alt="Close-up portrait of a modern female lead visual designer wearing minimal dark frame glasses against a low-lit studio backdrop. The lighting has subtle indigo reflections, emphasizing a high-tech obsidian creative suite aesthetic with cool-toned studio ambient illumination." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFi02tnoznWfx0zoFdhx1BOuaW2k6na7AXtgp72Y2vcxHsscIL129-TIOroySms1vDjGGRfBH7zA8s9d3c9OYylffhvOPA-8UOPcYVHV6AclAP1s9nhAdAyG1zpezbNZYhWEI-cqaFdH5pHd165c9DBgjL7oT_Kq4fxQVgk9KFNQvzmqXVtFE5s8lFUZ5il29quT_IC2BI7Jjd5B1QTUJIjRsAfujt-uXg4M0c2z3-3Oxb6rgOcrc"/>
+<img class="inline-block h-9 w-9 rounded-full ring-2 ring-surface-container-low object-cover" data-alt="Portrait of an experienced digital illustrator and 3D artist looking focused into a glowing monitor screen. High contrast dark mood lighting with intense cyan rim light accents matching a creative engineering workstation atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdlEmobpNbIp3JSvi7JlXRu6dc4pYZXTpHvVGK68J6Ay1roZKhFfzCZFQV6sc6PNQJIDsqZLt6N3iqi0j0Y-tFIqfv1AWsA_YYofm3bcv3IUVI727cjZ4qUpNNb-Jy5cw70oXg-_xxDppN7DyEvc1Xw_4EQX_U7A9qt8TPWIVEJoc_K3Hr06pt2eRTwHRjg0TIrnYgMXkW9PEOdAJRBWhOlotMSa6zrl1er-UgjQacMDfh4p01x4o"/>
+<img class="inline-block h-9 w-9 rounded-full ring-2 ring-surface-container-low object-cover" data-alt="Creative technologist working in a sleek darkened design lab with ambient violet monitors. Sharp, clean photography capturing effortless collaboration and modern product design precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIREQz0v1q_d-L9EtUmSIY8DU_T4tDM2s37pepJfsVsPoIc2NtwcQ21WkwXd5UkaGUQZR-k9wvMEDt6IVMQMPS5g9VED75VLAMUtPmwXtZe3sZscXU-B9-RlQ427v3lLUFqvD3TL4FXdiPJNE4ZRnEnCazWCTA0Q504XbaINlrdqQReHCtgzamTub9HoRxNaLUzjFUhHwGRSyI3BSgNkSyviGzXAUj22c_kifPJ1PN8qfc-DMnxEw"/>
+<div class="w-9 h-9 rounded-full bg-surface-container-high ring-2 ring-surface-container-low flex items-center justify-center text-label-mono font-bold text-primary">
+                +120k
+              </div>
+</div>
+<span class="text-label-default font-label-default text-outline">Active across 84 countries</span>
+</div>
+</div>
+<!-- Featured Testimonial Card -->
+<div class="lg:col-span-2">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-4xl text-primary/40 -mt-2" data-icon="format_quote">format_quote</span>
+<div>
+<blockquote class="text-headline-sm font-headline-sm text-on-surface text-lg md:text-xl font-normal leading-relaxed mb-4">
+                “Drowable Sync completely demolished our export friction. My illustrator in Tokyo and motion designer in Berlin fine-tune YouTube thumbnails and game launch vectors concurrently with zero conflict. It feels like editing local memory at 120 frames per second.”
+              </blockquote>
+<div class="flex items-center justify-between flex-wrap gap-2">
+<div>
+<div class="text-body-dense font-body-dense font-semibold text-on-surface">Elena Rostova</div>
+<div class="text-label-default font-label-default text-on-surface-variant">VP of Creative Production, Hyperion Studios</div>
+</div>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-sm" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-sm" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-sm" data-icon="star" data-weight="fill">star</span>
+<span class="material-symbols-outlined text-sm" data-icon="star" data-weight="fill">star</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ================= BOTTOM CALL TO ACTION BANNER ================= -->
+<section class="mt-24 text-center bg-gradient-to-b from-surface-container-high to-surface-container-low border border-outline-variant rounded-2xl p-10 md:p-16 relative overflow-hidden">
+<div class="relative z-10 max-w-2xl mx-auto flex flex-col items-center">
+<h2 class="text-2xl md:text-3xl font-display-lg text-on-surface font-bold tracking-tight mb-space-sm">
+          Design in Sync. Ship without Delays.
+        </h2>
+<p class="text-body-default font-body-default text-on-surface-variant mb-space-xl">
+          Join thousands of designers building brand icons, thumbnails, and scalable vector systems without messy export folders.
+        </p>
+<div class="flex flex-col sm:flex-row items-center gap-space-md w-full sm:w-auto">
+<a class="w-full sm:w-auto flex items-center justify-center gap-2 bg-primary text-on-primary-fixed hover:bg-primary-container px-space-xl py-3 rounded-lg text-body-dense font-body-dense font-semibold transition-all duration-150 active:scale-[0.98] glow-accent shadow-lg" href="#signup">
+<span>Start Free with GitHub or Google</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<span class="text-label-mono font-label-mono text-outline mt-4">Free tier includes 3 collaborative canvases • No credit card required</span>
+</div>
+</section>
+</main>
+<!-- ================= MODERN DARK FOOTER ================= -->
+<footer class="border-t border-outline-variant bg-surface-container-lowest mt-16 text-on-surface-variant">
+<div class="max-w-7xl mx-auto px-space-md py-12">
+<div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+<!-- Brand Summary Column -->
+<div class="col-span-2">
+<div class="flex items-center gap-space-xs mb-space-sm">
+<div class="w-5 h-5 rounded bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-surface-container-lowest text-xs" data-icon="polyline">polyline</span>
+</div>
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface tracking-tight">Drowable Sync</span>
+</div>
+<p class="text-body-dense font-body-dense text-outline max-w-xs mb-space-md">
+            The low-latency collaborative suite for creative technologists, designers, and multimedia teams.
+          </p>
+<!-- System Operational Badge -->
+<div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-surface-container border border-outline-variant/60">
+<span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+<span class="text-label-mono font-label-mono text-on-surface-variant text-[11px]">ALL GLOBAL ENGINES NORMAL</span>
+</div>
+</div>
+<!-- Product Links -->
+<div>
+<h4 class="text-label-default font-label-default text-on-surface font-semibold mb-3">Product</h4>
+<ul class="space-y-2 text-body-dense font-body-dense text-outline">
+<li><a class="hover:text-on-surface transition-colors" href="#features">Vector Engine 4.0</a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#use-cases">YouTube Cutout Tool</a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#use-cases">App Icon Exporter</a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#use-cases">Responsive Safezones</a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#changelog">Changelog</a></li>
+</ul>
+</div>
+<!-- Resources -->
+<div>
+<h4 class="text-label-default font-label-default text-on-surface font-semibold mb-3">Resources</h4>
+<ul class="space-y-2 text-body-dense font-body-dense text-outline">
+<li><a class="hover:text-on-surface transition-colors" href="#community">Community Canvas</a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#templates">Starter Presets</a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#docs">API &amp; Webhooks</a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#docs">Keyboard Shortcuts</a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#support">Support Center</a></li>
+</ul>
+</div>
+<!-- Company & Legal -->
+<div>
+<h4 class="text-label-default font-label-default text-on-surface font-semibold mb-3">Company</h4>
+<ul class="space-y-2 text-body-dense font-body-dense text-outline">
+<li><a class="hover:text-on-surface transition-colors" href="#about">About Drowable</a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#careers">Careers <span class="text-[10px] text-primary bg-primary/10 px-1 py-0.5 rounded">WE'RE HIRING</span></a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#privacy">Privacy Policy</a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#terms">Terms of Service</a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#security">Security Architecture</a></li>
+</ul>
+</div>
+</div>
+<!-- Bottom Hairline & Copyright -->
+<div class="pt-8 border-t border-outline-variant flex flex-col sm:flex-row items-center justify-between text-label-mono font-label-mono text-outline gap-4">
+<div>
+          © 2025 Drowable Sync Inc. All rights reserved. Precision collaborative graphics.
+        </div>
+<div class="flex items-center gap-4">
+<a class="hover:text-on-surface transition-colors" href="#">X (TWITTER)</a>
+<a class="hover:text-on-surface transition-colors" href="#">GITHUB</a>
+<a class="hover:text-on-surface transition-colors" href="#">DISCORD</a>
+<a class="hover:text-on-surface transition-colors" href="#">YOUTUBE</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- Micro-interaction Cursor Motion Simulator (Vanilla JS) -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Subtle organic drifting for demo cursors on the canvas
+      const sCursor = document.querySelector('[title="Sarah (Design Lead)"]')?.parentElement;
+      const aCursor = document.querySelector('[title="Alex (Illustrator)"]')?.parentElement;
+      
+      let angle = 0;
+      function animateDrift() {
+        angle += 0.03;
+        const driftX = Math.sin(angle) * 8;
+        const driftY = Math.cos(angle * 0.8) * 6;
+        
+        const pathVisual = document.querySelector('#canvas-teaser svg path');
+        if (pathVisual) {
+          // Micro dynamic breathing stroke
+          const strokeWidth = 11 + Math.sin(angle) * 1.5;
+          pathVisual.setAttribute('stroke-width', strokeWidth.toFixed(1));
+        }
+        
+        requestAnimationFrame(animateDrift);
+      }
+      animateDrift();
+    });
+  </script>
+<script src="/reference/interactions.js"></script></body></html>

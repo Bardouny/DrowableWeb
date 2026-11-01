@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Drowable Sync - Workspace Dashboard &amp; Network Hub</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-lowest": "#0a0e16",
+            "on-secondary-fixed": "#23005c",
+            "on-primary-fixed": "#07006c",
+            "on-surface": "#dfe2ee",
+            "tertiary-fixed": "#acedff",
+            "primary-fixed": "#e1e0ff",
+            "surface": "#0f131c",
+            "inverse-primary": "#494bd6",
+            "outline": "#908fa0",
+            "on-tertiary-fixed": "#001f26",
+            "surface-container-highest": "#31353e",
+            "secondary-fixed-dim": "#d0bcff",
+            "secondary-fixed": "#e9ddff",
+            "surface-variant": "#31353e",
+            "inverse-on-surface": "#2c3039",
+            "on-primary-container": "#0d0096",
+            "surface-container-high": "#262a33",
+            "primary": "#c0c1ff",
+            "surface-container-low": "#181c24",
+            "surface-dim": "#0f131c",
+            "outline-variant": "#464554",
+            "on-secondary-fixed-variant": "#5516be",
+            "primary-fixed-dim": "#c0c1ff",
+            "surface-container": "#1c2028",
+            "background": "#0f131c",
+            "surface-tint": "#c0c1ff",
+            "inverse-surface": "#dfe2ee",
+            "on-tertiary": "#003640",
+            "surface-bright": "#353942",
+            "error": "#ffb4ab",
+            "on-primary": "#1000a9",
+            "on-error": "#690005",
+            "tertiary-fixed-dim": "#4cd7f6",
+            "on-tertiary-fixed-variant": "#004e5c",
+            "tertiary-container": "#009eb9",
+            "error-container": "#93000a",
+            "on-secondary": "#3c0091",
+            "secondary-container": "#571bc1",
+            "on-surface-variant": "#c7c4d7",
+            "secondary": "#d0bcff",
+            "on-background": "#dfe2ee",
+            "tertiary": "#4cd7f6",
+            "primary-container": "#8083ff",
+            "on-error-container": "#ffdad6",
+            "on-tertiary-container": "#002f38",
+            "on-primary-fixed-variant": "#2f2ebe",
+            "on-secondary-container": "#c4abff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-md": "0.75rem",
+            "space-xl": "1.5rem",
+            "margin": "1rem",
+            "space-sm": "0.5rem",
+            "margin-compact": "0.5rem",
+            "gutter-dense": "0.5rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1rem",
+            "gutter": "0.75rem"
+          },
+          "fontFamily": {
+            "body-default": ["Inter"],
+            "label-default": ["Inter"],
+            "headline-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "display-lg-mobile": ["Inter"],
+            "display-lg": ["Inter"],
+            "body-dense": ["Inter"],
+            "label-mono": ["Inter"]
+          },
+          "fontSize": {
+            "body-default": ["0.875rem", { "lineHeight": "1.375rem", "letterSpacing": "-0.011em", "fontWeight": "400" }],
+            "label-default": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "headline-md": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "headline-sm": ["1rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "display-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "display-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.025em", "fontWeight": "600" }],
+            "body-dense": ["0.8125rem", { "lineHeight": "1.25rem", "letterSpacing": "-0.006em", "fontWeight": "400" }],
+            "label-mono": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.02em", "fontWeight": "500" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    /* Subtle custom scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f131c;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #31353e;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #464554;
+    }
+  </style>
+<style>@media (max-width: 700px) {
+ body { overflow-x: hidden; }
+ header { padding: 0 12px; }
+ header > div:first-child { min-width: 0; }
+ header nav, header input, header .relative:has(input), header button:has(.material-symbols-outlined[data-icon="share"]), header button:has(.material-symbols-outlined[data-icon="help"]) { display: none !important; }
+ body > aside { display: none !important; }
+ main { margin-left: 0 !important; padding: 62px 14px 24px !important; width: 100%; }
+ main > section:first-child { align-items: flex-start; }
+ main > section:first-child > div:last-child { flex-wrap: wrap; }
+ main .grid.grid-cols-1.md\:grid-cols-2 { grid-template-columns: minmax(0,1fr); }
+ main .grid.grid-cols-1.md\:grid-cols-2 > div { min-width: 0; }
+ main > div { min-width: 0; }
+ }</style></head>
+<body class="bg-background text-on-surface font-body-default antialiased selection:bg-primary-container selection:text-on-primary overflow-x-hidden min-h-screen flex flex-col">
+<!-- ==================== SHARED COMPONENT: TopNavBar ==================== -->
+<header class="flex justify-between items-center w-full px-space-md h-11 fixed top-0 left-0 z-50 bg-surface-container-low border-b border-outline-variant">
+<!-- Brand & Global Search -->
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-primary-container flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-base font-bold" data-icon="sync">sync</span>
+</div>
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface tracking-tight">Drowable Sync</span>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center gap-space-md ml-4 text-label-default font-label-default">
+<a class="text-primary font-medium border-b-2 border-primary py-2.5 transition-colors duration-150 ease-in-out" href="#">Projects</a>
+<a class="text-on-surface-variant hover:text-on-surface py-2.5 transition-colors duration-150 ease-in-out" href="#">Canvas</a>
+<a class="text-on-surface-variant hover:text-on-surface py-2.5 transition-colors duration-150 ease-in-out" href="#">Connections</a>
+<a class="text-on-surface-variant hover:text-on-surface py-2.5 transition-colors duration-150 ease-in-out" href="#">Templates</a>
+</nav>
+<!-- Global Search -->
+<div class="relative hidden lg:flex items-center w-72">
+<span class="material-symbols-outlined absolute left-2 text-outline text-[16px]" data-icon="search">search</span>
+<input class="w-full h-7 pl-7 pr-8 bg-surface-container text-body-dense font-body-dense text-on-surface placeholder:text-outline rounded border border-outline-variant focus:outline-none focus:border-primary transition-colors" placeholder="Search projects, connections, templates..." type="text"/>
+<kbd class="absolute right-2 px-1 text-[10px] text-outline font-label-mono bg-surface-container-high rounded border border-outline-variant">⌘K</kbd>
+</div>
+</div>
+<!-- Actions & User Profile -->
+<div class="flex items-center gap-space-sm">
+<button class="hidden sm:inline-flex items-center gap-1.5 px-2.5 h-7 bg-surface-container border border-outline-variant hover:bg-surface-container-high text-on-surface rounded text-label-default font-label-default transition-all duration-150 active:scale-[0.98]">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant" data-icon="share">share</span>
+<span>Share</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-2.5 h-7 bg-primary-container hover:bg-opacity-90 text-on-primary rounded text-label-default font-label-default transition-all duration-150 active:scale-[0.98]">
+<span class="material-symbols-outlined text-[16px]" data-icon="add">add</span>
+<span class="font-medium">New Project</span>
+</button>
+<div class="h-4 w-px bg-outline-variant mx-1"></div>
+<button class="relative p-1 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" title="Notifications">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-tertiary"></span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" title="Help">
+<span class="material-symbols-outlined text-[20px]" data-icon="help">help</span>
+</button>
+<div class="ml-1 pl-1">
+<img alt="User profile avatar" class="w-7 h-7 rounded object-cover border border-outline-variant" data-alt="Close up portrait profile avatar of a product engineer with neon indigo ambient rim lighting wearing modern glasses in a dark tech studio environment with sleek minimal styling." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPP19kylsyEqN7-EOKHwMm0I63p-A8u4N5ZTstDInuarcDKWmZiAcjxiq-gayg-7ieNkzNychQ_TD05V4D3BRuLvVCWOTAa0CSNl9r23pUB0h9WOqWNBcbw7SS8FHMaGZ0XCwRbf_3-tAGuavo8Fh1aCHxBXTRqJjsHZYma5dNNKxZp69qYYX0RbSrbxan5-tsYK5Hp3HUzQloE-nbB9M6XUtnC2dSh2DZdVbuWCXRNZ3oGFTU0mg"/>
+</div>
+</div>
+</header>
+<!-- ==================== SHARED COMPONENT: SideNavBar ==================== -->
+<aside class="flex flex-col justify-between h-[calc(100vh-2.75rem)] w-60 fixed top-11 left-0 z-40 p-space-sm bg-surface-container-low border-r border-outline-variant">
+<div class="flex flex-col gap-space-sm">
+<!-- Team Workspace Switcher -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container border border-outline-variant/60">
+<div class="flex items-center gap-2 overflow-hidden">
+<div class="w-7 h-7 rounded bg-surface-container-highest flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[18px]" data-icon="grid_view">grid_view</span>
+</div>
+<div class="truncate">
+<h4 class="text-headline-sm font-headline-sm font-bold text-on-surface leading-tight truncate">Drowable Studio</h4>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="text-label-mono font-label-mono text-outline text-[10px] uppercase">Team Pro Plan</span>
+</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px] cursor-pointer" data-icon="unfold_more">unfold_more</span>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-0.5 mt-2">
+<!-- Tab 1: All Projects (ACTIVE) -->
+<a class="flex items-center gap-2.5 bg-surface-container-high text-primary font-medium rounded-lg px-space-sm py-1.5 border-l-2 border-primary transition-all duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="folder">folder</span>
+<span class="text-label-default font-label-default">All Projects</span>
+</a>
+<!-- Tab 2: Connections -->
+<a class="flex items-center gap-2.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg px-space-sm py-1.5 transition-all duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="group">group</span>
+<span class="text-label-default font-label-default">Connections</span>
+<span class="ml-auto px-1.5 py-0.2 rounded-full text-label-mono font-label-mono text-[10px] bg-tertiary/15 text-tertiary border border-tertiary/30">3 new</span>
+</a>
+<!-- Tab 3: Shared Files -->
+<a class="flex items-center gap-2.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg px-space-sm py-1.5 transition-all duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="share">share</span>
+<span class="text-label-default font-label-default">Shared Files</span>
+</a>
+<!-- Tab 4: Assets -->
+<a class="flex items-center gap-2.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg px-space-sm py-1.5 transition-all duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="palette">palette</span>
+<span class="text-label-default font-label-default">Assets</span>
+</a>
+<!-- Tab 5: Settings -->
+<a class="flex items-center gap-2.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg px-space-sm py-1.5 transition-all duration-150 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined text-[18px]" data-icon="settings">settings</span>
+<span class="text-label-default font-label-default">Settings</span>
+</a>
+</nav>
+<!-- Quick CTA -->
+<div class="mt-4 p-3 rounded-lg bg-surface-container border border-outline-variant/40 flex flex-col gap-2">
+<div class="text-label-default font-label-default text-on-surface font-medium">Invite Teammates</div>
+<p class="text-body-dense font-body-dense text-outline text-[11px]">Collaborate in real-time with zero friction canvas syncing.</p>
+<button class="w-full mt-1 py-1.5 px-2 bg-surface-container-high hover:bg-surface-bright text-primary border border-outline-variant rounded text-label-default font-label-default flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[15px]" data-icon="person_add">person_add</span>
+<span>Invite</span>
+</button>
+</div>
+</div>
+<!-- Rail Footer -->
+<div class="flex flex-col gap-1 pt-3 border-t border-outline-variant">
+<a class="flex items-center gap-2 px-space-sm py-1 text-on-surface-variant hover:text-on-surface text-label-default font-label-default rounded hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]" data-icon="menu_book">menu_book</span>
+<span>Documentation</span>
+</a>
+<a class="flex items-center justify-between px-space-sm py-1 text-on-surface-variant hover:text-on-surface text-label-default font-label-default rounded hover:bg-surface-container-high transition-colors" href="#">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="wifi_tethering">wifi_tethering</span>
+<span>Status</span>
+</div>
+<span class="flex items-center gap-1 text-[10px] text-tertiary font-label-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+          Operational
+        </span>
+</a>
+</div>
+</aside>
+<!-- ==================== MAIN WORKBENCH CANVAS WRAPPER ==================== -->
+<main class="ml-60 mt-11 p-space-lg flex-1 flex flex-col gap-space-lg bg-background min-h-[calc(100vh-2.75rem)]">
+<!-- 1. Workspace Header -->
+<section class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-space-md border-b border-outline-variant/60">
+<div>
+<div class="flex items-center gap-2 text-label-default font-label-default text-outline mb-1">
+<span>Active Team</span>
+<span class="text-outline-variant">•</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-primary font-medium border border-outline-variant/50">Hyperion Studio</span>
+</div>
+<h1 class="text-display-lg font-display-lg text-on-surface font-semibold tracking-tight">Welcome back, Liam</h1>
+</div>
+<!-- Quick Stats Pills -->
+<div class="flex flex-wrap items-center gap-2.5">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded bg-surface-container border border-outline-variant">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="folder_open">folder_open</span>
+<span class="text-label-default font-label-default font-semibold text-on-surface">14</span>
+<span class="text-label-default font-label-default text-outline">Active Projects</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded bg-surface-container border border-outline-variant">
+<span class="material-symbols-outlined text-tertiary text-[18px]" data-icon="hub">hub</span>
+<span class="text-label-default font-label-default font-semibold text-on-surface">28</span>
+<span class="text-label-default font-label-default text-outline">Connections</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded bg-surface-container border border-outline-variant">
+<span class="material-symbols-outlined text-secondary text-[18px]" data-icon="person_add">person_add</span>
+<span class="text-label-default font-label-default font-semibold text-secondary">3</span>
+<span class="text-label-default font-label-default text-outline">Pending Requests</span>
+</div>
+</div>
+</section>
+<!-- 2. Two-Column Layout -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT / MAIN AREA: Projects Gallery (8 Cols on XL) -->
+<div class="xl:col-span-8 flex flex-col gap-space-md">
+<!-- Controls: Filter Tabs & View Switcher -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-surface-container-low p-2 rounded-lg border border-outline-variant">
+<div class="flex items-center gap-1 overflow-x-auto text-label-default font-label-default py-0.5">
+<button class="px-3 py-1 rounded bg-surface-container-high text-primary font-medium border border-outline-variant/60 shadow-sm transition-colors">All</button>
+<button class="px-3 py-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">Logos</button>
+<button class="px-3 py-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">Thumbnails</button>
+<button class="px-3 py-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">Icons</button>
+<button class="px-3 py-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">Banners</button>
+<button class="px-3 py-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[14px] text-secondary" data-icon="star">star</span>
+<span>Favorites</span>
+</button>
+</div>
+<div class="flex items-center gap-1 self-end sm:self-auto shrink-0">
+<button class="p-1.5 rounded bg-surface-container-high text-primary border border-outline-variant/80" title="Grid View">
+<span class="material-symbols-outlined text-[18px]" data-icon="grid_view">grid_view</span>
+</button>
+<button class="p-1.5 rounded text-outline hover:text-on-surface hover:bg-surface-container" title="List View">
+<span class="material-symbols-outlined text-[18px]" data-icon="view_list">view_list</span>
+</button>
+</div>
+</div>
+<!-- Projects Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Prominent + Create New Project card -->
+<div class="group h-56 rounded-lg border-2 border-dashed border-outline-variant hover:border-primary/80 bg-surface-container-low/40 hover:bg-surface-container-low p-space-lg flex flex-col items-center justify-center gap-3 cursor-pointer transition-all duration-150">
+<div class="w-12 h-12 rounded-full bg-surface-container-high group-hover:bg-primary-container group-hover:text-on-primary text-primary flex items-center justify-center border border-outline-variant transition-colors shadow-inner">
+<span class="material-symbols-outlined text-[24px]" data-icon="add">add</span>
+</div>
+<div class="text-center">
+<h3 class="text-headline-sm font-headline-sm text-on-surface group-hover:text-primary transition-colors">Create New Project</h3>
+<p class="text-body-dense font-body-dense text-outline text-[12px] mt-0.5">Start blank vector canvas or pick a team template</p>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[11px] font-label-mono text-outline px-2 py-0.5 rounded bg-surface-container border border-outline-variant">⌘N</span>
+</div>
+</div>
+<!-- Project Card 1: CyberPulse Logo & Wordmark -->
+<div class="group rounded-lg border border-outline-variant hover:border-primary/50 bg-surface-container-low overflow-hidden flex flex-col justify-between transition-all duration-150 hover:shadow-lg">
+<div class="h-28 w-full relative overflow-hidden bg-surface-container-lowest">
+<div class="w-full h-full bg-cover bg-center opacity-85 group-hover:scale-105 transition-transform duration-300" data-alt="Futuristic holographic cyberpunk logo emblem design with glowing cyan geometric vectors against a deep obsidian dark background with subtle neon grid coordinates and sleek design markers." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAQCv7XVG5GHEfmnUMbi0I_NhslLIGzE7Z8AjdGDBFqtkrq51ZFvWH7Jg_PrSQZqfhzK51ZolSYNVe4VHcJWf8W3pg9RCEBKFfDH3PHAs8UErS-T6nVTqz-QSaL099zaOPeDoaZgJeT3c6V21jO9Z0VyxwPRQ1Ve9zxJBCrc8t3YN1LMHzG02CMDV_aLtWmdHObYBR10X3qde7384WNCgdYGhPskpLts9h50GW-b8Dg60n8tYcdihY')"></div>
+<div class="absolute top-2 left-2 flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container-lowest/80 backdrop-blur-md border border-outline-variant/60">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-ping"></span>
+<span class="text-label-mono font-label-mono text-[10px] text-tertiary">In Progress</span>
+</div>
+<span class="absolute top-2 right-2 px-1.5 py-0.5 rounded text-[10px] font-label-mono bg-surface-container-high/90 text-on-surface border border-outline-variant">Logo</span>
+</div>
+<div class="p-3 flex flex-col gap-2">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-1">CyberPulse Logo &amp; Wordmark</h3>
+<p class="text-body-dense font-body-dense text-outline text-[11px]">Modified 12m ago • Vector Canvas</p>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded hover:bg-surface-container">
+<span class="material-symbols-outlined text-[16px]" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-outline-variant/40 mt-1">
+<div class="flex items-center -space-x-1.5 overflow-hidden">
+<img alt="Collaborator 1" class="inline-block h-6 w-6 rounded-full ring-2 ring-surface-container-low object-cover" data-alt="Creative female UI designer avatar portrait with vibrant violet studio lighting against a minimal clean dark tech background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrDp7hm67OJWlyV2OC7_ZN-Air-o_igMB82fQcEFraV1ozl8AVqJTBQ8dNCEqRsOElwuRdj2kx6asQuzl8nGrsFrLVWKzoeVUcZbk2-0qut2ISYFi0Q-nXzpNOWDau7MT7-TsKlFh3JylhiHY_pC82lN311weYdDZBNzGvKG2a4KivRte71mhga7reg41bRpKEay0EVwtcAWiZe89QlqWhEwi-rN08jx1klEFf-lmYFox9nbSfDwQ"/>
+<img alt="Collaborator 2" class="inline-block h-6 w-6 rounded-full ring-2 ring-surface-container-low object-cover" data-alt="Product design lead avatar portrait with soft ambient cyan studio lighting against deep dark grey background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjCsETHWe1vmFtwe_nmGtE4VKyXaWM9mZ9jKGL_VnG0tVHF-ZfElFJ7XNkIlymYJkYeEi9RaWflR-eqSGpHbSMfHPIel-2LIa_7K5i6g99Hzzr3P9PcrKvkU0SVx-wDLwhXNiFhTbvQaBwOO_FYnQAoEcaUpIcHYnbKJpAfVHzxX8WCbRhgZzQ_UH_HjUlNtwaCunvC1J6Tx_3bNiCm4nz8ORQgyn1W7HCcvhsaWg01hnglSbMbKI"/>
+<img alt="Collaborator 3" class="inline-block h-6 w-6 rounded-full ring-2 ring-surface-container-low object-cover" data-alt="Technical artist avatar portrait in minimalist modern dark studio with soft rim lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHjUJVQCycZiSBAiTMXBprVrZCp8b04Hw_QqRkk_HOndvzGYsWAERnKBkq2j-AVNUsnW6Q87kRm9A78SuCTxG61avTuxdu_p788KbmNTsYzyDeb1vzXgmHTKHnZCXbnzA8JhGzVJxUf7051lUhMD6Bdge8WPgRn8BpqEfdckoRdztsUfTJfqYTX46UHq-esNeGW96dXYoCuvjnpVhrlc2wfRh_Ax1-coFldMuo0YsU6UgIYmlXUBw"/>
+<div class="inline-flex h-6 w-6 items-center justify-center rounded-full ring-2 ring-surface-container-low bg-surface-container-highest text-label-mono font-label-mono text-[9px] text-on-surface font-semibold">+1</div>
+</div>
+<span class="text-label-mono font-label-mono text-[11px] text-outline">4 Active Peers</span>
+</div>
+</div>
+</div>
+<!-- Project Card 2: AI Tech Review Ep. 42 Thumbnail -->
+<div class="group rounded-lg border border-outline-variant hover:border-primary/50 bg-surface-container-low overflow-hidden flex flex-col justify-between transition-all duration-150 hover:shadow-lg">
+<div class="h-28 w-full relative overflow-hidden bg-surface-container-lowest">
+<div class="w-full h-full bg-cover bg-center opacity-85 group-hover:scale-105 transition-transform duration-300" data-alt="Modern YouTube tech review thumbnail layout composition with high-contrast split lighting showing a neural processor diagram and abstract glowing indigo data ribbons." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCjrRX-vfgy1ebqPJPceF8p-_NSw0_zkssSWc_f_SfmOG0ddQxWKqhGr-VaxSLQAzemiUE1MBZUfu6plv40TJudg49c627rn-tHIZSTuk5rd4ThsEY5KPlfBp5gGLb3FeEgOQcEo0lvStEzmP-A-f1w420-rO288lEXSZsnRM8vH9RRPv7w5UbiC9Fn7WJRFvdz53JBJR8HO9GcTQcrSHmkc89whNGbDMtuHhJ8xwlQBuyBPCnri6I')"></div>
+<div class="absolute top-2 left-2 px-2 py-0.5 rounded bg-surface-container-lowest/80 backdrop-blur-md border border-outline-variant/60">
+<span class="text-label-mono font-label-mono text-[10px] text-secondary">High CTR Draft</span>
+</div>
+<span class="absolute top-2 right-2 px-1.5 py-0.5 rounded text-[10px] font-label-mono bg-surface-container-high/90 text-on-surface border border-outline-variant">1280x720</span>
+</div>
+<div class="p-3 flex flex-col gap-2">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-1">AI Tech Review Ep. 42 Thumbnail</h3>
+<p class="text-body-dense font-body-dense text-outline text-[11px]">Modified 1h ago • YouTube Thumbnail</p>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded hover:bg-surface-container">
+<span class="material-symbols-outlined text-[16px]" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-outline-variant/40 mt-1">
+<div class="flex items-center -space-x-1.5 overflow-hidden">
+<img alt="Collaborator 1" class="inline-block h-6 w-6 rounded-full ring-2 ring-surface-container-low object-cover" data-alt="Motion designer avatar close-up portrait with dark obsidian studio rim lights and warm ambient fill." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvSFVKUaV2-O3L0AYFlp4R_kHkVTvjtqQXb6qAiqWHKaeDeXpUdWHqZuP4fB_VZZvyX84jf-BEjh4QEo5nYbQEqj99XpplTxfGoOIMgV_CJ9sKhvt_1yKirarRmIH2tuoYzIU_qlkq_fGOcdfpjXc7Lso496eYle1gZiExWExERq7MeZJgAQsHZQ3eaYBAtbGJLPpyoE5dugBKGkPBzLgEdv3zVgpgRisfLbdFVL7fo9rqK2H-wow"/>
+<img alt="Collaborator 2" class="inline-block h-6 w-6 rounded-full ring-2 ring-surface-container-low object-cover" data-alt="Content creator avatar portrait framed with cool blue studio edge lights in a creative dark workspace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjGk5rN-T5SQUARf58zpxCDCkONHzRHNJzaNXeCkkiAgUwrfYO4z-mJKRk8Z85PiPjBgb31-CrbwoEr3p7EtE14lwOz8cX7jzQTO0cCw2VxL9XGlrpzqrPW7h1ZLCepW4xQLejw73JdiUO7dJO-4ti5jVyR6OswRKovpnMAHxB9EYA7_yx-FqAo-raaLGuE97KmUGO_Ed7SLAnOxD1fLfVULRmhcsEPPbRCHZ2sp52_eT2uOonXBI"/>
+</div>
+<span class="text-label-mono font-label-mono text-[11px] text-outline">2 Collaborators</span>
+</div>
+</div>
+</div>
+<!-- Project Card 3: NeoPay App Icon System -->
+<div class="group rounded-lg border border-outline-variant hover:border-primary/50 bg-surface-container-low overflow-hidden flex flex-col justify-between transition-all duration-150 hover:shadow-lg">
+<div class="h-28 w-full relative overflow-hidden bg-surface-container-lowest">
+<div class="w-full h-full bg-cover bg-center opacity-85 group-hover:scale-105 transition-transform duration-300" data-alt="Minimalist isometric 3D fintech mobile application icon with pristine metallic glass finishes floating over an obsidian dark grid background with subtle purple reflections." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAw843GaqJ-XF1kl42Er7ihhxytjD4lJ9dJcnWKAjaC6R6jrjTlOiCLAXnG4tzK6-2G0tDxY2VaG-mPkhk2zYcYGpqRhHb_uRT0vTkPyA4GdgLZu7hZMghqMghNQq7sEZMSBlWQEZ70OS95gUbPkskCXklROCn3b8HTkYwz_T7g4Fuw8z2fIEGWzTku1hkj2XzHCwN2BqJZ0mAJoC03s5wt5vgR4VHkU_diJBKVkQNfYnbbt2MhTOs')"></div>
+<div class="absolute top-2 left-2 px-2 py-0.5 rounded bg-surface-container-lowest/80 backdrop-blur-md border border-outline-variant/60">
+<span class="text-label-mono font-label-mono text-[10px] text-primary">iOS/Android Master</span>
+</div>
+<span class="absolute top-2 right-2 px-1.5 py-0.5 rounded text-[10px] font-label-mono bg-surface-container-high/90 text-on-surface border border-outline-variant">Design Icon</span>
+</div>
+<div class="p-3 flex flex-col gap-2">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-1">NeoPay App Icon System</h3>
+<p class="text-body-dense font-body-dense text-outline text-[11px]">Modified 4h ago • Multi-density Assets</p>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded hover:bg-surface-container">
+<span class="material-symbols-outlined text-[16px]" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-outline-variant/40 mt-1">
+<div class="flex items-center -space-x-1.5 overflow-hidden">
+<img alt="Collaborator 1" class="inline-block h-6 w-6 rounded-full ring-2 ring-surface-container-low object-cover" data-alt="Senior mobile interface designer portrait avatar bathed in soft lavender ambient studio light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBq7AASGvelnjhZubcYBbNQ4O8RhKIa2L4WVe7jea_NGQTpme9VVqC63Axv0Aw8uVqnr8FjYfThsHiZbQSBmYdbakpU8YNWaM1Swj3_Lgl-ooFFR6zaX_hK6wz7FbEHxDUsrROvzGFqz5nmW1MZ0DKroQ4PohRbpVxa55e5YR5gMucDIy3cBhYXp4PzmzVb6zmJs3V9RVLFZIAAQmC1ei457RDfVHJRo338E4ZJxshWoySZ6ZaW-MU"/>
+<img alt="Collaborator 2" class="inline-block h-6 w-6 rounded-full ring-2 ring-surface-container-low object-cover" data-alt="Vector iconographer specialist avatar portrait against clean high-tech minimal dark background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF8DJr2K1ITZEtLLxXQugzZD5Kuwu91kU-lB3TXJi6pd9sBTrfui3E3kTD1yII6fbPBKosNCcv1eNJHNDhIhcUtzCvAONc3C40KPnaKUWc5GPIe2OqyNnnQ2oCI7jE375_ul0v1YxiSoymdfAlxnLL9o8GgZitdK-V6HMDXEkPMPjIMkAG7_rG-2CkiZkkbNUpK6ML_EUPkQoJs4ge_uUYCnSPrn9Gnud6IORBBbF9YLbmbi8cEgE"/>
+<img alt="Collaborator 3" class="inline-block h-6 w-6 rounded-full ring-2 ring-surface-container-low object-cover" data-alt="Graphic systems developer avatar with indigo backlight in creative studio setup." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRG1x4ZIv7Th1t_MGNNa1aSC1YjzXczlBgRxnaqpQR2uY7K8rHmK0u6K5tp2sVhZLwEK6YZnwTvJkOsjLpZqd4TDc64AOO5eVopRMwtedarMt7TdeHQAeXksBdFmaX9-fDi9wttkMEow0hJBz7rhXG10t7sAeN90m3OnfkTybSF-akg67LAjVmLfW9tNzzX7baSoFBFBjxk2DUbdvMdnFx-3mB0CAY7nEuXucUpywHAJ6b6K8bKJE"/>
+</div>
+<span class="text-label-mono font-label-mono text-[11px] text-outline">3 Collaborators</span>
+</div>
+</div>
+</div>
+<!-- Project Card 4: Twitter/X Summer Launch Banner -->
+<div class="group rounded-lg border border-outline-variant hover:border-primary/50 bg-surface-container-low overflow-hidden flex flex-col justify-between transition-all duration-150 hover:shadow-lg">
+<div class="h-28 w-full relative overflow-hidden bg-surface-container-lowest">
+<div class="w-full h-full bg-cover bg-center opacity-85 group-hover:scale-105 transition-transform duration-300" data-alt="Wide panoramic digital marketing banner design with fluid abstract gradient curves, bold typography placeholders, and sleek dark obsidian background texture." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDzICeZH7IoFgzAm-NBv_8zqSghyDu5OsRGJDDk8nGqhJzH12OQlDs5UQ_ogFcp4emcv5_OGTptuorOM0ZWsNJDXods8QRoONoYbzjPoXkEjatXu3N4Bzx4ARMJi4XY-G7DZUdb66AhsXOaIhHUDSrlb7N3A69uzsHcGGzzBv7YCMF21OnNeIqPzjYDxZOMYy_-HzQGvJSyrg9jc-7kr_8UO63aSpQDtf2BdV5lx25RLLpb24R3Tt4')"></div>
+<div class="absolute top-2 left-2 px-2 py-0.5 rounded bg-surface-container-lowest/80 backdrop-blur-md border border-outline-variant/60">
+<span class="text-label-mono font-label-mono text-[10px] text-tertiary">Ready for review</span>
+</div>
+<span class="absolute top-2 right-2 px-1.5 py-0.5 rounded text-[10px] font-label-mono bg-surface-container-high/90 text-on-surface border border-outline-variant">1500x500</span>
+</div>
+<div class="p-3 flex flex-col gap-2">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-1">Twitter/X Summer Launch Banner</h3>
+<p class="text-body-dense font-body-dense text-outline text-[11px]">Modified yesterday • Social Banner</p>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded hover:bg-surface-container">
+<span class="material-symbols-outlined text-[16px]" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-outline-variant/40 mt-1">
+<div class="flex items-center -space-x-1.5 overflow-hidden">
+<img alt="Collaborator 1" class="inline-block h-6 w-6 rounded-full ring-2 ring-surface-container-low object-cover" data-alt="Brand strategist avatar portrait wearing stylish dark glasses in ambient low-key tech studio." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWUZp8Lda46HI11RYFsDPRQqHO3lR9KyvMlZ7FFymjTHfSVSWDait42aS1JaHw1ygUl11pOE-OfyyDe4f14fUVvR2ry8RDWeCfXDI0xVL7sWBGfFbU8jQWF0C-n0uqUo5IFFcK8T2y1WISJZxlhvoRoSghRC1RrChOF82hmxYqVKloEvQl8ERcx9K4q1WYRIb6IQ1iXUKDDb1qXPtyKzVuHaalmnpjyqOHy-2g4Ew8bd0FJ2mJSlU"/>
+</div>
+<span class="text-label-mono font-label-mono text-[11px] text-outline">1 Collaborator</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT SIDEBAR: Connections & Social Hub (4 Cols on XL) -->
+<div class="xl:col-span-4 flex flex-col gap-space-lg">
+<!-- 1. Connection Requests Section -->
+<div class="p-space-md rounded-lg bg-surface-container-low border border-outline-variant flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]" data-icon="person_add">person_add</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Connection Requests</h2>
+</div>
+<span class="px-2 py-0.5 rounded-full text-label-mono font-label-mono text-[11px] bg-secondary-container text-on-secondary-container font-semibold">3</span>
+</div>
+<!-- Request 1: Marcus Chen -->
+<div class="p-2.5 rounded bg-surface-container border border-outline-variant/60 flex flex-col gap-2">
+<div class="flex items-center gap-2.5">
+<img alt="Marcus Chen avatar" class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="Portrait avatar of Marcus Chen, Senior Brand Designer with sharp features, styled dark hair and high-tech minimalist clothing against obsidian background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgI8a6tQW3K1kMD3FVeUPrjg-pZZdI7lUwqVdI5OPoOxTzGRUFjBwnkjQcnM0WfNYRyZ5-VykXOtMk0bkaFHVhf_4-a_G7ct1yhpqVOwqP-Ld8-2FQTPpvAbBp46JKNrrqBZ84YVuWp0zEZgGcxSF2-nXLET03MV1cg47YKSAA4ZsFzYhOdl9qepiFnMixQkIGZOGailUVwrHnMbvvN0NlW77pM9_TI9QqbKH3Bge_ESszequnNrw"/>
+<div class="overflow-hidden">
+<div class="text-label-default font-label-default font-medium text-on-surface truncate">Marcus Chen</div>
+<div class="text-body-dense font-body-dense text-outline text-[11px] truncate">@marcus_design • Senior Brand Designer</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-1">
+<button class="py-1 px-2 rounded bg-primary-container hover:bg-opacity-90 text-on-primary text-label-default font-label-default font-medium flex items-center justify-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[14px]" data-icon="check">check</span>
+<span>Accept</span>
+</button>
+<button class="py-1 px-2 rounded bg-transparent hover:bg-surface-container-high text-outline hover:text-on-surface text-label-default font-label-default transition-colors">
+<span>Decline</span>
+</button>
+</div>
+</div>
+<!-- Request 2: Aria Thorne -->
+<div class="p-2.5 rounded bg-surface-container border border-outline-variant/60 flex flex-col gap-2">
+<div class="flex items-center gap-2.5">
+<img alt="Aria Thorne avatar" class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="Portrait avatar of Aria Thorne, 3D Illustrator with artistic modern hair, subtle cyan rim light in futuristic design studio." src="https://lh3.googleusercontent.com/aida-public/AB6AXuActrPx_589jFJvi5pdG6XwjaNFAj6iQ5ih0y99VdJyp6t9Ck7EA7izpIbVfFWp0zbE3I04dx4djYYHGWKq_hKfdGW04gUXaKf7ImGCMG1GRVKimhpmHkFT-ZLCVYlw3Je_-UVxrm_WRNdc8197jUne1Urhrn6p18iIP17Odi4VsYcywhGYVWJGPDtSzlnZnghZs0QOKrN1hZqAASIMYH2rhKdgnx9khwc_a8MQcyZjJhK7I3w1aVg"/>
+<div class="overflow-hidden">
+<div class="text-label-default font-label-default font-medium text-on-surface truncate">Aria Thorne</div>
+<div class="text-body-dense font-body-dense text-outline text-[11px] truncate">@aria_art • 3D Illustrator</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-1">
+<button class="py-1 px-2 rounded bg-primary-container hover:bg-opacity-90 text-on-primary text-label-default font-label-default font-medium flex items-center justify-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[14px]" data-icon="check">check</span>
+<span>Accept</span>
+</button>
+<button class="py-1 px-2 rounded bg-transparent hover:bg-surface-container-high text-outline hover:text-on-surface text-label-default font-label-default transition-colors">
+<span>Decline</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 2. Active Connections Section -->
+<div class="p-space-md rounded-lg bg-surface-container-low border border-outline-variant flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[18px]" data-icon="hub">hub</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">Active Connections</h2>
+</div>
+<span class="text-label-mono font-label-mono text-[11px] text-outline">12 Online</span>
+</div>
+<!-- Search Filter -->
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2 top-1.5 text-outline text-[15px]" data-icon="search">search</span>
+<input class="w-full h-7 pl-7 pr-3 bg-surface-container text-body-dense font-body-dense text-on-surface placeholder:text-outline rounded border border-outline-variant focus:outline-none focus:border-primary text-[12px]" placeholder="Search peer network..." type="text"/>
+</div>
+<!-- Peer List -->
+<div class="flex flex-col gap-2 mt-1">
+<!-- Peer 1: Devon Lane (Active in CyberPulse Logo) -->
+<div class="p-2 rounded bg-surface-container hover:bg-surface-container-high border border-outline-variant/50 transition-colors flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="relative">
+<img alt="Devon Lane avatar" class="w-7 h-7 rounded-full object-cover border border-outline-variant" data-alt="Portrait avatar of Devon Lane, digital illustrator with dark framed glasses and intense focus in dark studio environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfktJ7YGqv7Q6EjOVVBnrm1BS1QV_Tsq5nJKVX59cGLD7yhP403wLXrMAfOJJTdsWSHnS3L_OZyu9FJPaeSqpgokkaKFVrpZW_E_V61V5nNjHljaLwoao1EIHrix5Eb1dLu02Fghrapy8-dVnX69pfj0fngs4Eqw6_-VMkcGY_sBSiYSzJSVQ1f4jn2LiPXPb930D0H1qduU6jB8nYK4xdbWnqhUP7u44x3FLpbDxUdeVm9Rdz4gY"/>
+<span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-tertiary ring-1 ring-surface-container"></span>
+</div>
+<div>
+<div class="text-label-default font-label-default font-medium text-on-surface leading-tight">Devon Lane</div>
+<div class="text-label-mono font-label-mono text-tertiary text-[10px] flex items-center gap-1">
+<span class="w-1 h-1 rounded-full bg-tertiary"></span>
+<span>CyberPulse Logo</span>
+</div>
+</div>
+</div>
+<button class="px-2 py-0.5 rounded bg-primary-container text-on-primary hover:bg-opacity-90 text-[11px] font-label-default flex items-center gap-1 transition-all active:scale-95">
+<span class="material-symbols-outlined text-[13px]" data-icon="launch">launch</span>
+<span>Jump</span>
+</button>
+</div>
+</div>
+<!-- Peer 2: Sophia Martinez (Idle) -->
+<div class="p-2 rounded bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 transition-colors flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="relative">
+<img alt="Sophia Martinez avatar" class="w-7 h-7 rounded-full object-cover border border-outline-variant" data-alt="Portrait avatar of Sophia Martinez, creative director smiling softly in subtle violet ambient light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmD8f2Z8adJxIzGSuuDaHQvi2LBOQmE18tixI4uutJ2QS7AW8BCojnCetyYdqc4HCNO-RAIoRlxD--pBBlIhyKyjKVCVyGKqHVd1gPia6CXo0ofCEcqUuYFf_5VmqGn9ghnpbXo98jiflonmesC2wP7lq-qpq7gntnn0rZzEinLQNEfwZkgdQW7WQ_eGgTRxpzj2pCCrAYopf1x6xL6oYzDednUR6ENOmOIXbOlCUWaGi4Z7Zq-d4"/>
+<span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-outline ring-1 ring-surface-container"></span>
+</div>
+<div>
+<div class="text-label-default font-label-default font-medium text-on-surface leading-tight">Sophia Martinez</div>
+<div class="text-body-dense font-body-dense text-outline text-[10px]">Idle • 25m ago</div>
+</div>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded">
+<span class="material-symbols-outlined text-[15px]" data-icon="chat_bubble">chat_bubble</span>
+</button>
+</div>
+<!-- Peer 3: Kenji Sato (Designing Banners) -->
+<div class="p-2 rounded bg-surface-container hover:bg-surface-container-high border border-outline-variant/40 transition-colors flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="relative">
+<img alt="Kenji Sato avatar" class="w-7 h-7 rounded-full object-cover border border-outline-variant" data-alt="Portrait avatar of Kenji Sato, graphic artist in minimal sleek dark workspace with cool cyan key light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_j5meJk-HAZsXMPn0Y3GE3SOmnEvKjC8CszHgrBwXoPMgn9kvdN3ZAigkhOGfn0KJFmQ5b3u8u1P-PZHIF53IGtir3sp4P_ZLDVFfL7J4_cXQK3znUsMM_OzLNCOkC4Gh34YCCyPnr3g9KjjGGZm713WAsLJ7V0hrL3Vryc02phPwP6hcUoC0BT4j6x-L4yy1NluqNXw6vntIYMI3PWtBUnNcpUb3rQ_oVDnoOUSTFWeUEDCP5a8"/>
+<span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-tertiary ring-1 ring-surface-container"></span>
+</div>
+<div>
+<div class="text-label-default font-label-default font-medium text-on-surface leading-tight">Kenji Sato</div>
+<div class="text-label-mono font-label-mono text-on-surface-variant text-[10px]">Designing 'Banners'</div>
+</div>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded">
+<span class="material-symbols-outlined text-[15px]" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Add / Invite Connection Action & Copier -->
+<div class="pt-2 border-t border-outline-variant flex items-center gap-2">
+<button class="flex-1 py-1 px-2.5 rounded bg-surface-container-high hover:bg-surface-bright text-on-surface text-label-default font-label-default border border-outline-variant flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[15px] text-primary" data-icon="person_add">person_add</span>
+<span>Add Connection</span>
+</button>
+<button class="p-1 px-2 rounded bg-surface-container-high hover:bg-surface-bright text-outline hover:text-on-surface border border-outline-variant text-[11px] font-label-mono flex items-center gap-1 transition-colors" title="Copy Invite Link">
+<span class="material-symbols-outlined text-[14px]" data-icon="link">link</span>
+<span>Copy Link</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script src="/reference/interactions.js"></script></body></html>
