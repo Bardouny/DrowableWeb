@@ -10,12 +10,14 @@
  * The @theme inline block maps CSS custom properties to Tailwind utility
  * classes (e.g. --color-primary -> bg-primary, text-primary).
  *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
+ * The :root and .dark blocks define the app's semantic color values using oklch.
  *
  * To add a new semantic color:
  * 1. Add the variable to :root (light value) and .dark (dark value)
  * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ *
+ * Reference design colors use the drowable-* Tailwind namespace to avoid
+ * replacing the app's existing semantic colors.
  */
 
 @theme inline {
@@ -59,6 +61,92 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-drowable-surface-container-lowest: var(--drowable-surface-container-lowest);
+  --color-drowable-on-secondary-fixed: var(--drowable-on-secondary-fixed);
+  --color-drowable-on-primary-fixed: var(--drowable-on-primary-fixed);
+  --color-drowable-on-surface: var(--drowable-on-surface);
+  --color-drowable-tertiary-fixed: var(--drowable-tertiary-fixed);
+  --color-drowable-primary-fixed: var(--drowable-primary-fixed);
+  --color-drowable-surface: var(--drowable-surface);
+  --color-drowable-inverse-primary: var(--drowable-inverse-primary);
+  --color-drowable-outline: var(--drowable-outline);
+  --color-drowable-on-tertiary-fixed: var(--drowable-on-tertiary-fixed);
+  --color-drowable-surface-container-highest: var(--drowable-surface-container-highest);
+  --color-drowable-secondary-fixed-dim: var(--drowable-secondary-fixed-dim);
+  --color-drowable-secondary-fixed: var(--drowable-secondary-fixed);
+  --color-drowable-surface-variant: var(--drowable-surface-variant);
+  --color-drowable-inverse-on-surface: var(--drowable-inverse-on-surface);
+  --color-drowable-on-primary-container: var(--drowable-on-primary-container);
+  --color-drowable-surface-container-high: var(--drowable-surface-container-high);
+  --color-drowable-primary: var(--drowable-primary);
+  --color-drowable-surface-container-low: var(--drowable-surface-container-low);
+  --color-drowable-outline-variant: var(--drowable-outline-variant);
+  --color-drowable-on-secondary-fixed-variant: var(--drowable-on-secondary-fixed-variant);
+  --color-drowable-surface-container: var(--drowable-surface-container);
+  --color-drowable-on-tertiary: var(--drowable-on-tertiary);
+  --color-drowable-surface-bright: var(--drowable-surface-bright);
+  --color-drowable-error: var(--drowable-error);
+  --color-drowable-on-primary: var(--drowable-on-primary);
+  --color-drowable-on-error: var(--drowable-on-error);
+  --color-drowable-tertiary-fixed-dim: var(--drowable-tertiary-fixed-dim);
+  --color-drowable-on-tertiary-fixed-variant: var(--drowable-on-tertiary-fixed-variant);
+  --color-drowable-tertiary-container: var(--drowable-tertiary-container);
+  --color-drowable-error-container: var(--drowable-error-container);
+  --color-drowable-on-secondary: var(--drowable-on-secondary);
+  --color-drowable-secondary-container: var(--drowable-secondary-container);
+  --color-drowable-on-surface-variant: var(--drowable-on-surface-variant);
+  --color-drowable-secondary: var(--drowable-secondary);
+  --color-drowable-tertiary: var(--drowable-tertiary);
+  --color-drowable-primary-container: var(--drowable-primary-container);
+  --color-drowable-on-error-container: var(--drowable-on-error-container);
+  --color-drowable-on-tertiary-container: var(--drowable-on-tertiary-container);
+  --color-drowable-on-primary-fixed-variant: var(--drowable-on-primary-fixed-variant);
+  --color-drowable-on-secondary-container: var(--drowable-on-secondary-container);
+  --color-drowable-artboard: var(--drowable-artboard);
+  --color-drowable-deep-background: var(--drowable-deep-background);
+  --color-drowable-modal-surface: var(--drowable-modal-surface);
+  --color-drowable-grid: var(--drowable-grid);
+  --color-drowable-indigo: var(--drowable-indigo);
+  --color-drowable-indigo-hover: var(--drowable-indigo-hover);
+  --color-drowable-indigo-active: var(--drowable-indigo-active);
+  --color-drowable-indigo-light: var(--drowable-indigo-light);
+  --color-drowable-cyan-accent: var(--drowable-cyan-accent);
+  --color-drowable-cyan: var(--drowable-cyan);
+  --color-drowable-success: var(--drowable-success);
+  --color-drowable-warning: var(--drowable-warning);
+  --color-drowable-google-red: var(--drowable-google-red);
+  --color-drowable-google-blue: var(--drowable-google-blue);
+  --color-drowable-google-yellow: var(--drowable-google-yellow);
+  --color-drowable-google-green: var(--drowable-google-green);
+  --color-drowable-white: var(--drowable-white);
+  --color-drowable-black: var(--drowable-black);
+  --color-drowable-amber-400: var(--drowable-amber-400);
+  --color-drowable-amber-500: var(--drowable-amber-500);
+  --color-drowable-amber-600: var(--drowable-amber-600);
+  --color-drowable-amber-950: var(--drowable-amber-950);
+  --color-drowable-cyan-400: var(--drowable-cyan-400);
+  --color-drowable-cyan-500: var(--drowable-cyan-500);
+  --color-drowable-cyan-600: var(--drowable-cyan-600);
+  --color-drowable-emerald-300: var(--drowable-emerald-300);
+  --color-drowable-emerald-400: var(--drowable-emerald-400);
+  --color-drowable-emerald-500: var(--drowable-emerald-500);
+  --color-drowable-emerald-700: var(--drowable-emerald-700);
+  --color-drowable-indigo-400: var(--drowable-indigo-400);
+  --color-drowable-indigo-500: var(--drowable-indigo-500);
+  --color-drowable-indigo-600: var(--drowable-indigo-600);
+  --color-drowable-indigo-950: var(--drowable-indigo-950);
+  --color-drowable-purple-400: var(--drowable-purple-400);
+  --color-drowable-purple-500: var(--drowable-purple-500);
+  --color-drowable-purple-700: var(--drowable-purple-700);
+  --color-drowable-purple-900: var(--drowable-purple-900);
+  --color-drowable-red-300: var(--drowable-red-300);
+  --color-drowable-red-400: var(--drowable-red-400);
+  --color-drowable-red-500: var(--drowable-red-500);
+  --color-drowable-red-600: var(--drowable-red-600);
+  --color-drowable-red-950: var(--drowable-red-950);
+  --color-drowable-rose-950: var(--drowable-rose-950);
+  --color-drowable-yellow-400: var(--drowable-yellow-400);
 }
 
 :root {

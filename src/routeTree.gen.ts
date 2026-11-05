@@ -14,6 +14,7 @@ import { Route as CanvasRouteImport } from './routes/canvas'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as NewProjectRouteImport } from './routes/new-project'
 import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ThumbnailRouteImport } from './routes/thumbnail'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +42,11 @@ const ProjectsRoute = ProjectsRouteImport.update({
   path: '/projects',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ThumbnailRoute = ThumbnailRouteImport.update({
   id: '/thumbnail',
   path: '/thumbnail',
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/new-project': typeof NewProjectRoute
   '/projects': typeof ProjectsRoute
+  '/signup': typeof SignupRoute
   '/thumbnail': typeof ThumbnailRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/new-project': typeof NewProjectRoute
   '/projects': typeof ProjectsRoute
+  '/signup': typeof SignupRoute
   '/thumbnail': typeof ThumbnailRoute
 }
 export interface FileRoutesById {
@@ -70,14 +78,28 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/new-project': typeof NewProjectRoute
   '/projects': typeof ProjectsRoute
+  '/signup': typeof SignupRoute
   '/thumbnail': typeof ThumbnailRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/canvas' | '/login' | '/new-project' | '/projects' | '/thumbnail'
+    | '/'
+    | '/canvas'
+    | '/login'
+    | '/new-project'
+    | '/projects'
+    | '/signup'
+    | '/thumbnail'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/canvas' | '/login' | '/new-project' | '/projects' | '/thumbnail'
+  to:
+    | '/'
+    | '/canvas'
+    | '/login'
+    | '/new-project'
+    | '/projects'
+    | '/signup'
+    | '/thumbnail'
   id:
     | '__root__'
     | '/'
@@ -85,6 +107,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/new-project'
     | '/projects'
+    | '/signup'
     | '/thumbnail'
   fileRoutesById: FileRoutesById
 }
@@ -94,6 +117,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   NewProjectRoute: typeof NewProjectRoute
   ProjectsRoute: typeof ProjectsRoute
+  SignupRoute: typeof SignupRoute
   ThumbnailRoute: typeof ThumbnailRoute
 }
 
@@ -134,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/thumbnail': {
       id: '/thumbnail'
       path: '/thumbnail'
@@ -150,6 +181,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   NewProjectRoute: NewProjectRoute,
   ProjectsRoute: ProjectsRoute,
+  SignupRoute: SignupRoute,
   ThumbnailRoute: ThumbnailRoute,
 }
 export const routeTree = rootRouteImport

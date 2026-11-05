@@ -1,0 +1,416 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, type FormEvent } from "react";
+import {
+  ArrowRight,
+  Check,
+  Eye,
+  EyeOff,
+  Github,
+  LockKeyhole,
+  Mail,
+  Sparkles,
+  UserRound,
+  Workflow,
+  Zap,
+} from "lucide-react";
+
+export const Route = createFileRoute("/signup")({
+  head: () => ({
+    meta: [
+      { title: "Create your account — Drowable Sync" },
+      {
+        name: "description",
+        content: "Create a Drowable Sync account and start creating together.",
+      },
+    ],
+  }),
+  component: SignupPage,
+});
+
+function SignupPage() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [notice, setNotice] = useState("");
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setNotice("Sign-up is not connected yet. Your details have not been sent.");
+  }
+
+  return (
+    <main className="relative min-h-screen overflow-hidden bg-drowable-surface-container-lowest text-drowable-on-surface">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-36 -top-40 size-[28rem] rounded-full bg-drowable-secondary-container/20 blur-[100px]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-36 top-1/4 size-[26rem] rounded-full bg-drowable-tertiary-container/15 blur-[110px]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-48 left-1/4 size-[30rem] rounded-full bg-drowable-primary-container/15 blur-[110px]"
+      />
+
+      <div className="relative mx-auto grid min-h-screen max-w-[1440px] lg:grid-cols-[minmax(0,1fr)_minmax(420px,0.82fr)]">
+        <section className="hidden flex-col justify-between px-10 py-9 lg:flex xl:px-16 xl:py-12">
+          <Link to="/" className="inline-flex w-fit items-center gap-3 rounded-lg">
+            <span className="flex size-10 items-center justify-center rounded-xl bg-drowable-indigo text-white shadow-[0_0_30px_rgba(99,102,241,0.4)]">
+              <Workflow aria-hidden="true" size={22} />
+            </span>
+            <span className="text-lg font-semibold tracking-tight">Drowable Sync</span>
+          </Link>
+
+          <div className="relative z-10 mx-auto w-full max-w-2xl py-12">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-drowable-outline-variant/70 bg-drowable-surface-container/70 px-3 py-1.5 text-xs font-medium text-drowable-on-surface-variant">
+              <Sparkles aria-hidden="true" className="size-3.5 text-drowable-tertiary" />
+              Your next idea starts here
+            </div>
+            <h1 className="max-w-xl text-4xl font-semibold leading-tight tracking-[-0.04em] xl:text-5xl">
+              Make room for{" "}
+              <span className="bg-gradient-to-r from-drowable-primary via-drowable-tertiary to-drowable-secondary bg-clip-text text-transparent">
+                good ideas.
+              </span>
+            </h1>
+            <p className="mt-5 max-w-lg text-base leading-7 text-drowable-on-surface-variant">
+              Bring your team, tools, and creative work into one shared studio. Start with a blank
+              canvas and see where it takes you.
+            </p>
+
+            <div className="relative mt-11 overflow-hidden rounded-2xl border border-drowable-outline-variant/70 bg-drowable-surface-container-low/90 p-5 shadow-2xl shadow-black/30">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 opacity-50 [background-image:radial-gradient(var(--drowable-outline-variant)_1px,transparent_1px)] [background-size:20px_20px]"
+              />
+              <div className="relative flex items-center justify-between border-b border-drowable-outline-variant/60 pb-4">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex size-8 items-center justify-center rounded-lg bg-drowable-primary-container/20 text-drowable-primary">
+                    <Workflow aria-hidden="true" size={17} />
+                  </span>
+                  <div>
+                    <p className="text-sm font-medium">Untitled workspace</p>
+                    <p className="mt-0.5 text-xs text-drowable-on-surface-variant">
+                      A little room to think
+                    </p>
+                  </div>
+                </div>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-drowable-emerald-500/10 px-2.5 py-1 text-[11px] font-medium text-drowable-emerald-300">
+                  <span className="size-1.5 rounded-full bg-drowable-emerald-400" />
+                  All changes saved
+                </span>
+              </div>
+
+              <div className="relative grid min-h-56 place-items-center py-8">
+                <div
+                  aria-hidden="true"
+                  className="absolute size-44 rounded-full bg-gradient-to-br from-drowable-indigo/30 via-drowable-purple-500/20 to-drowable-cyan/20 blur-3xl"
+                />
+                <div className="relative flex size-36 rotate-[-8deg] items-center justify-center rounded-[2rem] border border-drowable-primary/40 bg-gradient-to-br from-drowable-surface-container-high to-drowable-surface-container-lowest shadow-[0_20px_70px_rgba(99,102,241,0.2)]">
+                  <div className="absolute inset-3 rounded-[1.4rem] border border-dashed border-drowable-outline-variant/80" />
+                  <Sparkles aria-hidden="true" className="size-12 text-drowable-primary" />
+                  <span className="absolute -right-5 top-2 flex size-9 items-center justify-center rounded-xl border border-drowable-outline-variant bg-drowable-surface-container-high text-drowable-tertiary shadow-lg">
+                    <Zap aria-hidden="true" className="size-4" />
+                  </span>
+                  <span className="absolute -bottom-3 -left-6 rounded-md border border-drowable-outline-variant bg-drowable-surface-container-high px-2 py-1 text-[10px] font-medium text-drowable-on-surface-variant shadow-lg">
+                    Your next big thing
+                  </span>
+                </div>
+              </div>
+
+              <div className="relative flex items-center justify-between border-t border-drowable-outline-variant/60 pt-4">
+                <div className="flex -space-x-2">
+                  <span className="grid size-7 place-items-center rounded-full border-2 border-drowable-surface-container-low bg-drowable-indigo-500 text-[10px] font-semibold text-white">
+                    M
+                  </span>
+                  <span className="grid size-7 place-items-center rounded-full border-2 border-drowable-surface-container-low bg-drowable-cyan-600 text-[10px] font-semibold text-white">
+                    J
+                  </span>
+                  <span className="grid size-7 place-items-center rounded-full border-2 border-drowable-surface-container-low bg-drowable-purple-700 text-[10px] font-semibold text-white">
+                    A
+                  </span>
+                </div>
+                <p className="text-xs text-drowable-on-surface-variant">
+                  Better ideas, made together.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-7 grid grid-cols-3 gap-3">
+              {[
+                { label: "One shared studio", icon: Workflow },
+                { label: "Ideas in real time", icon: Zap },
+                { label: "Made for teams", icon: Check },
+              ].map(({ label, icon: Icon }) => (
+                <div
+                  className="flex items-center gap-2 text-xs text-drowable-on-surface-variant"
+                  key={label}
+                >
+                  <Icon aria-hidden="true" className="size-3.5 shrink-0 text-drowable-tertiary" />
+                  <span>{label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <p className="text-xs text-drowable-on-surface-variant">© 2025 Drowable Systems Inc.</p>
+        </section>
+
+        <section className="flex min-h-screen flex-col border-drowable-outline-variant/50 bg-drowable-surface/90 px-5 py-6 backdrop-blur-xl sm:px-10 lg:border-l lg:px-12 xl:px-16">
+          <header className="flex items-center justify-between lg:justify-end">
+            <Link to="/" className="inline-flex items-center gap-2.5 lg:hidden">
+              <span className="flex size-9 items-center justify-center rounded-xl bg-drowable-indigo text-white">
+                <Workflow aria-hidden="true" size={20} />
+              </span>
+              <span className="font-semibold tracking-tight">Drowable Sync</span>
+            </Link>
+            <p className="text-sm text-drowable-on-surface-variant">
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                className="font-medium text-drowable-primary transition-colors hover:text-drowable-primary-fixed"
+              >
+                Sign in
+              </Link>
+            </p>
+          </header>
+
+          <div className="mx-auto my-auto w-full max-w-md py-10">
+            <div className="mb-7">
+              <div className="mb-5 flex size-11 items-center justify-center rounded-xl border border-drowable-outline-variant bg-drowable-surface-container-high text-drowable-primary shadow-lg shadow-drowable-indigo/10">
+                <Sparkles aria-hidden="true" className="size-5" />
+              </div>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-drowable-tertiary">
+                Start creating
+              </p>
+              <h2 className="text-3xl font-semibold tracking-tight">Create your account</h2>
+              <p className="mt-2 text-sm leading-6 text-drowable-on-surface-variant">
+                Make a space for your ideas and the people you make them with.
+              </p>
+            </div>
+
+            <div className="mb-5 grid grid-cols-2 gap-3">
+              <button
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm font-medium transition-colors hover:bg-drowable-surface-container-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-drowable-primary"
+                onClick={() =>
+                  setNotice("Google sign-up is not connected yet. Your details have not been sent.")
+                }
+                type="button"
+              >
+                <GoogleMark />
+                Google
+              </button>
+              <button
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm font-medium transition-colors hover:bg-drowable-surface-container-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-drowable-primary"
+                onClick={() =>
+                  setNotice("GitHub sign-up is not connected yet. Your details have not been sent.")
+                }
+                type="button"
+              >
+                <Github aria-hidden="true" className="size-4" />
+                GitHub
+              </button>
+            </div>
+
+            <div className="relative my-6 flex items-center justify-center">
+              <div className="w-full border-t border-drowable-outline-variant/70" />
+              <span className="absolute bg-drowable-surface px-3 text-[11px] font-medium uppercase tracking-[0.14em] text-drowable-on-surface-variant">
+                or use your email
+              </span>
+            </div>
+
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium" htmlFor="full-name">
+                  Full name
+                </label>
+                <div className="relative">
+                  <UserRound
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-drowable-outline"
+                  />
+                  <input
+                    autoComplete="name"
+                    className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low pl-10 pr-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                    id="full-name"
+                    name="name"
+                    placeholder="Your name"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium" htmlFor="email">
+                  Email address
+                </label>
+                <div className="relative">
+                  <Mail
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-drowable-outline"
+                  />
+                  <input
+                    autoComplete="email"
+                    className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low pl-10 pr-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                    id="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    required
+                    type="email"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium" htmlFor="password">
+                  Password
+                </label>
+                <div className="relative">
+                  <LockKeyhole
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-drowable-outline"
+                  />
+                  <input
+                    autoComplete="new-password"
+                    className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low py-2 pl-10 pr-11 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                    id="password"
+                    minLength={8}
+                    name="password"
+                    placeholder="At least 8 characters"
+                    required
+                    type={showPassword ? "text" : "password"}
+                  />
+                  <button
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    className="absolute right-2 top-1/2 grid size-8 -translate-y-1/2 place-items-center rounded-md text-drowable-on-surface-variant transition-colors hover:bg-drowable-surface-container-high hover:text-drowable-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-drowable-primary"
+                    onClick={() => setShowPassword((visible) => !visible)}
+                    type="button"
+                  >
+                    {showPassword ? (
+                      <EyeOff aria-hidden="true" className="size-4" />
+                    ) : (
+                      <Eye aria-hidden="true" className="size-4" />
+                    )}
+                  </button>
+                </div>
+                <p className="text-xs text-drowable-on-surface-variant">
+                  Use at least 8 characters.
+                </p>
+              </div>
+
+              <label className="flex cursor-pointer items-start gap-2.5 pt-1 text-xs leading-5 text-drowable-on-surface-variant">
+                <input
+                  className="mt-0.5 size-4 shrink-0 accent-drowable-indigo"
+                  name="terms"
+                  required
+                  type="checkbox"
+                />
+                <span>
+                  I agree to the{" "}
+                  <a
+                    className="font-medium text-drowable-primary hover:underline"
+                    href="#terms"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      setNotice("The Terms of Service page is not available in this preview.");
+                    }}
+                  >
+                    Terms of Service
+                  </a>{" "}
+                  and{" "}
+                  <a
+                    className="font-medium text-drowable-primary hover:underline"
+                    href="#privacy"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      setNotice("The Privacy Policy page is not available in this preview.");
+                    }}
+                  >
+                    Privacy Policy
+                  </a>
+                  .
+                </span>
+              </label>
+
+              {notice && (
+                <p
+                  aria-live="polite"
+                  className="rounded-lg border border-drowable-tertiary/30 bg-drowable-tertiary/10 px-3 py-2.5 text-sm text-drowable-on-surface"
+                  role="status"
+                >
+                  {notice}
+                </p>
+              )}
+
+              <button
+                className="group inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-drowable-indigo px-4 text-sm font-semibold text-white shadow-lg shadow-drowable-indigo/20 transition hover:bg-drowable-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-drowable-primary focus-visible:ring-offset-2 focus-visible:ring-offset-drowable-surface disabled:cursor-not-allowed disabled:opacity-60"
+                type="submit"
+              >
+                Create account
+                <ArrowRight
+                  aria-hidden="true"
+                  className="size-4 transition-transform group-hover:translate-x-0.5"
+                />
+              </button>
+            </form>
+
+            <p className="mt-6 flex items-center justify-center gap-2 text-xs text-drowable-on-surface-variant">
+              <LockKeyhole aria-hidden="true" className="size-3.5" />
+              Your information stays private and secure.
+            </p>
+          </div>
+
+          <footer className="flex justify-center gap-5 pb-1 text-xs text-drowable-on-surface-variant">
+            <a
+              className="transition-colors hover:text-drowable-on-surface"
+              href="#privacy"
+              onClick={(event) => {
+                event.preventDefault();
+                setNotice("The Privacy Policy page is not available in this preview.");
+              }}
+            >
+              Privacy
+            </a>
+            <a
+              className="transition-colors hover:text-drowable-on-surface"
+              href="#terms"
+              onClick={(event) => {
+                event.preventDefault();
+                setNotice("The Terms of Service page is not available in this preview.");
+              }}
+            >
+              Terms
+            </a>
+            <a
+              className="transition-colors hover:text-drowable-on-surface"
+              href="mailto:support@drowable.com"
+            >
+              Help
+            </a>
+          </footer>
+        </section>
+      </div>
+    </main>
+  );
+}
+
+function GoogleMark() {
+  return (
+    <svg aria-hidden="true" className="size-4" viewBox="0 0 24 24">
+      <path
+        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1Z"
+        fill="var(--drowable-google-blue)"
+      />
+      <path
+        d="M12 23c2.97 0 5.46-.98 7.28-2.65l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.15v2.84A11 11 0 0 0 12 23Z"
+        fill="var(--drowable-google-green)"
+      />
+      <path
+        d="M5.84 14.11a6.6 6.6 0 0 1 0-4.22V7.05H2.15a11 11 0 0 0 0 9.9l3.69-2.84Z"
+        fill="var(--drowable-google-yellow)"
+      />
+      <path
+        d="M12 4.36c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 1.09 14.97 0 12 0a11 11 0 0 0-9.85 7.05l3.69 2.84C6.71 7.29 9.14 4.36 12 4.36Z"
+        fill="var(--drowable-google-red)"
+      />
+    </svg>
+  );
+}

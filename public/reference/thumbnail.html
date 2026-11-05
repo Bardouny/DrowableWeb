@@ -4,105 +4,14 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Drowable Sync - YouTube Thumbnail Editor Studio</title>
+<link rel="stylesheet" href="/reference/theme.css"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "error-container": "#93000a",
-            "background": "#0f131c",
-            "outline": "#908fa0",
-            "on-tertiary-fixed-variant": "#004e5c",
-            "surface-container-low": "#181c24",
-            "on-secondary-fixed": "#23005c",
-            "error": "#ffb4ab",
-            "surface": "#0f131c",
-            "on-secondary-container": "#c4abff",
-            "surface-container": "#1c2028",
-            "inverse-surface": "#dfe2ee",
-            "primary-fixed-dim": "#c0c1ff",
-            "secondary-container": "#571bc1",
-            "surface-dim": "#0f131c",
-            "surface-bright": "#353942",
-            "primary": "#c0c1ff",
-            "on-primary-fixed-variant": "#2f2ebe",
-            "on-tertiary-fixed": "#001f26",
-            "inverse-on-surface": "#2c3039",
-            "on-background": "#dfe2ee",
-            "on-secondary-fixed-variant": "#5516be",
-            "on-surface": "#dfe2ee",
-            "tertiary-fixed-dim": "#4cd7f6",
-            "on-secondary": "#3c0091",
-            "surface-container-high": "#262a33",
-            "primary-container": "#8083ff",
-            "surface-container-highest": "#31353e",
-            "tertiary-container": "#009eb9",
-            "surface-container-lowest": "#0a0e16",
-            "secondary": "#d0bcff",
-            "on-tertiary-container": "#002f38",
-            "tertiary": "#4cd7f6",
-            "inverse-primary": "#494bd6",
-            "primary-fixed": "#e1e0ff",
-            "on-tertiary": "#003640",
-            "on-primary-fixed": "#07006c",
-            "surface-tint": "#c0c1ff",
-            "on-primary-container": "#0d0096",
-            "outline-variant": "#464554",
-            "secondary-fixed-dim": "#d0bcff",
-            "on-error": "#690005",
-            "tertiary-fixed": "#acedff",
-            "on-primary": "#1000a9",
-            "on-surface-variant": "#c7c4d7",
-            "secondary-fixed": "#e9ddff",
-            "surface-variant": "#31353e",
-            "on-error-container": "#ffdad6"
-          },
-          borderRadius: {
-            "DEFAULT": "0.125rem",
-            "lg": "0.25rem",
-            "xl": "0.5rem",
-            "full": "0.75rem"
-          },
-          spacing: {
-            "gutter": "0.75rem",
-            "space-lg": "1rem",
-            "space-xs": "0.25rem",
-            "space-sm": "0.5rem",
-            "margin-compact": "0.5rem",
-            "margin": "1rem",
-            "space-xl": "1.5rem",
-            "gutter-dense": "0.5rem",
-            "space-md": "0.75rem"
-          },
-          fontFamily: {
-            "display-lg": ["Inter", "sans-serif"],
-            "label-default": ["Inter", "sans-serif"],
-            "body-default": ["Inter", "sans-serif"],
-            "label-mono": ["Inter", "monospace"],
-            "body-dense": ["Inter", "sans-serif"],
-            "headline-sm": ["Inter", "sans-serif"],
-            "headline-md": ["Inter", "sans-serif"]
-          },
-          fontSize: {
-            "display-lg": ["2rem", { lineHeight: "2.5rem", letterSpacing: "-0.025em", fontWeight: "600" }],
-            "label-default": ["0.75rem", { lineHeight: "1rem", letterSpacing: "0.01em", fontWeight: "500" }],
-            "body-default": ["0.875rem", { lineHeight: "1.375rem", letterSpacing: "-0.011em", fontWeight: "400" }],
-            "label-mono": ["0.6875rem", { lineHeight: "0.875rem", letterSpacing: "0.02em", fontWeight: "500" }],
-            "body-dense": ["0.8125rem", { lineHeight: "1.25rem", letterSpacing: "-0.006em", fontWeight: "400" }],
-            "headline-sm": ["1rem", { lineHeight: "1.5rem", letterSpacing: "-0.015em", fontWeight: "600" }],
-            "headline-md": ["1.25rem", { lineHeight: "1.75rem", letterSpacing: "-0.02em", fontWeight: "600" }]
-          }
-        }
-      }
-    }
-  </script>
+<script id="tailwind-config" src="/reference/theme-config.js"></script>
 <style>
     .material-symbols-outlined {
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
