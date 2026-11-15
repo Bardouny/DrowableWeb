@@ -16,6 +16,7 @@ export default defineConfig({
       schemas: path.join(projectRoot, "src/api/generated/models"),
       client: "react-query",
       httpClient: "fetch",
+      baseUrl: "https://localhost:7124",
     },
   },
 });

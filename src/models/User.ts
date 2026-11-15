@@ -1,3 +1,22 @@
+import { postApiAccounts, type postApiAccountsResponse } from "../api/generated/accounts/accounts";
+import type { CreateAccountCommand } from "../api/generated/models";
+import { Authontication } from "./Authontication";
+import type { Country } from "./Country";
+import { PersonalInfo, type GenderType } from "./PersonalInfo";
+import { Profile } from "./Profile";
+
+export type NewUserInput = {
+  userName: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  country: Country;
+  dateOfBirth?: Date | null;
+  gender?: GenderType | null;
+  enablesNotification?: boolean;
+};
+
 export class User {
   userId!: string;
   userName!: string;
@@ -15,40 +34,77 @@ export class User {
   connectionSenderUsers: import("./Connection").Connection[] = [];
   personalInfo!: import("./PersonalInfo").PersonalInfo;
   profile!: import("./Profile").Profile;
-  projectEnrollmentEnrolledUsers: import("./ProjectEnrollment").ProjectEnrollment[] =
-    [];
-  projectEnrollmentSenderUsers: import("./ProjectEnrollment").ProjectEnrollment[] =
-    [];
+  projectEnrollmentEnrolledUsers: import("./ProjectEnrollment").ProjectEnrollment[] = [];
+  projectEnrollmentSenderUsers: import("./ProjectEnrollment").ProjectEnrollment[] = [];
   projects: import("./Project").Project[] = [];
-  userVerificationCodes: import("./UserVerificationCode").UserVerificationCode[] =
-    [];
+  userVerificationCodes: import("./UserVerificationCode").UserVerificationCode[] = [];
 
   constructor(init?: Partial<User>) {
     Object.assign(this, init);
   }
 
-  lockUsingVerificationCode(
-    verificationCode: import("./UserVerificationCode").UserVerificationCode,
-  ): void {
-    this.isActive = false;
+  static New(input: NewUserInput): User {
+    const userId = crypto.randomUUID();
+    const authonticationId = crypto.randomUUID();
+    const personalInfoId = crypto.randomUUID();
+    const profile = new Profile();
 
-    if (verificationCode.isUsed) {
-      throw new Error("Cannot provide an already-used verification code.");
-    }
+    const user = new User({
+      userId,
+      userName: input.userName.trim(),
+      createdAt: new Date(),
+      lastLoginAt: null,
+      enablesNotification: input.enablesNotification ?? false,
+      isActive: true,
+      personalInfoId,
+      profileId: profile.profileId,
+      authonticationId,
+      authontication: new Authontication({
+        authonticationId,
+        email: input.email.trim(),
+        phone: input.phone.trim(),
+      }),
+      personalInfo: new PersonalInfo({
+        personalInfoId,
+        firstName: input.firstName.trim(),
+        lastName: input.lastName.trim(),
+        dateOfBirth: input.dateOfBirth ?? null,
+        gender: input.gender ?? null,
+        countryId: input.country.countryId,
+        country: input.country,
+      }),
+      profile,
+    });
 
-    verificationCode.user = this;
-    verificationCode.userId = this.userId;
-    this.userVerificationCodes.push(verificationCode);
+    user.authontication.user = user;
+    user.personalInfo.user = user;
+    user.personalInfo.country.personalInfos.push(user.personalInfo);
+    user.profile.user = user;
+
+    return user;
   }
 
-  unlockUsingVerificationCode(
-    verificationCode: import("./UserVerificationCode").UserVerificationCode,
-  ): void {
-    if (verificationCode.isUsed) {
-      throw new Error("Cannot provide an already-used verification code.");
+  async createAccount(password: string, options?: RequestInit): Promise<postApiAccountsResponse> {
+    const command: CreateAccountCommand = {
+      firstName: this.personalInfo.firstName,
+      lastName: this.personalInfo.lastName,
+      dateOfBirth: this.personalInfo.dateOfBirth?.toISOString().slice(0, 10) ?? null,
+      gender: this.personalInfo.gender ?? null,
+      countryId: this.personalInfo.countryId,
+      email: this.authontication.email,
+      phone: this.authontication.phone,
+      userName: this.userName,
+      password,
+      enableNotifications: this.enablesNotification,
+    };
+
+    const response = await postApiAccounts(command, options);
+    if (response.status < 200 || response.status >= 300) {
+      throw new Error(`Account creation failed with status ${response.status}.`);
     }
 
-    this.isActive = true;
-    verificationCode.isUsed = true;
+    return response;
   }
+
+  
 }

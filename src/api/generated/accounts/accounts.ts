@@ -39,7 +39,7 @@ export const getPostApiAccountsUrl = () => {
 
 
 
-  return `/api/Accounts`
+  return `https://localhost:7124/api/Accounts`
 }
 
 export const postApiAccounts = async (createAccountCommand: CreateAccountCommand, options?: RequestInit): Promise<postApiAccountsResponse> => {

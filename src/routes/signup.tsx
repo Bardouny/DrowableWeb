@@ -9,10 +9,12 @@ import {
   LockKeyhole,
   Mail,
   Sparkles,
-  UserRound,
   Workflow,
   Zap,
 } from "lucide-react";
+import { alertService } from "@/services/alert";
+import { Country } from "@/models/Country";
+import { User } from "@/models/User";
 
 export const Route = createFileRoute("/signup")({
   head: () => ({
@@ -30,10 +32,56 @@ export const Route = createFileRoute("/signup")({
 function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [notice, setNotice] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const countries = Country.All();
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setNotice("Sign-up is not connected yet. Your details have not been sent.");
+    setNotice("");
+
+    const formData = new FormData(event.currentTarget);
+    const password = String(formData.get("password") ?? "");
+    if (password !== String(formData.get("confirmPassword") ?? "")) {
+      setNotice("Passwords do not match.");
+      alertService.error("Passwords do not match.");
+      return;
+    }
+
+    const countryId = Number(formData.get("countryId"));
+    const country = Number.isSafeInteger(countryId) ? Country.Find(countryId) : undefined;
+    if (!country) {
+      setNotice("Select a valid country.");
+      alertService.error("Select a valid country.");
+      return;
+    }
+
+    const user = User.New({
+      userName: String(formData.get("userName") ?? "").trim(),
+      firstName: String(formData.get("firstName") ?? "").trim(),
+      lastName: String(formData.get("lastName") ?? "").trim(),
+      email: String(formData.get("email") ?? "").trim(),
+      phone: String(formData.get("phone") ?? "").trim(),
+      country,
+      dateOfBirth: formData.get("dateOfBirth")
+        ? new Date(`${String(formData.get("dateOfBirth"))}T00:00:00.000Z`)
+        : null,
+      gender: (String(formData.get("gender") ?? "") as "Male" | "Female" | "Other" | "") || null,
+      enablesNotification: formData.has("enableNotifications"),
+    });
+
+    setIsSubmitting(true);
+    try {
+      await user.createAccount(password);
+      setNotice("Your account was created successfully.");
+      alertService.success("Your account was created successfully.");
+    } catch (error) {
+      const description =
+        error instanceof Error ? error.message : "Please check your connection and try again.";
+      setNotice(`Unable to create your account. ${description}`);
+      alertService.error("Unable to create your account.", { description });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -218,24 +266,47 @@ function SignupPage() {
             </div>
 
             <form className="space-y-4" onSubmit={handleSubmit}>
-              <div className="space-y-1.5">
-                <label className="text-sm font-medium" htmlFor="full-name">
-                  Full name
-                </label>
-                <div className="relative">
-                  <UserRound
-                    aria-hidden="true"
-                    className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-drowable-outline"
-                  />
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <label className="text-sm font-medium" htmlFor="first-name">
+                    First name
+                  </label>
                   <input
-                    autoComplete="name"
-                    className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low pl-10 pr-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
-                    id="full-name"
-                    name="name"
-                    placeholder="Your name"
+                    autoComplete="given-name"
+                    className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                    id="first-name"
+                    name="firstName"
+                    placeholder="First name"
                     required
                   />
                 </div>
+                <div className="space-y-1.5">
+                  <label className="text-sm font-medium" htmlFor="last-name">
+                    Last name
+                  </label>
+                  <input
+                    autoComplete="family-name"
+                    className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                    id="last-name"
+                    name="lastName"
+                    placeholder="Last name"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium" htmlFor="user-name">
+                  Username
+                </label>
+                <input
+                  autoComplete="username"
+                  className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                  id="user-name"
+                  name="userName"
+                  placeholder="Choose a username"
+                  required
+                />
               </div>
 
               <div className="space-y-1.5">
@@ -257,6 +328,75 @@ function SignupPage() {
                     type="email"
                   />
                 </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium" htmlFor="phone">
+                  Phone number
+                </label>
+                <input
+                  autoComplete="tel"
+                  className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                  id="phone"
+                  name="phone"
+                  placeholder="+1 555 0100"
+                  required
+                  type="tel"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <label className="text-sm font-medium" htmlFor="country-id">
+                    Country
+                  </label>
+                  <select
+                    className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                    id="country-id"
+                    name="countryId"
+                    required
+                    defaultValue=""
+                  >
+                    <option disabled value="">
+                      Select your country
+                    </option>
+                    {countries.map((country) => (
+                      <option key={country.countryId} value={country.countryId}>
+                        {country.name} ({country.phonNumberCode})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-sm font-medium" htmlFor="date-of-birth">
+                    Date of birth
+                  </label>
+                  <input
+                    autoComplete="bday"
+                    className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                    id="date-of-birth"
+                    name="dateOfBirth"
+                    type="date"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium" htmlFor="gender">
+                  Gender{" "}
+                  <span className="font-normal text-drowable-on-surface-variant">(optional)</span>
+                </label>
+                <select
+                  className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                  id="gender"
+                  name="gender"
+                  defaultValue=""
+                >
+                  <option value="Other">Prefer not to say</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
               </div>
 
               <div className="space-y-1.5">
@@ -295,6 +435,31 @@ function SignupPage() {
                   Use at least 8 characters.
                 </p>
               </div>
+
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium" htmlFor="confirm-password">
+                  Confirm password
+                </label>
+                <input
+                  autoComplete="new-password"
+                  className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                  id="confirm-password"
+                  minLength={8}
+                  name="confirmPassword"
+                  placeholder="Re-enter your password"
+                  required
+                  type="password"
+                />
+              </div>
+
+              <label className="flex cursor-pointer items-start gap-2.5 pt-1 text-xs leading-5 text-drowable-on-surface-variant">
+                <input
+                  className="mt-0.5 size-4 shrink-0 accent-drowable-indigo"
+                  name="enableNotifications"
+                  type="checkbox"
+                />
+                <span>Send me product updates and notifications.</span>
+              </label>
 
               <label className="flex cursor-pointer items-start gap-2.5 pt-1 text-xs leading-5 text-drowable-on-surface-variant">
                 <input
@@ -342,13 +507,20 @@ function SignupPage() {
 
               <button
                 className="group inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-drowable-indigo px-4 text-sm font-semibold text-white shadow-lg shadow-drowable-indigo/20 transition hover:bg-drowable-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-drowable-primary focus-visible:ring-offset-2 focus-visible:ring-offset-drowable-surface disabled:cursor-not-allowed disabled:opacity-60"
+                disabled={isSubmitting}
                 type="submit"
               >
-                Create account
-                <ArrowRight
-                  aria-hidden="true"
-                  className="size-4 transition-transform group-hover:translate-x-0.5"
-                />
+                {isSubmitting ? (
+                  "Creating account..."
+                ) : (
+                  <>
+                    Create account
+                    <ArrowRight
+                      aria-hidden="true"
+                      className="size-4 transition-transform group-hover:translate-x-0.5"
+                    />
+                  </>
+                )}
               </button>
             </form>
 
