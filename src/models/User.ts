@@ -1,5 +1,10 @@
-import { postApiAccounts, type postApiAccountsResponse } from "../api/generated/accounts/accounts";
-import type { CreateAccountCommand } from "../api/generated/models";
+import {
+  postApiAccounts,
+  postApiAccountsActivate,
+  type postApiAccountsActivateResponse,
+  type postApiAccountsResponse,
+} from "../api/generated/accounts/accounts";
+import type { ActivateAccountCommand, CreateAccountCommand } from "../api/generated/models";
 import { Authontication } from "./Authontication";
 import type { Country } from "./Country";
 import { PersonalInfo, type GenderType } from "./PersonalInfo";
@@ -106,5 +111,21 @@ export class User {
     return response;
   }
 
-  
+  async activateAccount(
+    activationCode: string,
+    options?: RequestInit,
+  ): Promise<postApiAccountsActivateResponse> {
+    const command: ActivateAccountCommand = {
+      userId: this.userId,
+      activationCode,
+    };
+
+    const response = await postApiAccountsActivate(command, options);
+    if (response.status < 200 || response.status >= 300) {
+      throw new Error(`Account activation failed with status ${response.status}.`);
+    }
+
+    this.isActive = true;
+    return response;
+  }
 }

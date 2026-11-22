@@ -5,4 +5,5 @@
  * OpenAPI spec version: 1.0.0
  */
 
+export * from './activateAccountCommand.ts';
 export * from './createAccountCommand.ts';

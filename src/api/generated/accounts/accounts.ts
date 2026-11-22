@@ -15,6 +15,7 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  ActivateAccountCommand,
   CreateAccountCommand
 } from '../models';
 
@@ -121,4 +122,104 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
         TContext
       > => {
       return useMutation(getPostApiAccountsMutationOptions(options), queryClient);
+    }
+    export type postApiAccountsActivateResponse200 = {
+  data: void
+  status: 200
+}
+
+export type postApiAccountsActivateResponseSuccess = (postApiAccountsActivateResponse200) & {
+  headers: Headers;
+};
+;
+
+export type postApiAccountsActivateResponse = (postApiAccountsActivateResponseSuccess)
+
+export const getPostApiAccountsActivateUrl = () => {
+
+
+
+
+  return `https://localhost:7124/api/Accounts/activate`
+}
+
+export const postApiAccountsActivate = async (activateAccountCommand: ActivateAccountCommand, options?: RequestInit): Promise<postApiAccountsActivateResponse> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+const res = await fetch(getPostApiAccountsActivateUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(activateAccountCommand)
+  }
+)
+
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: postApiAccountsActivateResponse['data'] = body ? JSON.parse(body) : undefined
+  return { data, status: res.status, headers: res.headers } as postApiAccountsActivateResponse
+}
+
+
+
+
+
+export const getPostApiAccountsActivateMutationKey = () => ['postApiAccountsActivate'] as const;
+
+export const getPostApiAccountsActivateMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiAccountsActivate>>, TError,PostApiAccountsActivateMutationVariables, TContext>, fetch?: RequestInit}
+): UseMutationOptions<Awaited<ReturnType<typeof postApiAccountsActivate>>, TError,PostApiAccountsActivateMutationVariables, TContext> => {
+
+const mutationKey = getPostApiAccountsActivateMutationKey();
+const {mutation: mutationOptions, fetch: fetchOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, fetch: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof postApiAccountsActivate>>, PostApiAccountsActivateMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  postApiAccountsActivate(data,fetchOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PostApiAccountsActivateMutationResult = NonNullable<Awaited<ReturnType<typeof postApiAccountsActivate>>>
+    export type PostApiAccountsActivateMutationBody = ActivateAccountCommand
+    export type PostApiAccountsActivateMutationError = unknown
+    export type PostApiAccountsActivateMutationVariables = {data: ActivateAccountCommand}
+
+    export const usePostApiAccountsActivate = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiAccountsActivate>>, TError,PostApiAccountsActivateMutationVariables, TContext>, fetch?: RequestInit}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof postApiAccountsActivate>>,
+        TError,
+        PostApiAccountsActivateMutationVariables,
+        TContext
+      > => {
+      return useMutation(getPostApiAccountsActivateMutationOptions(options), queryClient);
     }
