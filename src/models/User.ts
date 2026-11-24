@@ -49,7 +49,7 @@ export class User {
   }
 
   static New(input: NewUserInput): User {
-    const userId = crypto.randomUUID();
+    const userId = "";
     const authonticationId = crypto.randomUUID();
     const personalInfoId = crypto.randomUUID();
     const profile = new Profile();
@@ -60,7 +60,7 @@ export class User {
       createdAt: new Date(),
       lastLoginAt: null,
       enablesNotification: input.enablesNotification ?? false,
-      isActive: true,
+      isActive: false,
       personalInfoId,
       profileId: profile.profileId,
       authonticationId,
@@ -108,6 +108,18 @@ export class User {
       throw new Error(`Account creation failed with status ${response.status}.`);
     }
 
+    const data: unknown = response.data;
+    if (
+      typeof data !== "object" ||
+      data === null ||
+      !("userId" in data) ||
+      typeof data.userId !== "string" ||
+      data.userId.length === 0
+    ) {
+      throw new Error("Account creation response did not include a valid user ID.");
+    }
+
+    this.userId = data.userId;
     return response;
   }
 

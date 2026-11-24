@@ -12,9 +12,11 @@ import {
   Workflow,
   Zap,
 } from "lucide-react";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { alertService } from "@/services/alert";
 import { Country } from "@/models/Country";
 import { User } from "@/models/User";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 
 export const Route = createFileRoute("/signup")({
   head: () => ({
@@ -33,6 +35,10 @@ function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [notice, setNotice] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [userToActivate, setUserToActivate] = useState<User | null>(null);
+  const [activationCode, setActivationCode] = useState("");
+  const [isActivating, setIsActivating] = useState(false);
+  const [isActivated, setIsActivated] = useState(false);
   const countries = Country.All();
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -72,8 +78,11 @@ function SignupPage() {
     setIsSubmitting(true);
     try {
       await user.createAccount(password);
-      setNotice("Your account was created successfully.");
-      alertService.success("Your account was created successfully.");
+      setUserToActivate(user);
+      setNotice("");
+      setActivationCode("");
+      setIsActivated(false);
+      alertService.success("Account created. Enter your activation code to continue.");
     } catch (error) {
       const description =
         error instanceof Error ? error.message : "Please check your connection and try again.";
@@ -81,6 +90,30 @@ function SignupPage() {
       alertService.error("Unable to create your account.", { description });
     } finally {
       setIsSubmitting(false);
+    }
+  }
+
+  async function handleActivationSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setNotice("");
+
+    if (!userToActivate || !/^\d{6}$/.test(activationCode)) {
+      setNotice("Enter the six-digit activation code.");
+      return;
+    }
+
+    setIsActivating(true);
+    try {
+      await userToActivate.activateAccount(activationCode);
+      setIsActivated(true);
+      alertService.success("Your account has been activated.");
+    } catch (error) {
+      const description =
+        error instanceof Error ? error.message : "Please check your connection and try again.";
+      setNotice(`Unable to activate your account. ${description}`);
+      alertService.error("Unable to activate your account.", { description });
+    } finally {
+      setIsActivating(false);
     }
   }
 
@@ -210,324 +243,449 @@ function SignupPage() {
               </span>
               <span className="font-semibold tracking-tight">Drowable Sync</span>
             </Link>
-            <p className="text-sm text-drowable-on-surface-variant">
-              Already have an account?{" "}
-              <Link
-                to="/login"
-                className="font-medium text-drowable-primary transition-colors hover:text-drowable-primary-fixed"
-              >
-                Sign in
-              </Link>
-            </p>
+            {userToActivate ? (
+              isActivated ? (
+                <Link
+                  to="/login"
+                  className="text-sm font-medium text-drowable-primary transition-colors hover:text-drowable-primary-fixed"
+                >
+                  Sign in
+                </Link>
+              ) : (
+                <p className="text-sm text-drowable-on-surface-variant">Account verification</p>
+              )
+            ) : (
+              <p className="text-sm text-drowable-on-surface-variant">
+                Already have an account?{" "}
+                <Link
+                  to="/login"
+                  className="font-medium text-drowable-primary transition-colors hover:text-drowable-primary-fixed"
+                >
+                  Sign in
+                </Link>
+              </p>
+            )}
           </header>
 
           <div className="mx-auto my-auto w-full max-w-md py-10">
-            <div className="mb-7">
-              <div className="mb-5 flex size-11 items-center justify-center rounded-xl border border-drowable-outline-variant bg-drowable-surface-container-high text-drowable-primary shadow-lg shadow-drowable-indigo/10">
-                <Sparkles aria-hidden="true" className="size-5" />
-              </div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-drowable-tertiary">
-                Start creating
-              </p>
-              <h2 className="text-3xl font-semibold tracking-tight">Create your account</h2>
-              <p className="mt-2 text-sm leading-6 text-drowable-on-surface-variant">
-                Make a space for your ideas and the people you make them with.
-              </p>
-            </div>
-
-            <div className="mb-5 grid grid-cols-2 gap-3">
-              <button
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm font-medium transition-colors hover:bg-drowable-surface-container-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-drowable-primary"
-                onClick={() =>
-                  setNotice("Google sign-up is not connected yet. Your details have not been sent.")
-                }
-                type="button"
-              >
-                <GoogleMark />
-                Google
-              </button>
-              <button
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm font-medium transition-colors hover:bg-drowable-surface-container-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-drowable-primary"
-                onClick={() =>
-                  setNotice("GitHub sign-up is not connected yet. Your details have not been sent.")
-                }
-                type="button"
-              >
-                <Github aria-hidden="true" className="size-4" />
-                GitHub
-              </button>
-            </div>
-
-            <div className="relative my-6 flex items-center justify-center">
-              <div className="w-full border-t border-drowable-outline-variant/70" />
-              <span className="absolute bg-drowable-surface px-3 text-[11px] font-medium uppercase tracking-[0.14em] text-drowable-on-surface-variant">
-                or use your email
-              </span>
-            </div>
-
-            <form className="space-y-4" onSubmit={handleSubmit}>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1.5">
-                  <label className="text-sm font-medium" htmlFor="first-name">
-                    First name
-                  </label>
-                  <input
-                    autoComplete="given-name"
-                    className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
-                    id="first-name"
-                    name="firstName"
-                    placeholder="First name"
-                    required
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-sm font-medium" htmlFor="last-name">
-                    Last name
-                  </label>
-                  <input
-                    autoComplete="family-name"
-                    className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
-                    id="last-name"
-                    name="lastName"
-                    placeholder="Last name"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-sm font-medium" htmlFor="user-name">
-                  Username
-                </label>
-                <input
-                  autoComplete="username"
-                  className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
-                  id="user-name"
-                  name="userName"
-                  placeholder="Choose a username"
-                  required
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-sm font-medium" htmlFor="email">
-                  Email address
-                </label>
-                <div className="relative">
-                  <Mail
-                    aria-hidden="true"
-                    className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-drowable-outline"
-                  />
-                  <input
-                    autoComplete="email"
-                    className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low pl-10 pr-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
-                    id="email"
-                    name="email"
-                    placeholder="you@example.com"
-                    required
-                    type="email"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-sm font-medium" htmlFor="phone">
-                  Phone number
-                </label>
-                <input
-                  autoComplete="tel"
-                  className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
-                  id="phone"
-                  name="phone"
-                  placeholder="+1 555 0100"
-                  required
-                  type="tel"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1.5">
-                  <label className="text-sm font-medium" htmlFor="country-id">
-                    Country
-                  </label>
-                  <select
-                    className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
-                    id="country-id"
-                    name="countryId"
-                    required
-                    defaultValue=""
-                  >
-                    <option disabled value="">
-                      Select your country
-                    </option>
-                    {countries.map((country) => (
-                      <option key={country.countryId} value={country.countryId}>
-                        {country.name} ({country.phonNumberCode})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-sm font-medium" htmlFor="date-of-birth">
-                    Date of birth
-                  </label>
-                  <input
-                    autoComplete="bday"
-                    className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
-                    id="date-of-birth"
-                    name="dateOfBirth"
-                    type="date"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-sm font-medium" htmlFor="gender">
-                  Gender{" "}
-                  <span className="font-normal text-drowable-on-surface-variant">(optional)</span>
-                </label>
-                <select
-                  className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
-                  id="gender"
-                  name="gender"
-                  defaultValue=""
-                >
-                  <option value="Other">Prefer not to say</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-sm font-medium" htmlFor="password">
-                  Password
-                </label>
-                <div className="relative">
-                  <LockKeyhole
-                    aria-hidden="true"
-                    className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-drowable-outline"
-                  />
-                  <input
-                    autoComplete="new-password"
-                    className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low py-2 pl-10 pr-11 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
-                    id="password"
-                    minLength={8}
-                    name="password"
-                    placeholder="At least 8 characters"
-                    required
-                    type={showPassword ? "text" : "password"}
-                  />
-                  <button
-                    aria-label={showPassword ? "Hide password" : "Show password"}
-                    className="absolute right-2 top-1/2 grid size-8 -translate-y-1/2 place-items-center rounded-md text-drowable-on-surface-variant transition-colors hover:bg-drowable-surface-container-high hover:text-drowable-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-drowable-primary"
-                    onClick={() => setShowPassword((visible) => !visible)}
-                    type="button"
-                  >
-                    {showPassword ? (
-                      <EyeOff aria-hidden="true" className="size-4" />
-                    ) : (
-                      <Eye aria-hidden="true" className="size-4" />
-                    )}
-                  </button>
-                </div>
-                <p className="text-xs text-drowable-on-surface-variant">
-                  Use at least 8 characters.
-                </p>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-sm font-medium" htmlFor="confirm-password">
-                  Confirm password
-                </label>
-                <input
-                  autoComplete="new-password"
-                  className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
-                  id="confirm-password"
-                  minLength={8}
-                  name="confirmPassword"
-                  placeholder="Re-enter your password"
-                  required
-                  type="password"
-                />
-              </div>
-
-              <label className="flex cursor-pointer items-start gap-2.5 pt-1 text-xs leading-5 text-drowable-on-surface-variant">
-                <input
-                  className="mt-0.5 size-4 shrink-0 accent-drowable-indigo"
-                  name="enableNotifications"
-                  type="checkbox"
-                />
-                <span>Send me product updates and notifications.</span>
-              </label>
-
-              <label className="flex cursor-pointer items-start gap-2.5 pt-1 text-xs leading-5 text-drowable-on-surface-variant">
-                <input
-                  className="mt-0.5 size-4 shrink-0 accent-drowable-indigo"
-                  name="terms"
-                  required
-                  type="checkbox"
-                />
-                <span>
-                  I agree to the{" "}
-                  <a
-                    className="font-medium text-drowable-primary hover:underline"
-                    href="#terms"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      setNotice("The Terms of Service page is not available in this preview.");
-                    }}
-                  >
-                    Terms of Service
-                  </a>{" "}
-                  and{" "}
-                  <a
-                    className="font-medium text-drowable-primary hover:underline"
-                    href="#privacy"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      setNotice("The Privacy Policy page is not available in this preview.");
-                    }}
-                  >
-                    Privacy Policy
-                  </a>
-                  .
-                </span>
-              </label>
-
-              {notice && (
-                <p
-                  aria-live="polite"
-                  className="rounded-lg border border-drowable-tertiary/30 bg-drowable-tertiary/10 px-3 py-2.5 text-sm text-drowable-on-surface"
-                  role="status"
-                >
-                  {notice}
-                </p>
-              )}
-
-              <button
-                className="group inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-drowable-indigo px-4 text-sm font-semibold text-white shadow-lg shadow-drowable-indigo/20 transition hover:bg-drowable-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-drowable-primary focus-visible:ring-offset-2 focus-visible:ring-offset-drowable-surface disabled:cursor-not-allowed disabled:opacity-60"
-                disabled={isSubmitting}
-                type="submit"
-              >
-                {isSubmitting ? (
-                  "Creating account..."
+            {userToActivate ? (
+              <div className="space-y-6">
+                {isActivated ? (
+                  <div className="space-y-3">
+                    <div className="mb-5 flex size-11 items-center justify-center rounded-xl border border-drowable-outline-variant bg-drowable-surface-container-high text-drowable-primary shadow-lg shadow-drowable-indigo/10">
+                      <Check aria-hidden="true" className="size-5" />
+                    </div>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-drowable-tertiary">
+                      Verification complete
+                    </p>
+                    <h2 className="text-3xl font-semibold tracking-tight">Account activated</h2>
+                    <p className="text-sm leading-6 text-drowable-on-surface-variant">
+                      Your account is ready. Sign in to start creating.
+                    </p>
+                    <Link
+                      to="/login"
+                      className="group inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-drowable-indigo px-4 text-sm font-semibold text-white shadow-lg shadow-drowable-indigo/20 transition hover:bg-drowable-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-drowable-primary focus-visible:ring-offset-2 focus-visible:ring-offset-drowable-surface"
+                    >
+                      Sign in
+                      <ArrowRight
+                        aria-hidden="true"
+                        className="size-4 transition-transform group-hover:translate-x-0.5"
+                      />
+                    </Link>
+                  </div>
                 ) : (
                   <>
-                    Create account
-                    <ArrowRight
-                      aria-hidden="true"
-                      className="size-4 transition-transform group-hover:translate-x-0.5"
-                    />
+                    <div>
+                      <div className="mb-5 flex size-11 items-center justify-center rounded-xl border border-drowable-outline-variant bg-drowable-surface-container-high text-drowable-primary shadow-lg shadow-drowable-indigo/10">
+                        <Mail aria-hidden="true" className="size-5" />
+                      </div>
+                      <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-drowable-tertiary">
+                        One last step
+                      </p>
+                      <h2 className="text-3xl font-semibold tracking-tight">
+                        Activate your account
+                      </h2>
+                      <p className="mt-2 text-sm leading-6 text-drowable-on-surface-variant">
+                        Enter the six-digit activation code sent to{" "}
+                        <span className="font-medium text-drowable-on-surface">
+                          {userToActivate.authontication.email}
+                        </span>
+                        .
+                      </p>
+                    </div>
+
+                    <form className="space-y-5" onSubmit={handleActivationSubmit}>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium" id="activation-code-label">
+                          Six-digit code
+                        </label>
+                        <InputOTP
+                          aria-label="Six-digit activation code"
+                          autoComplete="one-time-code"
+                          maxLength={6}
+                          onChange={setActivationCode}
+                          pattern={REGEXP_ONLY_DIGITS}
+                          value={activationCode}
+                        >
+                          <InputOTPGroup className="w-full justify-between gap-2">
+                            {Array.from({ length: 6 }, (_, index) => (
+                              <InputOTPSlot
+                                className="h-12 w-12 rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low text-base"
+                                index={index}
+                                key={index}
+                              />
+                            ))}
+                          </InputOTPGroup>
+                        </InputOTP>
+                      </div>
+
+                      {notice && (
+                        <p
+                          aria-live="polite"
+                          className="rounded-lg border border-drowable-tertiary/30 bg-drowable-tertiary/10 px-3 py-2.5 text-sm text-drowable-on-surface"
+                          role="status"
+                        >
+                          {notice}
+                        </p>
+                      )}
+
+                      <button
+                        className="group inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-drowable-indigo px-4 text-sm font-semibold text-white shadow-lg shadow-drowable-indigo/20 transition hover:bg-drowable-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-drowable-primary focus-visible:ring-offset-2 focus-visible:ring-offset-drowable-surface disabled:cursor-not-allowed disabled:opacity-60"
+                        disabled={isActivating || activationCode.length !== 6}
+                        type="submit"
+                      >
+                        {isActivating ? (
+                          "Activating account..."
+                        ) : (
+                          <>
+                            Activate account
+                            <ArrowRight
+                              aria-hidden="true"
+                              className="size-4 transition-transform group-hover:translate-x-0.5"
+                            />
+                          </>
+                        )}
+                      </button>
+                    </form>
                   </>
                 )}
-              </button>
-            </form>
+              </div>
+            ) : (
+              <>
+                <div className="mb-7">
+                  <div className="mb-5 flex size-11 items-center justify-center rounded-xl border border-drowable-outline-variant bg-drowable-surface-container-high text-drowable-primary shadow-lg shadow-drowable-indigo/10">
+                    <Sparkles aria-hidden="true" className="size-5" />
+                  </div>
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-drowable-tertiary">
+                    Start creating
+                  </p>
+                  <h2 className="text-3xl font-semibold tracking-tight">Create your account</h2>
+                  <p className="mt-2 text-sm leading-6 text-drowable-on-surface-variant">
+                    Make a space for your ideas and the people you make them with.
+                  </p>
+                </div>
 
-            <p className="mt-6 flex items-center justify-center gap-2 text-xs text-drowable-on-surface-variant">
-              <LockKeyhole aria-hidden="true" className="size-3.5" />
-              Your information stays private and secure.
-            </p>
+                <div className="mb-5 grid grid-cols-2 gap-3">
+                  <button
+                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm font-medium transition-colors hover:bg-drowable-surface-container-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-drowable-primary"
+                    onClick={() =>
+                      setNotice(
+                        "Google sign-up is not connected yet. Your details have not been sent.",
+                      )
+                    }
+                    type="button"
+                  >
+                    <GoogleMark />
+                    Google
+                  </button>
+                  <button
+                    className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm font-medium transition-colors hover:bg-drowable-surface-container-high focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-drowable-primary"
+                    onClick={() =>
+                      setNotice(
+                        "GitHub sign-up is not connected yet. Your details have not been sent.",
+                      )
+                    }
+                    type="button"
+                  >
+                    <Github aria-hidden="true" className="size-4" />
+                    GitHub
+                  </button>
+                </div>
+
+                <div className="relative my-6 flex items-center justify-center">
+                  <div className="w-full border-t border-drowable-outline-variant/70" />
+                  <span className="absolute bg-drowable-surface px-3 text-[11px] font-medium uppercase tracking-[0.14em] text-drowable-on-surface-variant">
+                    or use your email
+                  </span>
+                </div>
+
+                <form className="space-y-4" onSubmit={handleSubmit}>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-medium" htmlFor="first-name">
+                        First name
+                      </label>
+                      <input
+                        autoComplete="given-name"
+                        className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                        id="first-name"
+                        name="firstName"
+                        placeholder="First name"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-medium" htmlFor="last-name">
+                        Last name
+                      </label>
+                      <input
+                        autoComplete="family-name"
+                        className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                        id="last-name"
+                        name="lastName"
+                        placeholder="Last name"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-medium" htmlFor="user-name">
+                      Username
+                    </label>
+                    <input
+                      autoComplete="username"
+                      className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                      id="user-name"
+                      name="userName"
+                      placeholder="Choose a username"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-medium" htmlFor="email">
+                      Email address
+                    </label>
+                    <div className="relative">
+                      <Mail
+                        aria-hidden="true"
+                        className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-drowable-outline"
+                      />
+                      <input
+                        autoComplete="email"
+                        className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low pl-10 pr-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        required
+                        type="email"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-medium" htmlFor="phone">
+                      Phone number
+                    </label>
+                    <input
+                      autoComplete="tel"
+                      className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                      id="phone"
+                      name="phone"
+                      placeholder="+1 555 0100"
+                      required
+                      type="tel"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-medium" htmlFor="country-id">
+                        Country
+                      </label>
+                      <select
+                        className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                        id="country-id"
+                        name="countryId"
+                        required
+                        defaultValue=""
+                      >
+                        <option disabled value="">
+                          Select your country
+                        </option>
+                        {countries.map((country) => (
+                          <option key={country.countryId} value={country.countryId}>
+                            {country.name} ({country.phonNumberCode})
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-medium" htmlFor="date-of-birth">
+                        Date of birth
+                      </label>
+                      <input
+                        autoComplete="bday"
+                        className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                        id="date-of-birth"
+                        name="dateOfBirth"
+                        type="date"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-medium" htmlFor="gender">
+                      Gender{" "}
+                      <span className="font-normal text-drowable-on-surface-variant">
+                        (optional)
+                      </span>
+                    </label>
+                    <select
+                      className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                      id="gender"
+                      name="gender"
+                      defaultValue=""
+                    >
+                      <option value="Other">Prefer not to say</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-medium" htmlFor="password">
+                      Password
+                    </label>
+                    <div className="relative">
+                      <LockKeyhole
+                        aria-hidden="true"
+                        className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-drowable-outline"
+                      />
+                      <input
+                        autoComplete="new-password"
+                        className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low py-2 pl-10 pr-11 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                        id="password"
+                        minLength={8}
+                        name="password"
+                        placeholder="At least 8 characters"
+                        required
+                        type={showPassword ? "text" : "password"}
+                      />
+                      <button
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                        className="absolute right-2 top-1/2 grid size-8 -translate-y-1/2 place-items-center rounded-md text-drowable-on-surface-variant transition-colors hover:bg-drowable-surface-container-high hover:text-drowable-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-drowable-primary"
+                        onClick={() => setShowPassword((visible) => !visible)}
+                        type="button"
+                      >
+                        {showPassword ? (
+                          <EyeOff aria-hidden="true" className="size-4" />
+                        ) : (
+                          <Eye aria-hidden="true" className="size-4" />
+                        )}
+                      </button>
+                    </div>
+                    <p className="text-xs text-drowable-on-surface-variant">
+                      Use at least 8 characters.
+                    </p>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-medium" htmlFor="confirm-password">
+                      Confirm password
+                    </label>
+                    <input
+                      autoComplete="new-password"
+                      className="h-11 w-full rounded-lg border border-drowable-outline-variant bg-drowable-surface-container-low px-3 text-sm outline-none transition placeholder:text-drowable-outline focus:border-drowable-primary focus:ring-2 focus:ring-drowable-primary/20"
+                      id="confirm-password"
+                      minLength={8}
+                      name="confirmPassword"
+                      placeholder="Re-enter your password"
+                      required
+                      type="password"
+                    />
+                  </div>
+
+                  <label className="flex cursor-pointer items-start gap-2.5 pt-1 text-xs leading-5 text-drowable-on-surface-variant">
+                    <input
+                      className="mt-0.5 size-4 shrink-0 accent-drowable-indigo"
+                      name="enableNotifications"
+                      type="checkbox"
+                    />
+                    <span>Send me product updates and notifications.</span>
+                  </label>
+
+                  <label className="flex cursor-pointer items-start gap-2.5 pt-1 text-xs leading-5 text-drowable-on-surface-variant">
+                    <input
+                      className="mt-0.5 size-4 shrink-0 accent-drowable-indigo"
+                      name="terms"
+                      required
+                      type="checkbox"
+                    />
+                    <span>
+                      I agree to the{" "}
+                      <a
+                        className="font-medium text-drowable-primary hover:underline"
+                        href="#terms"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          setNotice("The Terms of Service page is not available in this preview.");
+                        }}
+                      >
+                        Terms of Service
+                      </a>{" "}
+                      and{" "}
+                      <a
+                        className="font-medium text-drowable-primary hover:underline"
+                        href="#privacy"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          setNotice("The Privacy Policy page is not available in this preview.");
+                        }}
+                      >
+                        Privacy Policy
+                      </a>
+                      .
+                    </span>
+                  </label>
+
+                  {notice && (
+                    <p
+                      aria-live="polite"
+                      className="rounded-lg border border-drowable-tertiary/30 bg-drowable-tertiary/10 px-3 py-2.5 text-sm text-drowable-on-surface"
+                      role="status"
+                    >
+                      {notice}
+                    </p>
+                  )}
+
+                  <button
+                    className="group inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-drowable-indigo px-4 text-sm font-semibold text-white shadow-lg shadow-drowable-indigo/20 transition hover:bg-drowable-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-drowable-primary focus-visible:ring-offset-2 focus-visible:ring-offset-drowable-surface disabled:cursor-not-allowed disabled:opacity-60"
+                    disabled={isSubmitting}
+                    type="submit"
+                  >
+                    {isSubmitting ? (
+                      "Creating account..."
+                    ) : (
+                      <>
+                        Create account
+                        <ArrowRight
+                          aria-hidden="true"
+                          className="size-4 transition-transform group-hover:translate-x-0.5"
+                        />
+                      </>
+                    )}
+                  </button>
+                </form>
+
+                <p className="mt-6 flex items-center justify-center gap-2 text-xs text-drowable-on-surface-variant">
+                  <LockKeyhole aria-hidden="true" className="size-3.5" />
+                  Your information stays private and secure.
+                </p>
+              </>
+            )}
           </div>
 
           <footer className="flex justify-center gap-5 pb-1 text-xs text-drowable-on-surface-variant">
