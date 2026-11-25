@@ -1,14 +1,21 @@
 import {
   postApiAccounts,
   postApiAccountsActivate,
+  postApiAccountsResendVerificationCode,
   type postApiAccountsActivateResponse,
   type postApiAccountsResponse,
 } from "../api/generated/accounts/accounts";
-import type { ActivateAccountCommand, CreateAccountCommand } from "../api/generated/models";
+import type {
+  ActivateAccountCommand,
+  CreateAccountCommand,
+  ResendVerificationCodeCommand,
+} from "../api/generated/models";
 import { Authontication } from "./Authontication";
 import type { Country } from "./Country";
 import { PersonalInfo, type GenderType } from "./PersonalInfo";
 import { Profile } from "./Profile";
+
+export const MAX_VERIFICATION_CODE_RESENDS = 3;
 
 export type NewUserInput = {
   userName: string;
@@ -43,6 +50,7 @@ export class User {
   projectEnrollmentSenderUsers: import("./ProjectEnrollment").ProjectEnrollment[] = [];
   projects: import("./Project").Project[] = [];
   userVerificationCodes: import("./UserVerificationCode").UserVerificationCode[] = [];
+  verificationCodeResendCount = 0;
 
   constructor(init?: Partial<User>) {
     Object.assign(this, init);
@@ -139,5 +147,22 @@ export class User {
 
     this.isActive = true;
     return response;
+  }
+
+  async resendVerificationCode(password: string, options?: RequestInit): Promise<void> {
+    if (this.verificationCodeResendCount >= MAX_VERIFICATION_CODE_RESENDS) {
+      throw new Error("Activation code can only be resent 3 times.");
+    }
+
+    this.verificationCodeResendCount += 1;
+    const command: ResendVerificationCodeCommand = {
+      email: this.authontication.email,
+      password,
+    };
+
+    const response = await postApiAccountsResendVerificationCode(command, options);
+    if (response.status < 200 || response.status >= 300) {
+      throw new Error(`Activation code resend failed with status ${response.status}.`);
+    }
   }
 }

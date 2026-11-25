@@ -16,7 +16,8 @@ import type {
 
 import type {
   ActivateAccountCommand,
-  CreateAccountCommand
+  CreateAccountCommand,
+  ResendVerificationCodeCommand
 } from '../models';
 
 
@@ -222,4 +223,104 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
         TContext
       > => {
       return useMutation(getPostApiAccountsActivateMutationOptions(options), queryClient);
+    }
+    export type postApiAccountsResendVerificationCodeResponse200 = {
+  data: void
+  status: 200
+}
+
+export type postApiAccountsResendVerificationCodeResponseSuccess = (postApiAccountsResendVerificationCodeResponse200) & {
+  headers: Headers;
+};
+;
+
+export type postApiAccountsResendVerificationCodeResponse = (postApiAccountsResendVerificationCodeResponseSuccess)
+
+export const getPostApiAccountsResendVerificationCodeUrl = () => {
+
+
+
+
+  return `https://localhost:7124/api/Accounts/resend-verification-code`
+}
+
+export const postApiAccountsResendVerificationCode = async (resendVerificationCodeCommand: ResendVerificationCodeCommand, options?: RequestInit): Promise<postApiAccountsResendVerificationCodeResponse> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+const res = await fetch(getPostApiAccountsResendVerificationCodeUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(resendVerificationCodeCommand)
+  }
+)
+
+
+  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
+
+  const data: postApiAccountsResendVerificationCodeResponse['data'] = body ? JSON.parse(body) : undefined
+  return { data, status: res.status, headers: res.headers } as postApiAccountsResendVerificationCodeResponse
+}
+
+
+
+
+
+export const getPostApiAccountsResendVerificationCodeMutationKey = () => ['postApiAccountsResendVerificationCode'] as const;
+
+export const getPostApiAccountsResendVerificationCodeMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiAccountsResendVerificationCode>>, TError,PostApiAccountsResendVerificationCodeMutationVariables, TContext>, fetch?: RequestInit}
+): UseMutationOptions<Awaited<ReturnType<typeof postApiAccountsResendVerificationCode>>, TError,PostApiAccountsResendVerificationCodeMutationVariables, TContext> => {
+
+const mutationKey = getPostApiAccountsResendVerificationCodeMutationKey();
+const {mutation: mutationOptions, fetch: fetchOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, fetch: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof postApiAccountsResendVerificationCode>>, PostApiAccountsResendVerificationCodeMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  postApiAccountsResendVerificationCode(data,fetchOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PostApiAccountsResendVerificationCodeMutationResult = NonNullable<Awaited<ReturnType<typeof postApiAccountsResendVerificationCode>>>
+    export type PostApiAccountsResendVerificationCodeMutationBody = ResendVerificationCodeCommand
+    export type PostApiAccountsResendVerificationCodeMutationError = unknown
+    export type PostApiAccountsResendVerificationCodeMutationVariables = {data: ResendVerificationCodeCommand}
+
+    export const usePostApiAccountsResendVerificationCode = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiAccountsResendVerificationCode>>, TError,PostApiAccountsResendVerificationCodeMutationVariables, TContext>, fetch?: RequestInit}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof postApiAccountsResendVerificationCode>>,
+        TError,
+        PostApiAccountsResendVerificationCodeMutationVariables,
+        TContext
+      > => {
+      return useMutation(getPostApiAccountsResendVerificationCodeMutationOptions(options), queryClient);
     }

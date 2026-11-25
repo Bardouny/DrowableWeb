@@ -7,3 +7,4 @@
 
 export * from './activateAccountCommand.ts';
 export * from './createAccountCommand.ts';
+export * from './resendVerificationCodeCommand.ts';

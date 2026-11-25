@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import {
   ArrowRight,
   Check,
@@ -15,7 +15,7 @@ import {
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { alertService } from "@/services/alert";
 import { Country } from "@/models/Country";
-import { User } from "@/models/User";
+import { MAX_VERIFICATION_CODE_RESENDS, User } from "@/models/User";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 
 export const Route = createFileRoute("/signup")({
@@ -38,7 +38,10 @@ function SignupPage() {
   const [userToActivate, setUserToActivate] = useState<User | null>(null);
   const [activationCode, setActivationCode] = useState("");
   const [isActivating, setIsActivating] = useState(false);
+  const [isResending, setIsResending] = useState(false);
+  const [resendAttempts, setResendAttempts] = useState(0);
   const [isActivated, setIsActivated] = useState(false);
+  const activationPassword = useRef<string | null>(null);
   const countries = Country.All();
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -78,9 +81,11 @@ function SignupPage() {
     setIsSubmitting(true);
     try {
       await user.createAccount(password);
+      activationPassword.current = password;
       setUserToActivate(user);
       setNotice("");
       setActivationCode("");
+      setResendAttempts(0);
       setIsActivated(false);
       alertService.success("Account created. Enter your activation code to continue.");
     } catch (error) {
@@ -106,6 +111,7 @@ function SignupPage() {
     try {
       await userToActivate.activateAccount(activationCode);
       setIsActivated(true);
+      activationPassword.current = null;
       alertService.success("Your account has been activated.");
     } catch (error) {
       const description =
@@ -114,6 +120,31 @@ function SignupPage() {
       alertService.error("Unable to activate your account.", { description });
     } finally {
       setIsActivating(false);
+    }
+  }
+
+  async function handleResendVerificationCode() {
+    if (!userToActivate || !activationPassword.current || isResending) {
+      return;
+    }
+
+    setNotice("");
+    setIsResending(true);
+    const resendRequest = userToActivate.resendVerificationCode(activationPassword.current);
+    setResendAttempts(userToActivate.verificationCodeResendCount);
+
+    try {
+      await resendRequest;
+      setActivationCode("");
+      setNotice("A new activation code has been sent.");
+      alertService.success("A new activation code has been sent.");
+    } catch (error) {
+      const description =
+        error instanceof Error ? error.message : "Please check your connection and try again.";
+      setNotice(`Unable to resend the activation code. ${description}`);
+      alertService.error("Unable to resend the activation code.", { description });
+    } finally {
+      setIsResending(false);
     }
   }
 
@@ -337,6 +368,20 @@ function SignupPage() {
                             ))}
                           </InputOTPGroup>
                         </InputOTP>
+                      </div>
+
+                      <div className="flex items-center justify-between gap-3 text-sm">
+                        <span className="text-drowable-on-surface-variant">
+                          {MAX_VERIFICATION_CODE_RESENDS - resendAttempts} resends remaining
+                        </span>
+                        <button
+                          className="font-medium text-drowable-primary transition-colors hover:text-drowable-primary-fixed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-drowable-primary disabled:cursor-not-allowed disabled:opacity-50"
+                          disabled={isResending || resendAttempts >= MAX_VERIFICATION_CODE_RESENDS}
+                          onClick={handleResendVerificationCode}
+                          type="button"
+                        >
+                          {isResending ? "Sending..." : "Resend code"}
+                        </button>
                       </div>
 
                       {notice && (
